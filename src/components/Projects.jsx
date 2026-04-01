@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import gsap from 'gsap';
@@ -9,38 +9,39 @@ const projectsData = [
     id: 1,
     title: "NoteNetra",
     description: "IoT Fintech Intelligence Platform tracking offline MSME cash transactions via IoT sensors. Generates alternative credit scores for financial inclusion.",
-    category: "IoT",
-    tags: ["IoT", "Node.js", "React", "AI/ML"],
+    category: "IoT Campus Safety",
+    tags: ["IoT", "React", "Node.js", "AI"],
     github: "#",
-    live: "#"
+    live: "#",
+    color: "cyan"
   },
   {
     id: 2,
     title: "AIKosh",
     description: "AI-Powered MSME Agent Mapping that connects MSMEs to relevant financial agents using intelligent data analysis.",
     category: "AI",
-    tags: ["AI", "React", "Node.js", "Express"],
+    tags: ["AI", "React", "Express"],
     github: "#",
-    live: "#"
+    live: "#",
+    color: "violet"
   },
   {
     id: 3,
     title: "Smart Vape Detection System",
     description: "Embedded IoT sensor system detecting vaping in restricted campus environments.",
     category: "Hardware",
-    tags: ["IoT", "Embedded Systems", "Hardware"],
+    tags: ["IoT", "Embedded", "Hardware"],
     github: "#",
-    live: "#"
+    live: "#",
+    color: "gold"
   }
 ];
 
 const Projects = () => {
   const containerRef = useRef(null);
-  const [filter, setFilter] = useState('All');
-  const filters = ['All', 'IoT', 'AI', 'Hardware'];
 
   useEffect(() => {
-     const ctx = gsap.context(() => {
+     let ctx = gsap.context(() => {
         gsap.from('.proj-heading', {
             scrollTrigger: {
                 trigger: containerRef.current,
@@ -55,111 +56,78 @@ const Projects = () => {
      return () => ctx.revert();
   }, []);
 
-  const filteredProjects = filter === 'All' 
-    ? projectsData 
-    : projectsData.filter(p => p.category === filter);
-
-  const getBorderColor = (category) => {
-      switch(category) {
-          case 'IoT': return 'border-t-[#00F5FF] shadow-[0_-5px_15px_rgba(0,245,255,0.2)] hover:shadow-[0_-5px_30px_rgba(0,245,255,0.5)]';
-          case 'AI': return 'border-t-[#9B59FF] shadow-[0_-5px_15px_rgba(155,89,255,0.2)] hover:shadow-[0_-5px_30px_rgba(155,89,255,0.5)]';
-          case 'Hardware': return 'border-t-[#FFD700] shadow-[0_-5px_15px_rgba(255,215,0,0.2)] hover:shadow-[0_-5px_30px_rgba(255,215,0,0.5)]';
+  const getBorderColor = (color) => {
+      switch(color) {
+          case 'cyan': return 'border-t-[#00F5FF] shadow-[0_-5px_15px_rgba(0,245,255,0.1)] hover:shadow-[0_-5px_30px_rgba(0,245,255,0.4)]';
+          case 'violet': return 'border-t-[#9B59FF] shadow-[0_-5px_15px_rgba(155,89,255,0.1)] hover:shadow-[0_-5px_30px_rgba(155,89,255,0.4)]';
+          case 'gold': return 'border-t-[#FFD700] shadow-[0_-5px_15px_rgba(255,215,0,0.1)] hover:shadow-[0_-5px_30px_rgba(255,215,0,0.4)]';
           default: return 'border-t-white';
       }
   };
 
-  const getTagColor = (tag) => {
-    if(['React', 'Node.js', 'Express', 'Hardware'].includes(tag)) return 'text-violet-neon bg-violet-neon/10 border-violet-neon/20';
-    if(['AI/ML', 'AI'].includes(tag)) return 'text-gold-pulse bg-gold-pulse/10 border-gold-pulse/20';
-    return 'text-cyan-glow bg-cyan-glow/10 border-cyan-glow/20';
-  };
-
-
-
   return (
-    <section id="projects" ref={containerRef} className="w-full py-24 relative overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12 z-10 relative">
+    <section id="projects" ref={containerRef} className="w-full py-32 relative overflow-hidden pointer-events-none">
+      <div className="container mx-auto px-6 md:px-12 z-10 relative pointer-events-auto">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-            <div className="flex flex-col relative">
-                <div className="text-[6rem] md:text-[8rem] font-heading font-extrabold leading-none text-white/5 absolute -top-8 -left-6 pointer-events-none select-none">
-                    03
-                </div>
-                <h2 className="proj-heading text-4xl md:text-5xl font-heading font-bold text-white relative z-10">
-                    Selected Work
-                </h2>
-                <div className="proj-heading w-24 md:w-32 h-[2px] bg-cyan-glow mt-4 shadow-[0_0_10px_#00F5FF]"></div>
-            </div>
-
-            <div className="flex gap-4 proj-heading overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
-                {filters.map((f) => (
-                    <button 
-                        key={f}
-                        onClick={() => setFilter(f)}
-                        className={`px-5 py-2 rounded-full font-medium transition-all duration-300 border text-sm whitespace-nowrap ${
-                            filter === f 
-                                ? 'bg-cyan-glow/10 text-cyan-glow border-cyan-glow shadow-[0_0_15px_rgba(0,245,255,0.4)]' 
-                                : 'bg-transparent text-gray-400 border-white/10 hover:border-cyan-glow/50 hover:text-white'
-                        }`}
-                    >
-                        {f}
-                    </button>
-                ))}
+        <div className="flex flex-col mb-16 gap-8">
+            <div className="proj-heading inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-4 w-max glow-cyan">
+                SELECTED WORK
             </div>
         </div>
 
-        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatePresence>
-                {filteredProjects.map((project) => (
-                    <motion.div
-                        key={project.id}
-                        layout
-                        initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.5 }}
-                        className="h-full"
-                    >
-                            <motion.div 
-                                whileHover={{ y: -5, scale: 1.02 }}
-                                transition={{ duration: 0.3, ease: 'easeOut' }}
-                                className={`glass-panel h-full rounded-2xl p-8 flex flex-col justify-between border-t-2 transition-colors duration-500 group ${getBorderColor(project.category)}`}
-                            >
-                                <div>
-                                    <h3 className="text-2xl font-bold font-heading text-white mb-4 group-hover:text-cyan-glow transition-colors duration-300">
-                                        {project.title}
-                                    </h3>
-                                    <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                                        {project.description}
-                                    </p>
-                                </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projectsData.map((project, index) => (
+                <motion.div 
+                    key={project.id}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, delay: index * 0.15 }}
+                    whileHover={{ y: -10, rotateX: 2, rotateY: -2, scale: 1.02 }}
+                    style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
+                    className={`glass-panel rounded-lg p-8 flex flex-col justify-between border-t border-white/5 transition-colors duration-500 group cursor-pointer h-full ${getBorderColor(project.color)}`}
+                >
+                    <div className="relative z-10 pointer-events-none">
+                        <div className={`text-[10px] font-bold tracking-[0.2em] mb-4 ${
+                            project.color === 'cyan' ? 'text-cyan-glow' 
+                            : project.color === 'violet' ? 'text-violet-neon' 
+                            : 'text-[#FFD700]'
+                        }`}>
+                            ⬡ {project.category.toUpperCase()}
+                        </div>
 
-                                <div>
-                                    <div className="flex flex-wrap gap-2 mb-8">
-                                        {project.tags.map((tag, i) => (
-                                            <span 
-                                                key={i} 
-                                                className={`text-[11px] font-bold px-3 py-1 rounded-full border ${getTagColor(tag)}`}
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
+                        <h3 className="text-2xl font-bold font-heading text-white mb-4 group-hover:text-white transition-colors duration-300">
+                            {project.title}
+                        </h3>
+                        <p className="text-white/50 text-sm font-light leading-relaxed mb-8">
+                            {project.description}
+                        </p>
+                    </div>
 
-                                    <div className="flex items-center space-x-4">
-                                        <a href={project.github} className="text-gray-400 hover:text-white hover:scale-110 transition-all duration-300" target="_blank" rel="noreferrer">
-                                            <FaGithub size={20} />
-                                        </a>
-                                        <a href={project.live} className="text-gray-400 hover:text-cyan-glow hover:scale-110 transition-all duration-300" target="_blank" rel="noreferrer">
-                                            <ExternalLink size={20} />
-                                        </a>
-                                    </div>
-                                </div>
-                            </motion.div>
-                    </motion.div>
-                ))}
-            </AnimatePresence>
-        </motion.div>
+                    <div className="relative z-20">
+                        <div className="flex flex-wrap gap-2 mb-8 pointer-events-none">
+                            {project.tags.map((tag, i) => (
+                                <span 
+                                    key={i} 
+                                    className="text-[10px] font-medium px-2 py-1 rounded border border-white/10 text-white/50 bg-white/5"
+                                >
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+
+                        <div className="flex items-center space-x-6">
+                            <a href={project.github} className="text-white/40 hover:text-white hover:-translate-y-1 transition-all duration-300 pointer-events-auto" target="_blank" rel="noreferrer">
+                                <FaGithub size={18} />
+                            </a>
+                            <a href={project.live} className="text-white/40 hover:text-cyan-glow hover:-translate-y-1 transition-all duration-300 pointer-events-auto" target="_blank" rel="noreferrer">
+                                <ExternalLink size={18} />
+                            </a>
+                        </div>
+                    </div>
+                </motion.div>
+            ))}
+        </div>
 
       </div>
     </section>

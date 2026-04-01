@@ -1,18 +1,19 @@
 import { useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Robot } from './components/Robot';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Experience from './components/Experience';
-import Skills from './components/Skills';
+import Services from './components/Services';
 import Projects from './components/Projects';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Cursor from './components/Cursor';
-import Preloader from './components/Preloader';
 
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { motion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,40 +36,68 @@ function App() {
         }
       );
     });
+
+    // Staggered fade ups
+    const fadeUps = document.querySelectorAll('.gsap-fade-up');
+    fadeUps.forEach((el) => {
+      gsap.fromTo(el, 
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+          }
+        }
+      );
+    });
+
   }, []);
 
   return (
-    <div className="relative min-h-screen font-body text-white bg-dark">
-      <div className="noise-bg pointer-events-none z-50"></div>
-      
+    <div className="relative min-h-screen font-body text-white w-full overflow-x-hidden bg-[#07070F]">
       <Cursor />
-      <Preloader />
       
+      {/* Global Persisting 3D Context */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-0 animate-[fadeIn_1s_ease-in-out_forwards]">
+         <Canvas camera={{ position: [0, 0, 6], fov: 50 }} dpr={[1, 2]}>
+            <ambientLight intensity={0.5} color="#0a0a1a" />
+            <Robot />
+         </Canvas>
+      </div>
+
       <Navbar />
 
       <main className="relative z-10 w-full flex flex-col items-center">
         <Hero />
         
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
+        <div className="w-full h-px bg-white/10 section-divider-line my-10"></div>
         <About />
         
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
-        <Experience />
+        <div className="w-full h-px bg-white/10 section-divider-line my-10"></div>
+        <Services />
         
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
-        <Skills />
-        
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
+        <div className="w-full h-px bg-white/10 section-divider-line my-10"></div>
         <Projects />
         
         <div className="w-full h-px bg-gradient-to-r from-transparent via-gold-pulse to-transparent opacity-30 section-divider-line my-10"></div>
         <Achievements />
         
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
+        <div className="w-full h-px bg-white/10 section-divider-line my-10"></div>
         <Contact />
       </main>
 
       <Footer />
+      
+      <style>{`
+         @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+         }
+      `}</style>
     </div>
   );
 }

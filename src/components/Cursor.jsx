@@ -32,16 +32,13 @@ const Cursor = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseover', handleMouseOver);
 
-    // Animation loop for lag effect
     let ctx = gsap.context(() => {
       gsap.ticker.add(() => {
-        // Dot follows instantly
-        dotPos.x += (mouse.x - dotPos.x) * 0.5;
-        dotPos.y += (mouse.y - dotPos.y) * 0.5;
+        dotPos.x += (mouse.x - dotPos.x) * 1;
+        dotPos.y += (mouse.y - dotPos.y) * 1;
         gsap.set(dotRef.current, { x: dotPos.x, y: dotPos.y });
 
-        // Ring follows with lag
-        ringPos.x += (mouse.x - ringPos.x) * 0.15;
+        ringPos.x += (mouse.x - ringPos.x) * 0.15; // lerp lag
         ringPos.y += (mouse.y - ringPos.y) * 0.15;
         gsap.set(ringRef.current, { x: ringPos.x, y: ringPos.y });
       });
@@ -55,14 +52,20 @@ const Cursor = () => {
   }, []);
 
   return (
-    <div className="hidden md:block pointer-events-none fixed inset-0 z-[9999]">
+    <div className="hidden md:block pointer-events-none fixed inset-0 z-[99999]">
+      {/* 8px solid cyan dot */}
       <div 
         ref={dotRef} 
-        className={`absolute w-2 h-2 rounded-full bg-cyan-glow glow-cyan transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${isHovering ? 'scale-[2.5] opacity-50' : 'scale-100'}`}
+        className="absolute w-2 h-2 rounded-full bg-cyan-glow transform -translate-x-1/2 -translate-y-1/2"
+        style={{ willChange: 'transform' }}
       />
+      {/* 32px transparent ring tracking */}
       <div 
         ref={ringRef} 
-        className={`absolute w-8 h-8 rounded-full border border-cyan-glow/50 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${isHovering ? 'scale-150 border-violet-neon/70 bg-violet-neon/10 backdrop-blur-[2px]' : 'scale-100'}`}
+        className={`absolute w-8 h-8 rounded-full border border-cyan-glow transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
+            isHovering ? 'w-12 h-12 bg-cyan-glow/10 border-cyan-glow/80' : ''
+        }`}
+        style={{ willChange: 'transform' }}
       />
     </div>
   );

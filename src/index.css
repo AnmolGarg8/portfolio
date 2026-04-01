@@ -4,27 +4,31 @@
 
 @layer base {
   body {
-    background-color: #0A0A0F;
+    background-color: #07070F;
     color: #ffffff;
-    cursor: none; /* Hide default cursor */
+    cursor: none;
     overflow-x: hidden;
   }
 }
 
+/* Custom noise/film grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Utility Classes */
 @layer utilities {
-  .text-gradient {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(to right, #00F5FF, #9B59FF);
-  }
-  
   .glow-cyan {
-    box-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
-  }
-  
-  .glow-cyan-intense {
-    box-shadow: 0 0 30px rgba(0, 245, 255, 0.7);
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
   }
   
   .glow-violet {
@@ -34,27 +38,18 @@
   .glow-gold {
     box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
   }
+
+  /* Cinematic text rendering */
+  .cinematic-text {
+    will-change: transform, opacity, filter;
+  }
 }
 
-/* Custom noise/film grain overlay */
-.noise-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* General reset for hide scrollbar but keep scroll functionality */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0A0F;
+  background: #07070F;
 }
 ::-webkit-scrollbar-thumb {
   background: #333;
@@ -69,9 +64,73 @@
   background: rgba(20, 20, 30, 0.4);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  will-change: transform;
 }
 
-/* Hide cursor on link/hover parts specifically for custom cursor */
+/* Bracket corner cards CSS */
+.bracket-card {
+  position: relative;
+  background: rgba(10, 10, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bracket-card::before, .bracket-card::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #00F5FF;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.bracket-card::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.bracket-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.bracket-card:hover::before, .bracket-card:hover::after {
+  width: 25px;
+  height: 25px;
+  opacity: 1;
+}
+
+/* Hide default cursor on interactive */
 a, button, input, textarea, select, label {
   cursor: none !important;
+}
+
+/* Dual radial glow */
+.hero-glow::before {
+   content: '';
+   position: absolute;
+   top: 50%;
+   left: 30%;
+   width: 40vw;
+   height: 40vw;
+   background: radial-gradient(circle, rgba(0, 245, 255, 0.15) 0%, rgba(0,0,0,0) 60%);
+   transform: translateY(-50%);
+   z-index: -1;
+   pointer-events: none;
+}
+.hero-glow::after {
+   content: '';
+   position: absolute;
+   top: 50%;
+   right: 30%;
+   width: 40vw;
+   height: 40vw;
+   background: radial-gradient(circle, rgba(155, 89, 255, 0.15) 0%, rgba(0,0,0,0) 60%);
+   transform: translateY(-50%);
+   z-index: -1;
+   pointer-events: none;
 }
