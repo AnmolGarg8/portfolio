@@ -6,8 +6,8 @@
   --violet: #7C3AED;
   --gold: #F59E0B;
   --white: #F8FAFC;
-  --muted: rgba(248, 250, 252, 0.4);
-  --dim: rgba(248, 250, 252, 0.12);
+  --muted: rgba(248, 250, 252, 0.85);
+  --dim: rgba(248, 250, 252, 0.25);
   --accent-color: var(--cyan); /* Default accent */
 }
 

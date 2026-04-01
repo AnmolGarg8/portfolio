@@ -39,7 +39,7 @@ const Projects = () => {
     gsap.from('.project-card', {
       scrollTrigger: {
         trigger: '.projects-list',
-        start: 'top 75%'
+        start: 'top 85%'
       },
       opacity: 0,
       x: -60,
@@ -78,7 +78,7 @@ const Projects = () => {
             gap: '3rem',
             padding: '4rem 3rem',
             background: '#111120',
-            border: '1px solid rgba(248, 250, 252, 0.12)',
+            border: '1px solid var(--dim)',
             borderRadius: '4px',
             position: 'relative',
             overflow: 'hidden',
@@ -88,7 +88,7 @@ const Projects = () => {
               fontFamily: 'Clash Display',
               fontSize: '3rem',
               fontWeight: 700,
-              color: 'rgba(248, 250, 252, 0.12)',
+              color: 'var(--dim)',
               transition: 'color 0.3s'
             }}>{p.num}</span>
 
@@ -111,7 +111,7 @@ const Projects = () => {
               <p className="project-desc" style={{
                 fontFamily: 'Inter',
                 fontSize: '0.95rem',
-                color: 'rgba(248, 250, 252, 0.4)',
+                color: 'var(--muted)',
                 lineHeight: '1.6',
                 maxWidth: '55ch',
                 marginBottom: '1.2rem'
@@ -121,8 +121,8 @@ const Projects = () => {
                   <span key={t} className="project-tag" style={{
                     fontFamily: 'JetBrains Mono',
                     fontSize: '0.65rem',
-                    color: 'rgba(248, 250, 252, 0.4)',
-                    border: '1px solid rgba(248, 250, 252, 0.12)',
+                    color: 'var(--muted)',
+                    border: '1px solid var(--dim)',
                     padding: '0.2rem 0.5rem',
                     borderRadius: '2px'
                   }}>{t}</span>
@@ -139,7 +139,7 @@ const Projects = () => {
               <a href={p.github} target="_blank" rel="noopener noreferrer" className="project-link" style={{
                 fontFamily: 'JetBrains Mono',
                 fontSize: '0.72rem',
-                color: 'rgba(248, 250, 252, 0.4)',
+                color: 'var(--muted)',
                 textDecoration: 'none',
                 letterSpacing: '0.1em',
                 display: 'flex',

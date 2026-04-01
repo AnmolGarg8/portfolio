@@ -71,7 +71,9 @@ function App() {
       }, '-=0.8');
 
       // Refresh ScrollTrigger after animations mount
-      ScrollTrigger.refresh();
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 500);
     }
   }, [loading]);
 

@@ -102,7 +102,7 @@ const WhatIDo = () => {
               opacity: open === i ? 1 : 0
             }}>
               <p style={{
-                color: 'rgba(248, 250, 252, 0.4)',
+                color: 'var(--muted)',
                 fontFamily: 'Inter',
                 lineHeight: '1.8',
                 margin: '1.2rem 0',

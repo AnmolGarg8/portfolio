@@ -10,9 +10,9 @@ const About = () => {
     gsap.from('.about-terminal', {
       scrollTrigger: {
         trigger: '.about',
-        start: 'top 70%'
+        start: 'top 85%'
       },
-      opacity: 0,
+      scale: 0.95,
       x: -60,
       duration: 0.9,
       ease: 'power3.out'
@@ -21,7 +21,7 @@ const About = () => {
     gsap.from('.about-content > *', {
       scrollTrigger: {
         trigger: '.about-content',
-        start: 'top 75%'
+        start: 'top 90%'
       },
       opacity: 0,
       y: 40,
@@ -73,7 +73,7 @@ const About = () => {
           <span className="dot" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#FF5F57' }}></span>
           <span className="dot" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#FEBC2E' }}></span>
           <span className="dot" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#28C840' }}></span>
-          <span className="terminal-title" style={{ marginLeft: 'auto', fontSize: '0.7rem', color: 'rgba(248, 250, 252, 0.4)' }}>anmol@kenet:~</span>
+          <span className="terminal-title" style={{ marginLeft: 'auto', fontSize: '0.7rem', color: 'var(--muted)' }}>anmol@kenet:~</span>
         </div>
         <div className="terminal-body" style={{
           padding: '2rem',
@@ -108,7 +108,7 @@ const About = () => {
           fontFamily: 'Inter',
           fontSize: '1rem',
           lineHeight: '1.8',
-          color: 'rgba(248, 250, 252, 0.4)',
+          color: 'var(--muted)',
           marginBottom: '2.5rem',
           maxWidth: '52ch'
         }}>
@@ -120,23 +120,23 @@ const About = () => {
           gap: '3.5rem',
           margin: '2.5rem 0',
           padding: '2rem 0',
-          borderTop: '1px solid rgba(248, 250, 252, 0.12)',
-          borderBottom: '1px solid rgba(248, 250, 252, 0.12)'
+          borderTop: '1px solid var(--dim)',
+          borderBottom: '1px solid var(--dim)'
         }}>
           <div className="stat-item">
             <div style={{ display: 'flex', alignItems: 'baseline' }}>
               <span className="stat-number" data-target="3" style={{ fontSize: '2.5rem', fontWeight: 700, fontFamily: 'Clash Display', color: '#00E5FF' }}>0</span>
               <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#00E5FF' }}>+</span>
             </div>
-            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'rgba(248, 250, 252, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PROJECTS</span>
+            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PROJECTS</span>
           </div>
           <div className="stat-item">
             <span className="stat-number" data-target="1" style={{ fontSize: '2.5rem', fontWeight: 700, fontFamily: 'Clash Display', color: '#00E5FF' }}>0</span>
-            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'rgba(248, 250, 252, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>STARTUP FOUNDED</span>
+            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>STARTUP FOUNDED</span>
           </div>
           <div className="stat-item">
             <span className="stat-number gold" style={{ fontSize: '1.8rem', fontWeight: 700, fontFamily: 'Clash Display', color: '#F59E0B' }}>TOP 10</span>
-            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'rgba(248, 250, 252, 0.4)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>NATIONALLY</span>
+            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>NATIONALLY</span>
           </div>
         </div>
 
@@ -144,8 +144,8 @@ const About = () => {
           display: 'inline-flex',
           alignItems: 'center',
           gap: '0.5rem',
-          border: '1px solid rgba(248, 250, 252, 0.12)',
-          color: 'rgba(248, 250, 252, 0.4)',
+          border: '1px solid var(--dim)',
+          color: 'var(--muted)',
           padding: '0.8rem 1.8rem',
           fontFamily: 'Inter',
           fontSize: '0.85rem',

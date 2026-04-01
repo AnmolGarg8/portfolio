@@ -60,8 +60,8 @@ const SkillCard = ({ category }) => (
         <span key={i} className="skill-tag" style={{
           fontFamily: 'JetBrains Mono',
           fontSize: '0.68rem',
-          color: 'rgba(248, 250, 252, 0.4)',
-          border: '1px solid rgba(248, 250, 252, 0.12)',
+          color: 'var(--muted)',
+          border: '1px solid var(--dim)',
           padding: '0.2rem 0.6rem',
           borderRadius: '2px',
           transition: 'all 0.2s'
@@ -95,9 +95,8 @@ const Skills = () => {
     gsap.from('.skill-card', {
       scrollTrigger: {
         trigger: '.skills-grid',
-        start: 'top 75%'
+        start: 'top 85%'
       },
-      opacity: 0,
       y: 60,
       stagger: 0.12,
       duration: 0.7,

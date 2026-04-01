@@ -60,7 +60,7 @@ const Hero = () => {
         <div className="hero-role" style={{
           fontFamily: 'Inter',
           fontSize: '1.1rem',
-          color: 'rgba(248, 250, 252, 0.4)',
+          color: 'var(--muted)',
           marginBottom: '1rem',
           display: 'flex',
           alignItems: 'center',
