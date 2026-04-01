@@ -13,21 +13,21 @@ const Footer = () => {
       gap: '2rem'
     }}>
       <div className="footer-left" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-        <span className="footer-logo gradient-text" style={{ fontFamily: 'Clash Display', fontWeight: 700, fontSize: '1.2rem' }}>[AG]</span>
-        <span className="footer-copy" style={{ fontFamily: 'Inter', fontSize: '0.78rem', color: 'rgba(248, 250, 252, 0.4)' }}>
+        <span className="footer-logo gradient-text" style={{ fontFamily: 'Times New Roman', fontWeight: 700, fontSize: '1.2rem' }}>[AG]</span>
+        <span className="footer-copy" style={{ fontFamily: 'Times New Roman', fontSize: '0.78rem', color: 'rgba(248, 250, 252, 0.4)' }}>
           © 2025 Anmol Garg. Built with Passion.
         </span>
       </div>
 
       <div className="footer-right" style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
-        <span className="footer-made" style={{ fontFamily: 'JetBrains Mono', fontSize: '0.7rem', color: 'rgba(248, 250, 252, 0.12)', letterSpacing: '0.05em' }}>
+        <span className="footer-made" style={{ fontFamily: 'Times New Roman', fontSize: '0.7rem', color: 'rgba(248, 250, 252, 0.12)', letterSpacing: '0.05em' }}>
           REACT + THREE.JS + GSAP
         </span>
         <button 
           className="back-top" 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           style={{
-            fontFamily: 'JetBrains Mono',
+            fontFamily: 'Times New Roman',
             fontSize: '0.7rem',
             letterSpacing: '0.15em',
             color: '#00E5FF',

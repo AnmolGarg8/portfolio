@@ -13,7 +13,7 @@ const Contact = () => {
       <div className="contact-left">
         <span className="section-label">// GET IN TOUCH</span>
         <h2 className="contact-heading" style={{
-          fontFamily: 'Clash Display',
+          fontFamily: 'Times New Roman',
           fontWeight: 700,
           fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
           lineHeight: '1.1',
@@ -60,7 +60,7 @@ const Contact = () => {
               width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid rgba(248, 250, 252, 0.12)', padding: '1rem 0', color: '#F8FAFC', outline: 'none'
             }} />
             <label className="form-label" style={{
-              position: 'absolute', top: '1rem', left: 0, poTimes New RomanEvents: 'none', color: 'rgba(248, 250, 252, 0.4)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s'
+              position: 'absolute', top: '1rem', left: 0, pointerEvents: 'none', color: 'rgba(248, 250, 252, 0.4)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s'
             }}>Your Name</label>
           </div>
 
@@ -69,7 +69,7 @@ const Contact = () => {
               width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid rgba(248, 250, 252, 0.12)', padding: '1rem 0', color: '#F8FAFC', outline: 'none'
             }} />
             <label className="form-label" style={{
-              position: 'absolute', top: '1rem', left: 0, poTimes New RomanEvents: 'none', color: 'rgba(248, 250, 252, 0.4)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s'
+              position: 'absolute', top: '1rem', left: 0, pointerEvents: 'none', color: 'rgba(248, 250, 252, 0.4)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s'
             }}>Email Address</label>
           </div>
 
@@ -78,12 +78,12 @@ const Contact = () => {
               width: '100%', minHeight: '120px', background: 'transparent', border: 'none', borderBottom: '1px solid rgba(248, 250, 252, 0.12)', padding: '1rem 0', color: '#F8FAFC', outline: 'none'
             }}></textarea>
             <label className="form-label" style={{
-              position: 'absolute', top: '1rem', left: 0, poTimes New RomanEvents: 'none', color: 'rgba(248, 250, 252, 0.4)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s'
+              position: 'absolute', top: '1rem', left: 0, pointerEvents: 'none', color: 'rgba(248, 250, 252, 0.4)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', transition: 'all 0.3s'
             }}>Your Message</label>
           </div>
 
           <button type="submit" className="btn-submit" style={{
-            background: 'linear-gradient(135deg, #00E5FF, #7C3AED)', border: 'none', padding: '1.2rem 3rem', color: '#060608', fontFamily: 'Times New Roman', fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'poTimes New Roman', alignSelf: 'flex-start', transition: 'all 0.3s ease'
+            background: 'linear-gradient(135deg, #00E5FF, #7C3AED)', border: 'none', padding: '1.2rem 3rem', color: '#060608', fontFamily: 'Times New Roman', fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', alignSelf: 'flex-start', transition: 'all 0.3s ease'
           }}>SEND MESSAGE</button>
         </form>
       </div>

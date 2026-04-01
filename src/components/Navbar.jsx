@@ -34,7 +34,7 @@ const Navbar = () => {
       alignItems: 'center'
     }}>
       <div className="nav-logo" style={{
-        fontFamily: 'Clash Display',
+        fontFamily: 'Times New Roman',
         fontWeight: 700,
         fontSize: '1.5rem',
         display: 'flex',
@@ -63,7 +63,7 @@ const Navbar = () => {
             href={link.href}
             className="nav-link-item"
             style={{
-              fontFamily: 'Inter',
+              fontFamily: 'Times New Roman',
               fontWeight: 500,
               fontSize: '0.75rem',
               letterSpacing: '0.15em',
@@ -82,7 +82,7 @@ const Navbar = () => {
         border: '1px solid #00E5FF',
         color: '#00E5FF',
         padding: '0.6rem 1.4rem',
-        fontFamily: 'JetBrains Mono',
+        fontFamily: 'Times New Roman',
         fontSize: '0.75rem',
         letterSpacing: '0.1em',
         transition: 'all 0.3s ease'
