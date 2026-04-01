@@ -6,11 +6,11 @@ import * as THREE from 'three';
 const Eye = ({ position }) => (
   <group position={position}>
     <mesh>
-      <sphereGeometry args={[0.26, 64, 64]} />
+      <sphereGeometry args={[0.27, 64, 64]} />
       <meshStandardMaterial color="#ffffff" roughness={0.1} emissive="#ffffff" emissiveIntensity={0.2} />
-      <mesh position={[0, 0, 0.23]}>
-        <sphereGeometry args={[0.135, 16, 16]} />
-        <meshStandardMaterial color="#010101" />
+      <mesh position={[0, 0, 0.24]}>
+        <sphereGeometry args={[0.13, 16, 16]} />
+        <meshStandardMaterial color="#000" />
       </mesh>
     </mesh>
   </group>
@@ -23,84 +23,81 @@ const Character = () => {
     useFrame((state) => {
         if (!group.current || !bodyRef.current) return;
         const t = state.clock.getElapsedTime();
-        // Dynamic Idle Floating (Bobbing translateY)
-        group.current.position.y = -2.3 + Math.sin(t * 1.6) * 0.38;
-        // Natural Breathing physics
-        const b = 1 + Math.sin(t * 2.1) * 0.045;
+        // Floating Sine Bobbing
+        group.current.position.y = -2.4 + Math.sin(t * 1.5) * 0.35;
+        // Breathing Physics (chest swell)
+        const b = 1 + Math.sin(t * 2.2) * 0.04;
         bodyRef.current.scale.set(b, 1, b);
-        // Mouse Tracking (Head/Body Rotation)
-        group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, state.mouse.x * 0.45, 0.08);
-        group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -state.mouse.y * 0.12, 0.08);
+        // Interactivity Head Tracking
+        const mx = state.mouse.x * 0.45;
+        const my = state.mouse.y * 0.15;
+        group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, mx, 0.08);
+        group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -my * 0.5, 0.08);
     });
 
   return (
-    <group ref={group} scale={1.85} position={[0, -2.3, 0]}>
-      {/* High-Performance Knit Crewneck (Bust) */}
+    <group ref={group} scale={1.8} position={[0, -2.4, 0]}>
+      {/* Knit Sweater Base (Bust) */}
       <mesh ref={bodyRef} position={[0, 0.4, 0]}>
-        <capsuleGeometry args={[0.74, 1.45, 32, 64]} />
-        <meshStandardMaterial color="#1a1a20" roughness={1} metalness={0.05} />
+        <capsuleGeometry args={[0.73, 1.45, 32, 64]} />
+        <meshStandardMaterial color="#1a1a22" roughness={1} />
         <mesh position={[0, 0.72, 0]} rotation={[Math.PI/2, 0, 0]}>
-           <torusGeometry args={[0.43, 0.06, 32, 64]} />
+           <torusGeometry args={[0.42, 0.06, 16, 64]} />
            <meshStandardMaterial color="#111" />
         </mesh>
       </mesh>
 
-      {/* CGI Stylized Protagonist Head */}
+      {/* CGI Protagonist Head (Center) */}
       <group position={[0, 1.85, 0.1]}>
-        {/* Face with Sub-Surface Scattering Fake */}
+        {/* Soft Skin Surface */}
         <mesh>
            <sphereGeometry args={[0.88, 64, 64]} />
-           <meshStandardMaterial color="#ffceb4" roughness={0.35} emissive="#ffceb4" emissiveIntensity={0.15} />
+           <meshStandardMaterial color="#ffceb2" roughness={0.4} emissive="#ffceb2" emissiveIntensity={0.12} />
         </mesh>
-        {/* Defined Professional Jawline */}
-        <mesh position={[0, -0.45, 0.2]} scale={[1.05, 0.8, 1.35]}>
-           <sphereGeometry args={[0.45, 32, 32]} />
-           <meshStandardMaterial color="#ffceb4" roughness={0.4} />
-        </mesh>
-
-        <Eye position={[0.35, 0.28, 0.72]} />
-        <Eye position={[-0.35, 0.28, 0.72]} />
-
-        {/* Confident CGI Smile showing teeth */}
-        <group position={[0, -0.32, 0.84]}>
+        {/* Professional CGI Smile with Dental Mesh */}
+        <group position={[0, -0.32, 0.83]}>
            <mesh position={[0, 0.07, 0.02]}>
-              <RoundedBox args={[0.48, 0.11, 0.03]} radius={0.03}>
-                 <meshStandardMaterial color="white" emissive="white" emissiveIntensity={0.7} roughness={0.1} />
+              <RoundedBox args={[0.48, 0.12, 0.04]} radius={0.035}>
+                 <meshStandardMaterial color="#f8f8f8" emissive="#ffffff" emissiveIntensity={0.65} />
               </RoundedBox>
            </mesh>
            {/* Lips Upper/Lower */}
-           <mesh rotation={[Math.PI, 0, 0]} position={[0, 0.16, 0.04]}>
-              <torusGeometry args={[0.26, 0.02, 16, 32, Math.PI]} />
-              <meshStandardMaterial color="#e8a89b" roughness={0.5} />
+           <mesh rotation={[Math.PI, 0, 0]} position={[0, 0.17, 0.04]}>
+              <torusGeometry args={[0.26, 0.025, 16, 64, Math.PI]} />
+              <meshStandardMaterial color="#e8a89b" roughness={0.6} />
            </mesh>
            <mesh rotation={[0, 0, Math.PI]} position={[0, -0.04, 0.04]}>
-              <torusGeometry args={[0.28, 0.03, 16, 32, Math.PI]} />
-              <meshStandardMaterial color="#e8a89b" roughness={0.5} />
+              <torusGeometry args={[0.29, 0.035, 16, 64, Math.PI]} />
+              <meshStandardMaterial color="#e8a89b" roughness={0.6} />
            </mesh>
         </group>
 
+        {/* Photorealistic Eye Placement */}
+        <Eye position={[0.35, 0.3, 0.73]} />
+        <Eye position={[-0.35, 0.3, 0.73]} />
+
         {/* Defined Nose Bridge */}
-        <mesh position={[0, 0, 0.88]} scale={[0.8, 1.4, 0.8]}>
-           <sphereGeometry args={[0.11, 32, 32]} />
+        <mesh position={[0, 0, 0.88]} scale={[0.8, 1.35, 0.8]}>
+           <sphereGeometry args={[0.12, 32, 32]} />
            <meshStandardMaterial color="#f2b4a1" />
         </mesh>
 
-        {/* Voluminous Swept-Up 3D Hair system (brown) */}
-        <group position={[0, 0.75, 0]}>
-           <RoundedBox args={[1.5, 0.95, 1.4]} radius={0.45} position={[0, 0.12, -0.1]}>
+        {/* Voluminous Swept-Up 3D Hair System (Stylized CGI) */}
+        <group position={[0, 0.78, 0]}>
+           <RoundedBox args={[1.5, 0.95, 1.35]} radius={0.45} position={[0, 0.12, -0.1]}>
               <meshStandardMaterial color="#31221b" roughness={0.8} />
            </RoundedBox>
-           {/* Individual CGI Sculpted Strands of dynamic brown hair */}
-           {[-0.45, -0.2, 0, 0.2, 0.45].map((x, i) => (
-             <mesh key={i} position={[x, 0.5 + Math.abs(x)*0.3, 0.35 - Math.abs(x)*0.2]} rotation={[0.85, x*0.4, 0]} scale={[1.3, 2.15, 1.3]}>
-               <capsuleGeometry args={[0.18, 0.48, 12, 16]} />
-               <meshStandardMaterial color="#36221b" roughness={0.4} metalness={0.15} emissive="#2d1d14" emissiveIntensity={0.1} />
+           {/* Detailed Sculpted Brown Hair Strands */}
+           {[-0.45, -0.22, 0, 0.22, 0.45].map((x, i) => (
+             <mesh key={i} position={[x, 0.45 + Math.abs(x)*0.35, 0.4 - Math.abs(x)*0.3]} rotation={[0.8, x*0.4, 0]} scale={[1.35, 2.22, 1.35]}>
+               <capsuleGeometry args={[0.18, 0.48, 16, 32]} />
+               <meshStandardMaterial color="#36221b" roughness={0.45} metalness={0.15} />
              </mesh>
            ))}
         </group>
       </group>
 
-      <ContactShadows position={[0, 0, 0]} opacity={0.65} scale={12} blur={3.2} far={5} />
+      <ContactShadows position={[0, 0, 0]} opacity={0.65} scale={12} blur={3.2} far={6} />
     </group>
   );
 };
@@ -112,11 +109,11 @@ const CharacterWrapper = () => (
       dpr={[1, 1.5]} 
       camera={{ position: [0, 0, 8.5], fov: 36 }}
     >
-      <ambientLight intensity={4.2} /> {/* DOMINANT LIGHTING FOR STABILITY */}
-      <spotLight position={[5, 10, 10]} intensity={15} angle={0.3} penumbra={1} color="#ffffff" />
-      <pointLight position={[-10, 5, 5]} color="#7C3AED" intensity={30} /> {/* Ultra-Vivid Rim Purple */}
-      <pointLight position={[10, 5, 5]} color="#7C3AED" intensity={20} />
-      <pointLight position={[0, -5, 5]} color="#ffceb4" intensity={8} /> {/* Warm fill base */}
+      <ambientLight intensity={4.5} /> {/* SUPREME STUDIO LIGHTING RIG for CGI Clarity */}
+      <spotLight position={[5, 10, 10]} intensity={18} angle={0.3} penumbra={1} color="#ffffff" />
+      <pointLight position={[-12, 5, 5]} color="#7C3AED" intensity={35} /> {/* Extreme Violet Rim Light */}
+      <pointLight position={[12, 5, 5]} color="#7C3AED" intensity={22} />
+      <pointLight position={[0, -5, 8]} color="#ffceb2" intensity={10} /> {/* Warm Frontal Fill */}
       <Character />
     </Canvas>
   </div>
