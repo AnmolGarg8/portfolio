@@ -1,5 +1,5 @@
 import React from 'react';
-import Character from '../components/Character';
+import characterImage from '../assets/character.png';
 
 const SocialIcon = ({ path, href, active }) => (
   <a href={href} rel="noopener noreferrer" target="_blank" style={{ 
@@ -66,7 +66,7 @@ const Hero = () => {
       <style>{`
         @keyframes halo-pulse { 0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); } }
         @keyframes aurora-shift { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(40px,-20px) rotate(2.5deg); } }
-        @keyframes glyphy-pulse { 0%, 100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 10px #fff); } }
+        @keyframes character-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
       `}</style>
 
       {/* Navbar Container */}
@@ -80,7 +80,7 @@ const Hero = () => {
       </div>
 
       {/* Main Structural Layout (3-Column architecture for ZERO OVERLAP) */}
-      <div style={{ display: 'flex', width: '100%', alignItems: 'center', position: 'relative', zIndex: 10, height: '100%' }}>
+      <div style={{ display: 'flex', width: '100%', alignItems: 'center', position: 'relative', zIndex: 10, flex: 1 }}>
         {/* Left Typography Pillar (32% width) */}
         <div style={{ width: '32%', overflow: 'hidden' }}>
           <span style={{ 
@@ -94,7 +94,7 @@ const Hero = () => {
           <h1 style={{
             fontFamily: 'Syne, sans-serif',
             fontWeight: 800,
-            fontSize: 'clamp(3rem, 4.5vw, 4.2rem)', // Scaled down for safety
+            fontSize: 'clamp(3rem, 4.5vw, 4.2rem)',
             lineHeight: '0.88',
             color: '#FFFFFF',
             margin: 0,
@@ -107,12 +107,36 @@ const Hero = () => {
           </h1>
         </div>
 
-        {/* Center Visual Space (36% width divider) */}
-        <div style={{ width: '36%', height: '100%', position: 'relative', zIndex: 5, pointerEvents: 'none' }}>
-           <div style={{ width: '100%', height: '100%', transform: 'scale(1) translateY(8vh)' }}>
-             <Character />
-           </div>
+        {/* Center Visual Space (36% width divider) - Using defined Image centerpiece with precision Masking */}
+        <div style={{ 
+          width: '36%', 
+          height: '100%', 
+          position: 'relative', 
+          zIndex: 5, 
+          pointerEvents: 'none', 
+          display: 'flex', 
+          alignItems: 'flex-end', 
+          justifyContent: 'center',
+          overflow: 'hidden'
+        }}>
+           <img 
+               src={characterImage} 
+               alt="Definitive 3D Character" 
+               style={{ 
+                  height: '110%', 
+                  width: 'auto',
+                  maxWidth: '180%', 
+                  objectFit: 'contain', 
+                  objectPosition: 'center 20%',
+                  animation: 'character-float 6s infinite ease-in-out',
+                  userSelect: 'none',
+                  clipPath: 'inset(18% 5% 0 5%)', // Surgical mask to remove top nav & side UI from source screenshot
+                  mixBlendMode: 'screen', // Liquid blend into #050505 background
+                  filter: 'contrast(1.05) brightness(1.02)'
+               }} 
+           />
         </div>
+
 
         {/* Right Typography Pillar (32% width) */}
         <div style={{ width: '32%', textAlign: 'right', overflow: 'hidden' }}>
@@ -120,7 +144,7 @@ const Hero = () => {
            <h2 style={{
              fontFamily: 'Syne, sans-serif',
              fontWeight: 800,
-             fontSize: 'clamp(2.8rem, 4vw, 3.8rem)', // Scaled down for safety
+             fontSize: 'clamp(2.8rem, 4vw, 3.8rem)',
              lineHeight: '0.95',
              margin: 0,
              display: 'flex',
@@ -137,6 +161,7 @@ const Hero = () => {
            </h2>
         </div>
       </div>
+
 
       {/* Persistent Social Indicator Sidebar indicators */}
       <div style={{ position: 'absolute', left: '2rem', top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', gap: '1.2rem', zIndex: 100 }}>
@@ -166,16 +191,6 @@ const Hero = () => {
         </a>
       </div>
 
-      <div style={{ 
-        position: 'absolute', 
-        bottom: '2.5rem', 
-        right: '2.5rem', 
-        color: '#FFFFFF', 
-        fontSize: '2.5rem', 
-        opacity: 0.6,
-        zIndex: 10,
-        animation: 'glyphy-pulse 4s infinite ease-in-out'
-      }}>✦</div>
     </section>
   );
 };

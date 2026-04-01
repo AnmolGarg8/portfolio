@@ -24,7 +24,7 @@ const Character = () => {
         if (!group.current || !bodyRef.current) return;
         const t = state.clock.getElapsedTime();
         // Floating Sine Bobbing
-        group.current.position.y = -2.4 + Math.sin(t * 1.5) * 0.35;
+        group.current.position.y = -2.1 + Math.sin(t * 1.5) * 0.35;
         // Breathing Physics (chest swell)
         const b = 1 + Math.sin(t * 2.2) * 0.04;
         bodyRef.current.scale.set(b, 1, b);
@@ -36,7 +36,8 @@ const Character = () => {
     });
 
   return (
-    <group ref={group} scale={1.8} position={[0, -2.4, 0]}>
+    <group ref={group} scale={1.8} position={[0, -2.1, 0]}>
+
       {/* Knit Sweater Base (Bust) */}
       <mesh ref={bodyRef} position={[0, 0.4, 0]}>
         <capsuleGeometry args={[0.73, 1.45, 32, 64]} />
@@ -103,20 +104,21 @@ const Character = () => {
 };
 
 const CharacterWrapper = () => (
-  <div className="character-canvas" style={{ width: '100%', height: '100%', position: 'absolute', pointerEvents: 'none' }}>
+  <div className="character-canvas" style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'none' }}>
     <Canvas 
       gl={{ alpha: true, antialias: true, stencil: false, depth: true, powerPreference: "high-performance" }} 
-      dpr={[1, 1.5]} 
-      camera={{ position: [0, 0, 8.5], fov: 36 }}
+      dpr={[1, 2]} 
+      camera={{ position: [0, 0, 8], fov: 35 }}
     >
-      <ambientLight intensity={4.5} /> {/* SUPREME STUDIO LIGHTING RIG for CGI Clarity */}
-      <spotLight position={[5, 10, 10]} intensity={18} angle={0.3} penumbra={1} color="#ffffff" />
-      <pointLight position={[-12, 5, 5]} color="#7C3AED" intensity={35} /> {/* Extreme Violet Rim Light */}
-      <pointLight position={[12, 5, 5]} color="#7C3AED" intensity={22} />
+      <ambientLight intensity={4} /> {/* SUPREME STUDIO LIGHTING RIG for CGI Clarity */}
+      <spotLight position={[5, 10, 10]} intensity={20} angle={0.3} penumbra={1} color="#ffffff" />
+      <pointLight position={[-10, 5, 5]} color="#7C3AED" intensity={30} /> {/* Extreme Violet Rim Light */}
+      <pointLight position={[10, 5, 5]} color="#7C3AED" intensity={20} />
       <pointLight position={[0, -5, 8]} color="#ffceb2" intensity={10} /> {/* Warm Frontal Fill */}
       <Character />
     </Canvas>
   </div>
 );
+
 
 export default CharacterWrapper;
