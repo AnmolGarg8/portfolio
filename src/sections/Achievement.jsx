@@ -9,9 +9,8 @@ const Achievement = () => {
     gsap.from('.achievement-inner > *', {
       scrollTrigger: {
         trigger: '.achievement',
-        start: 'top 70%'
+        start: 'top 85%'
       },
-      opacity: 0,
       y: 40,
       stagger: 0.2,
       duration: 1,

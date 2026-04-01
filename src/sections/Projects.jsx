@@ -41,7 +41,6 @@ const Projects = () => {
         trigger: '.projects-list',
         start: 'top 85%'
       },
-      opacity: 0,
       x: -60,
       stagger: 0.2,
       duration: 0.8,

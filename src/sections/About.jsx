@@ -21,9 +21,8 @@ const About = () => {
     gsap.from('.about-content > *', {
       scrollTrigger: {
         trigger: '.about-content',
-        start: 'top 90%'
+        start: 'top 95%'
       },
-      opacity: 0,
       y: 40,
       stagger: 0.15,
       duration: 0.7
