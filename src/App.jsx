@@ -85,10 +85,6 @@ function App() {
         <Loader onComplete={onLoaderComplete} />
       ) : (
         <>
-          <Navbar />
-          <SocialSidebar />
-          <ResumeButton />
-          
           <main>
             <Hero />
             <About />

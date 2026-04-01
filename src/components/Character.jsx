@@ -49,11 +49,11 @@ const Character = () => {
     if (!group.current || !bodyRef.current) return;
     const t = state.clock.getElapsedTime();
     
-    // Smooth idle bob (slow up-down loop)
-    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, -2.4 + Math.sin(t * 1.5) * 0.15, 0.05);
+    // Smooth idle bob (slow up-down loop) - AMPLIFIED
+    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, -2.4 + Math.sin(t * 1.5) * 0.35, 0.05);
     
-    // Subtle idle breathing (chest rise/fall)
-    const breath = 1 + Math.sin(t * 2) * 0.015;
+    // Subtle idle breathing (chest rise/fall) - AMPLIFIED
+    const breath = 1 + Math.sin(t * 2) * 0.04;
     bodyRef.current.scale.set(breath, 1, breath);
 
     // Mouse tracking for head
