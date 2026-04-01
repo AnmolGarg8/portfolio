@@ -1,73 +1,75 @@
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { Trophy } from 'lucide-react';
 
 const Achievements = () => {
-  return (
-    <section className="py-24 relative overflow-hidden bg-gray-50/50" id="achievements">
-      {/* Decorative Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-soft-gold/10 to-electric-indigo/5 rounded-full blur-[150px] mix-blend-multiply opacity-70 animate-pulse"></div>
-      </div>
+    const containerRef = useRef(null);
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10 w-full max-w-5xl">
-        <motion.div 
-          className="glass-panel p-1 border border-soft-gold/20 shadow-[0_20px_50px_rgba(244,185,66,0.15)] rounded-3xl overflow-hidden group"
-          initial={{ opacity: 0, y: 50, scale: 0.9 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          {/* Shimmer Effect */}
-          <div className="absolute inset-0 w-[200%] h-[200%] bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.8)_50%,transparent_75%)] translate-x-[-150%] animate-[shimmer_5s_infinite] rotate-12 -z-10 group-hover:block transition-all pointer-events-none"></div>
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from('.achieve-burst', {
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top 75%",
+                },
+                scale: 0,
+                opacity: 0,
+                rotation: -180,
+                duration: 1.5,
+                ease: "elastic.out(1, 0.4)"
+            });
 
-          <div className="bg-white/80 backdrop-blur-xl rounded-[23px] p-10 md:p-16 flex flex-col md:flex-row items-center gap-10 md:justify-between text-center md:text-left h-full">
-            
-            <motion.div 
-              className="relative w-40 h-40 md:w-56 md:h-56 shrink-0 flex items-center justify-center rounded-full bg-gradient-to-tr from-soft-gold/20 to-electric-indigo/10 border-4 border-white shadow-xl"
-              animate={{ 
-                y: [0, -15, 0],
-                rotate: [0, 5, -5, 0]
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <div className="absolute inset-0 bg-soft-gold/30 blur-[40px] rounded-full animate-pulse"></div>
-              <Trophy size={80} className="text-soft-gold drop-shadow-[0_0_20px_rgba(244,185,66,0.5)] z-10 md:w-[100px] md:h-[100px]" />
-            </motion.div>
+            gsap.from('.achieve-text', {
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top 75%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.2,
+                autoAlpha: 1,
+                delay: 0.5,
+                ease: "power2.out"
+            });
+        }, containerRef);
+        
+        return () => ctx.revert();
+    }, []);
 
-            <div className="flex-1 max-w-2xl">
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-              >
-                <h4 className="text-electric-indigo font-body font-bold text-lg md:text-xl tracking-widest uppercase mb-4 opacity-90">
-                  National Recognition
-                </h4>
+    return (
+        <section id="achievements" ref={containerRef} className="w-full py-32 relative overflow-hidden bg-[#0A0A0F]">
+            {/* Background glowing particles */}
+            <div className="absolute inset-0 z-0 flex justify-center items-center pointer-events-none opacity-40">
+                <div className="w-[800px] h-[800px] bg-gold-pulse/10 rounded-full blur-[120px] mix-blend-screen"></div>
+            </div>
+
+            <div className="container mx-auto px-6 md:px-12 z-10 relative flex flex-col items-center justify-center text-center">
                 
-                <h2 className="text-3xl md:text-5xl font-heading font-extrabold text-gray-900 mb-6 leading-tight">
-                  Top 10 Semifinalist
-                  <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-soft-gold to-orange-500">
-                    Samsung Solve for Tomorrow 2025
-                  </span>
+                <div className="achieve-burst relative mb-12">
+                    {/* Ring animation */}
+                    <div className="absolute inset-0 rounded-full border-2 border-gold-pulse animate-[ping_3s_ease-out_infinite] opacity-50 scale-[1.5]"></div>
+                    <div className="absolute inset-0 rounded-full border border-gold-pulse animate-[ping_3s_ease-out_infinite_1s] opacity-30 scale-[2]"></div>
+                    
+                    {/* Trophy container */}
+                    <div className="w-32 h-32 md:w-40 md:h-40 bg-gold-pulse/10 rounded-full border border-gold-pulse flex items-center justify-center glow-gold backdrop-blur-sm relative z-10">
+                        <Trophy size={64} className="text-gold-pulse drop-shadow-[0_0_15px_#FFD700]" />
+                    </div>
+                </div>
+
+                <h2 className="achieve-text text-4xl md:text-6xl lg:text-7xl font-heading font-extrabold text-white mb-6 tracking-tight max-w-4xl">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-pulse to-yellow-200 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)]">
+                        Top 10 — Samsung Solve for Tomorrow 2025
+                    </span>
                 </h2>
                 
-                <p className="font-body text-gray-700 text-lg md:text-xl leading-relaxed">
-                  Recognized nationally for building an innovative tech solution solving real-world challenges. Showcasing impact through intersection of AI and scalable engineering.
+                <p className="achieve-text text-xl md:text-2xl text-gray-300 font-light max-w-2xl text-center">
+                    Selected as a National Semifinalist out of thousands of entries across India.
                 </p>
-              </motion.div>
+                
             </div>
-            
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default Achievements;

@@ -1,66 +1,70 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 
 const Cursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
+    const mouse = { x: 0, y: 0 };
+    const dotPos = { x: 0, y: 0 };
+    const ringPos = { x: 0, y: 0 };
+
     const handleMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     };
 
     const handleMouseOver = (e) => {
-      const target = e.target;
       if (
-        target.tagName.toLowerCase() === 'a' ||
-        target.tagName.toLowerCase() === 'button' ||
-        target.classList.contains('interactive') ||
-        target.closest('a') ||
-        target.closest('button')
+        e.target.tagName.toLowerCase() === 'button' ||
+        e.target.tagName.toLowerCase() === 'a' ||
+        e.target.closest('button') ||
+        e.target.closest('a')
       ) {
-        setIsHovered(true);
+        setIsHovering(true);
       } else {
-        setIsHovered(false);
+        setIsHovering(false);
       }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseover', handleMouseOver);
 
+    // Animation loop for lag effect
+    let ctx = gsap.context(() => {
+      gsap.ticker.add(() => {
+        // Dot follows instantly
+        dotPos.x += (mouse.x - dotPos.x) * 0.5;
+        dotPos.y += (mouse.y - dotPos.y) * 0.5;
+        gsap.set(dotRef.current, { x: dotPos.x, y: dotPos.y });
+
+        // Ring follows with lag
+        ringPos.x += (mouse.x - ringPos.x) * 0.15;
+        ringPos.y += (mouse.y - ringPos.y) * 0.15;
+        gsap.set(ringRef.current, { x: ringPos.x, y: ringPos.y });
+      });
+    });
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
+      ctx.revert();
     };
   }, []);
 
-  // Only show custom cursor on non-touch devices
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-  }, []);
-
-  if (isTouchDevice) return null;
-
   return (
-    <motion.div
-      className="fixed pointer-events-none z-[9999] rounded-full mix-blend-difference"
-      animate={{
-        x: position.x - (isHovered ? 25 : 10),
-        y: position.y - (isHovered ? 25 : 10),
-        scale: isHovered ? 1.5 : 1,
-        backgroundColor: isHovered ? 'rgba(92, 107, 192, 1)' : 'transparent',
-        border: isHovered ? 'none' : '2px solid #5C6BC0',
-        width: isHovered ? 50 : 20,
-        height: isHovered ? 50 : 20,
-      }}
-      transition={{
-        type: 'spring',
-        stiffness: 700,
-        damping: 30,
-        mass: 0.5,
-      }}
-    />
+    <div className="hidden md:block pointer-events-none fixed inset-0 z-[9999]">
+      <div 
+        ref={dotRef} 
+        className={`absolute w-2 h-2 rounded-full bg-cyan-glow glow-cyan transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${isHovering ? 'scale-[2.5] opacity-50' : 'scale-100'}`}
+      />
+      <div 
+        ref={ringRef} 
+        className={`absolute w-8 h-8 rounded-full border border-cyan-glow/50 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${isHovering ? 'scale-150 border-violet-neon/70 bg-violet-neon/10 backdrop-blur-[2px]' : 'scale-100'}`}
+      />
+    </div>
   );
 };
 

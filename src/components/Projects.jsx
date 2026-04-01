@@ -1,170 +1,172 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Tilt } from 'react-tilt';
 import { ExternalLink } from 'lucide-react';
-import { FaGithub as Github } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
+import gsap from 'gsap';
 
-const PROJECTS = [
+const projectsData = [
   {
     id: 1,
-    title: 'NoteNetra — IoT Fintech Intelligence Platform',
-    category: 'IoT',
-    borderColor: 'border-electric-indigo',
-    gradientClass: 'from-electric-indigo to-blue-500',
-    description: 'IoT-based system tracking offline MSME cash transactions using smart sensors. Generates alternative credit scores to improve financial inclusion for small businesses.',
-    tech: ['IoT', 'Node.js', 'React', 'AI/ML'],
-    github: '#',
-    demo: '#',
+    title: "NoteNetra",
+    description: "IoT Fintech Intelligence Platform tracking offline MSME cash transactions via IoT sensors. Generates alternative credit scores for financial inclusion.",
+    category: "IoT",
+    tags: ["IoT", "Node.js", "React", "AI/ML"],
+    github: "#",
+    live: "#"
   },
   {
     id: 2,
-    title: 'AIKosh — AI-Powered MSME Agent Mapping Tool',
-    category: 'AI',
-    borderColor: 'border-purple-500',
-    gradientClass: 'from-purple-500 to-pink-500',
-    description: 'Maps MSMEs to the most relevant financial agents and resources using intelligent data analysis. Improves discoverability of financial support for small enterprises.',
-    tech: ['AI', 'React', 'Node.js', 'Express'],
-    github: '#',
-    demo: '#',
+    title: "AIKosh",
+    description: "AI-Powered MSME Agent Mapping that connects MSMEs to relevant financial agents using intelligent data analysis.",
+    category: "AI",
+    tags: ["AI", "React", "Node.js", "Express"],
+    github: "#",
+    live: "#"
   },
   {
     id: 3,
-    title: 'Smart Vape Detection System',
-    category: 'Hardware',
-    borderColor: 'border-soft-gold',
-    gradientClass: 'from-soft-gold to-orange-400',
-    description: 'Hardware-based IoT sensor system detecting vaping in restricted campus environments. Enhances safety monitoring in schools and colleges via embedded sensors.',
-    tech: ['IoT', 'Embedded Systems', 'Hardware Sensors'],
-    github: '#',
-    demo: '#',
-  },
+    title: "Smart Vape Detection System",
+    description: "Embedded IoT sensor system detecting vaping in restricted campus environments.",
+    category: "Hardware",
+    tags: ["IoT", "Embedded Systems", "Hardware"],
+    github: "#",
+    live: "#"
+  }
 ];
 
-const FILTER_TABS = ['All', 'IoT', 'AI', 'Hardware'];
-
 const Projects = () => {
-  const [activeTab, setActiveTab] = useState('All');
+  const containerRef = useRef(null);
+  const [filter, setFilter] = useState('All');
+  const filters = ['All', 'IoT', 'AI', 'Hardware'];
 
-  const filteredProjects = PROJECTS.filter(
-    proj => activeTab === 'All' || proj.category === activeTab || (activeTab === 'Hardware' && proj.tech.includes('Hardware Sensors'))
-  );
+  useEffect(() => {
+     const ctx = gsap.context(() => {
+        gsap.from('.proj-heading', {
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 80%",
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+     }, containerRef);
+     return () => ctx.revert();
+  }, []);
+
+  const filteredProjects = filter === 'All' 
+    ? projectsData 
+    : projectsData.filter(p => p.category === filter);
+
+  const getBorderColor = (category) => {
+      switch(category) {
+          case 'IoT': return 'border-t-[#00F5FF] shadow-[0_-5px_15px_rgba(0,245,255,0.2)] hover:shadow-[0_-5px_30px_rgba(0,245,255,0.5)]';
+          case 'AI': return 'border-t-[#9B59FF] shadow-[0_-5px_15px_rgba(155,89,255,0.2)] hover:shadow-[0_-5px_30px_rgba(155,89,255,0.5)]';
+          case 'Hardware': return 'border-t-[#FFD700] shadow-[0_-5px_15px_rgba(255,215,0,0.2)] hover:shadow-[0_-5px_30px_rgba(255,215,0,0.5)]';
+          default: return 'border-t-white';
+      }
+  };
+
+  const getTagColor = (tag) => {
+    if(['React', 'Node.js', 'Express', 'Hardware'].includes(tag)) return 'text-violet-neon bg-violet-neon/10 border-violet-neon/20';
+    if(['AI/ML', 'AI'].includes(tag)) return 'text-gold-pulse bg-gold-pulse/10 border-gold-pulse/20';
+    return 'text-cyan-glow bg-cyan-glow/10 border-cyan-glow/20';
+  };
+
+  const defaultTiltOptions = {
+      reverse:        false,
+      max:            15,
+      perspective:    1000,
+      scale:          1.02,
+      speed:          1000,
+      transition:     true,
+      axis:           null,
+      reset:          true,
+      easing:         "cubic-bezier(.03,.98,.52,.99)",
+  };
 
   return (
-    <section className="py-24 relative overflow-hidden" id="projects">
-      <div className="container mx-auto px-6 md:px-12">
+    <section id="projects" ref={containerRef} className="w-full py-24 relative overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12 z-10 relative">
         
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-8"
-          >
-            Featured <span className="text-soft-gold">Projects</span>
-          </motion.h2>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+            <div className="flex flex-col relative">
+                <div className="text-[6rem] md:text-[8rem] font-heading font-extrabold leading-none text-white/5 absolute -top-8 -left-6 pointer-events-none select-none">
+                    03
+                </div>
+                <h2 className="proj-heading text-4xl md:text-5xl font-heading font-bold text-white relative z-10">
+                    Selected Work
+                </h2>
+                <div className="proj-heading w-24 md:w-32 h-[2px] bg-cyan-glow mt-4 shadow-[0_0_10px_#00F5FF]"></div>
+            </div>
 
-          {/* Filter Tabs */}
-          <motion.div 
-            className="flex flex-wrap items-center justify-center gap-4 border border-gray-200 rounded-full p-2 mx-auto max-w-lg bg-white/50 backdrop-blur-md"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            {FILTER_TABS.map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`interactive relative px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-300 z-10 ${
-                  activeTab === tab ? 'text-white' : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                {activeTab === tab && (
-                  <motion.div
-                    layoutId="active-tab"
-                    className="absolute inset-0 bg-electric-indigo rounded-full -z-10 shadow-md shadow-electric-indigo/30"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-                {tab}
-              </button>
-            ))}
-          </motion.div>
+            <div className="flex gap-4 proj-heading overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
+                {filters.map((f) => (
+                    <button 
+                        key={f}
+                        onClick={() => setFilter(f)}
+                        className={`px-5 py-2 rounded-full font-medium transition-all duration-300 border text-sm whitespace-nowrap ${
+                            filter === f 
+                                ? 'bg-cyan-glow/10 text-cyan-glow border-cyan-glow shadow-[0_0_15px_rgba(0,245,255,0.4)]' 
+                                : 'bg-transparent text-gray-400 border-white/10 hover:border-cyan-glow/50 hover:text-white'
+                        }`}
+                    >
+                        {f}
+                    </button>
+                ))}
+            </div>
         </div>
 
-        {/* Projects Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-              >
-                <Tilt options={{ max: 15, scale: 1.02, speed: 400, glare: true, 'max-glare': 0.1 }} className="h-full">
-                  <div className={`glass-panel h-full flex flex-col relative overflow-hidden group`}>
-                    
-                    {/* Top Gradient Border */}
-                    <div className={`h-2 w-full bg-gradient-to-r ${project.gradientClass}`}></div>
-                    
-                    {/* Background glow on hover */}
-                    <div className="absolute inset-0 bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                    
-                    <div className="p-8 flex flex-col h-full flex-grow">
-                      
-                      <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4 group-hover:text-electric-indigo transition-colors">
-                        {project.title}
-                      </h3>
-                      
-                      <p className="text-gray-600 font-body text-sm leading-relaxed mb-8 flex-grow">
-                        {project.description}
-                      </p>
-                      
-                      {/* Tech Stack Tags */}
-                      <div className="flex flex-wrap gap-2 mb-8">
-                        {project.tech.map((techItem, techIdx) => (
-                          <span 
-                            key={techIdx} 
-                            className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-semibold group-hover:scale-105 transition-transform"
-                            style={{ transitionDelay: `${techIdx * 50}ms` }}
-                          >
-                            {techItem}
-                          </span>
-                        ))}
-                      </div>
-                      
-                      {/* Actions */}
-                      <div className="flex items-center gap-4 mt-auto border-t border-gray-100 pt-6">
-                        <a 
-                          href={project.github} 
-                          className="interactive flex items-center justify-center gap-2 flex-1 py-3 px-4 rounded-xl border border-gray-200 text-gray-700 font-medium hover:border-electric-indigo hover:text-electric-indigo transition-all duration-300"
-                        >
-                          <Github size={18} />
-                          <span>Code</span>
-                        </a>
-                        <a 
-                          href={project.demo} 
-                          className="interactive flex flex-1 items-center justify-center gap-2 py-3 px-4 rounded-xl relative overflow-hidden group/btn"
-                        >
-                          <div className={`absolute inset-0 bg-gradient-to-r opacity-10 group-hover/btn:opacity-100 transition-opacity duration-300 ${project.gradientClass} rounded-xl`}></div>
-                          
-                          <span className={`relative flex items-center gap-2 z-10 font-bold bg-clip-text text-transparent bg-gradient-to-r ${project.gradientClass}`}>
-                            <ExternalLink size={18} className="text-gray-900 group-hover/btn:text-white transition-colors" />
-                            <span className="text-gray-900 group-hover/btn:text-white transition-colors">Demo</span>
-                          </span>
-                        </a>
-                      </div>
+        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <AnimatePresence>
+                {filteredProjects.map((project) => (
+                    <motion.div
+                        key={project.id}
+                        layout
+                        initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.5 }}
+                        className="h-full"
+                    >
+                        <Tilt options={defaultTiltOptions} className="h-full">
+                            <div className={`glass-panel h-full rounded-2xl p-8 flex flex-col justify-between border-t-2 transition-all duration-500 group ${getBorderColor(project.category)}`}>
+                                <div>
+                                    <h3 className="text-2xl font-bold font-heading text-white mb-4 group-hover:text-cyan-glow transition-colors duration-300">
+                                        {project.title}
+                                    </h3>
+                                    <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                                        {project.description}
+                                    </p>
+                                </div>
 
-                    </div>
-                  </div>
-                </Tilt>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                                <div>
+                                    <div className="flex flex-wrap gap-2 mb-8">
+                                        {project.tags.map((tag, i) => (
+                                            <span 
+                                                key={i} 
+                                                className={`text-[11px] font-bold px-3 py-1 rounded-full border ${getTagColor(tag)}`}
+                                            >
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <div className="flex items-center space-x-4">
+                                        <a href={project.github} className="text-gray-400 hover:text-white hover:scale-110 transition-all duration-300" target="_blank" rel="noreferrer">
+                                            <FaGithub size={20} />
+                                        </a>
+                                        <a href={project.live} className="text-gray-400 hover:text-cyan-glow hover:scale-110 transition-all duration-300" target="_blank" rel="noreferrer">
+                                            <ExternalLink size={20} />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </Tilt>
+                    </motion.div>
+                ))}
+            </AnimatePresence>
         </motion.div>
 
       </div>

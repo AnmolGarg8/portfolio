@@ -1,121 +1,126 @@
-import { useEffect, useRef } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
-import { Download, Trophy, Briefcase, Code, Rocket } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-
-const CountUp = ({ end, duration = 2, suffix = "" }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    if (isInView) {
-      gsap.to(ref.current, {
-        innerHTML: end,
-        duration: duration,
-        snap: { innerHTML: 1 },
-        onUpdate: function () {
-          if (ref.current) {
-            ref.current.innerHTML = Math.round(this.targets()[0].innerHTML) + suffix;
-          }
-        },
-      });
-    }
-  }, [isInView, end, duration, suffix]);
-
-  return <span ref={ref}>0{suffix}</span>;
-};
+import { Download, Award } from 'lucide-react';
 
 const About = () => {
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-200px" });
+  const containerRef = useRef(null);
+  const statsRef = useRef(null);
+
+  const [countProjects, setCountProjects] = useState(0);
+  const [countStartup, setCountStartup] = useState(0);
+  const [countNationally, setCountNationally] = useState(0);
 
   useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
+    const ctx = gsap.context(() => {
+      gsap.from('.about-heading', {
+        scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+      });
 
-  const variants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-  };
+      gsap.from('.about-line', {
+        scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+        },
+        scaleX: 0,
+        transformOrigin: "left center",
+        duration: 1.5,
+        ease: "power4.out",
+        delay: 0.2
+      });
+
+      // Bio text reveal
+      gsap.from('.bio-text', {
+        scrollTrigger: {
+            trigger: ".bio-text",
+            start: "top 85%",
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out"
+      });
+
+      // Stat counters animation setup
+      ScrollTrigger.create({
+        trigger: statsRef.current,
+        start: "top 90%",
+        onEnter: () => {
+          gsap.to({ val: 0 }, { val: 3, duration: 2, ease: "power1.out", onUpdate: function() { setCountProjects(Math.floor(this.targets()[0].val)); }});
+          gsap.to({ val: 0 }, { val: 1, duration: 2, ease: "power1.out", onUpdate: function() { setCountStartup(Math.floor(this.targets()[0].val)); }});
+          gsap.to({ val: 0 }, { val: 10, duration: 2.5, ease: "power1.out", onUpdate: function() { setCountNationally(Math.floor(this.targets()[0].val)); }});
+        },
+        once: true
+      });
+
+    }, containerRef);
+    
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="py-24 relative" id="about" ref={ref}>
-      <div className="container mx-auto px-6 md:px-12">
+    <section id="about" ref={containerRef} className="w-full py-24 relative overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12 grid md:grid-cols-[1fr_2fr] gap-12 lg:gap-24 relative z-10">
         
-        <motion.div 
-          className="max-w-4xl mx-auto"
-          variants={variants}
-          initial="hidden"
-          animate={controls}
-        >
-          {/* Section Header */}
-          <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-gray-900">
-              About <span className="text-electric-indigo">Me</span>
-            </h2>
-            <div className="h-px bg-gray-200 flex-1"></div>
+        {/* Left Col - Heading */}
+        <div className="relative">
+          <div className="about-heading text-[8rem] md:text-[12rem] font-heading font-extrabold leading-none text-white/5 absolute -top-8 -left-8 md:-left-16 pointer-events-none select-none">
+            01
+          </div>
+          <h2 className="about-heading text-4xl md:text-5xl font-heading font-bold text-white relative z-10">
+            About Me
+          </h2>
+          <div className="about-line w-24 md:w-32 h-[2px] bg-cyan-glow mt-4 shadow-[0_0_10px_#00F5FF]"></div>
+        </div>
+
+        {/* Right Col - Content */}
+        <div className="flex flex-col space-y-8">
+          <div className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl bio-text font-light">
+            <span className="bio-text inline-block">Aspiring Software Engineer and AI Developer </span>
+            <span className="bio-text inline-block text-cyan-glow font-medium glow-cyan bg-cyan- glow/10 px-1 rounded mx-1">passionate about Artificial Intelligence, Machine Learning</span>
+            <span className="bio-text inline-block">, IoT, and Cybersecurity. I build </span>
+            <span className="bio-text inline-block text-violet-neon font-medium mx-1">intelligent sensor-based systems</span>
+            <span className="bio-text inline-block"> and scalable full-stack applications that solve real-world problems.</span>
           </div>
 
-          {/* Content */}
-          <div className="glass-panel p-8 md:p-12 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-soft-gold/10 rounded-full blur-[80px] -z-10 group-hover:scale-110 transition-transform duration-700"></div>
-            
-            <p className="text-lg md:text-xl text-gray-700 font-body leading-relaxed mb-8">
-              Aspiring Software Engineer and AI Developer passionate about Artificial Intelligence, Machine Learning, IoT, and Cybersecurity. I build intelligent, sensor-based systems and scalable full-stack applications that solve real-world problems. National-level innovator — Top 10 Semifinalist in Samsung Solve for Tomorrow 2025.
-            </p>
-
-            {/* Glowing Badge */}
-            <motion.div 
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-electric-indigo/5 border border-electric-indigo/20 shadow-[0_0_20px_rgba(92,107,192,0.15)] relative mb-12"
-              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(92,107,192,0.3)" }}
-            >
-              <Trophy size={20} className="text-soft-gold animate-pulse" />
-              <span className="font-heading font-semibold text-gray-900">
-                Top 10 — Samsung Solve for Tomorrow 2025
-              </span>
-            </motion.div>
-
-            {/* Stats Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 border-t border-b border-gray-100 py-8">
-              <div className="flex flex-col items-center">
-                <Rocket size={24} className="text-electric-indigo mb-2" />
-                <h4 className="text-4xl font-heading font-bold text-gray-900 flex">
-                  <CountUp end={3} duration={2} />
-                </h4>
-                <p className="text-sm text-gray-500 font-medium uppercase tracking-wider mt-1">Live Projects</p>
-              </div>
-              
-              <div className="flex flex-col items-center md:border-l md:border-r border-gray-100">
-                <Briefcase size={24} className="text-soft-gold mb-2" />
-                <h4 className="text-4xl font-heading font-bold text-gray-900 flex">
-                  <CountUp end={1} duration={1.5} />
-                </h4>
-                <p className="text-sm text-gray-500 font-medium uppercase tracking-wider mt-1">Startup Founded</p>
-              </div>
-              
-              <div className="flex flex-col items-center">
-                <Code size={24} className="text-electric-indigo mb-2" />
-                <h4 className="text-4xl font-heading font-bold text-gray-900 flex">
-                  <CountUp end={2} duration={2} suffix="+" />
-                </h4>
-                <p className="text-sm text-gray-500 font-medium uppercase tracking-wider mt-1">Years Building</p>
-              </div>
-            </div>
-
-            {/* Resume Button */}
-            <a 
-              href="#" 
-              className="interactive group inline-flex items-center gap-3 bg-gray-900 text-white px-8 py-3 rounded-full font-medium hover:bg-electric-indigo transition-colors duration-300"
-            >
-              <Download size={18} className="group-hover:-translate-y-1 transition-transform" />
-              Download Resume
-            </a>
+          <div ref={statsRef} className="grid grid-cols-3 gap-6 pt-6 border-t border-white/5">
+             <div className="flex flex-col">
+               <span className="text-4xl md:text-5xl font-heading font-bold text-white mb-2">{countProjects}+</span>
+               <span className="text-sm text-gray-400">Projects</span>
+             </div>
+             <div className="flex flex-col">
+               <span className="text-4xl md:text-5xl font-heading font-bold text-white mb-2">{countStartup}</span>
+               <span className="text-sm text-gray-400">Startup</span>
+             </div>
+             <div className="flex flex-col">
+               <span className="text-4xl md:text-5xl font-heading font-bold text-gradient mb-2 glow-violet">Top {countNationally}</span>
+               <span className="text-sm text-gray-400">Nationally</span>
+             </div>
           </div>
 
-        </motion.div>
+          <div className="w-max mt-4">
+              <div className="inline-flex items-center space-x-3 bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-lg px-5 py-3 glow-gold backdrop-blur-sm mb-6">
+                 <Award className="text-gold-pulse" />
+                 <span className="text-gold-pulse font-medium text-sm md:text-base tracking-wide">🏆 Samsung Solve for Tomorrow 2025 — Top 10 National Semifinalist</span>
+              </div>
+          </div>
+
+          <div>
+            <button className="flex items-center space-x-3 px-6 py-3 border border-cyan-glow/40 text-white rounded bg-dark/50 hover:bg-cyan-glow hover:text-dark hover:border-transparent transition-all duration-300 group shadow-[0_0_15px_rgba(0,245,255,0.1)] hover:shadow-[0_0_20px_rgba(0,245,255,0.6)]">
+              <span>Download Resume</span>
+              <Download size={18} className="group-hover:translate-y-1 transition-transform" />
+            </button>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );

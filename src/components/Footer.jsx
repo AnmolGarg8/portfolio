@@ -1,44 +1,40 @@
-import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import gsap from 'gsap';
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
-  return (
-    <footer className="bg-gray-900 border-t border-gray-800 text-white py-12 relative overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-        
-        {/* Left Side: Copy */}
-        <div className="flex flex-col items-center md:items-start group">
-          <p className="font-body text-gray-400 text-sm font-medium">
-            Designed & Built by
-          </p>
-          <a href="#" onClick={(e) => { e.preventDefault(); scrollToTop(); }} className="interactive text-xl font-heading font-bold bg-clip-text text-transparent bg-gradient-to-r from-electric-indigo to-soft-gold opacity-90 group-hover:opacity-100 transition-opacity">
-            Anmol Garg
-          </a>
-        </div>
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 
-        {/* Right Side: Back to Top */}
-        <motion.button 
-          onClick={scrollToTop}
-          className="interactive group relative w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-soft-gold hover:bg-soft-gold/20 transition-colors"
-          whileHover={{ y: -5 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <ArrowUp size={20} className="text-gray-400 group-hover:text-soft-gold group-hover:animate-bounce" />
-          
-          {/* Subtle glow ring on hover */}
-          <div className="absolute inset-0 rounded-full box-shadow-[0_0_15px_rgba(244,185,66,0)] group-hover:shadow-[0_0_20px_rgba(244,185,66,0.3)] transition-shadow"></div>
-        </motion.button>
-        
-      </div>
-      
-      {/* Background Decor */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-electric-indigo/10 via-transparent to-transparent opacity-50 block"></div>
-    </footer>
-  );
+    return (
+        <footer className="w-full py-8 border-t border-white/5 relative z-10 bg-[#050508]">
+            <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
+                
+                <div className="flex items-center space-x-2 opacity-50">
+                    <span className="text-cyan-glow font-heading font-extrabold text-xl">A</span>
+                    <span className="text-white font-heading font-extrabold text-xl">G</span>
+                </div>
+
+                <div className="text-sm text-gray-500 font-light tracking-wide text-center">
+                    Designed & Built by <span className="text-gray-300 font-medium hover:text-cyan-glow transition-colors cursor-pointer" onClick={scrollToTop}>Anmol Garg</span>
+                </div>
+
+                <button 
+                    onClick={scrollToTop}
+                    className="w-10 h-10 rounded-full border border-cyan-glow/30 flex items-center justify-center text-cyan-glow hover:bg-cyan-glow hover:text-dark hover:shadow-[0_0_15px_rgba(0,245,255,0.5)] transition-all duration-300 group"
+                    aria-label="Back to top"
+                >
+                    <ArrowUp size={18} className="group-hover:-translate-y-1 transition-transform" />
+                </button>
+
+            </div>
+        </footer>
+    );
 };
 
 export default Footer;

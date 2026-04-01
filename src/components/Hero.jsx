@@ -1,147 +1,134 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Mail, ArrowRight } from 'lucide-react';
-import { FaGithub as Github, FaLinkedin as Linkedin } from 'react-icons/fa';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { Mail, ArrowRight } from 'lucide-react';
 import Hero3D from './Hero3D';
 
-const ROLES = [
-  "Full Stack Developer",
-  "AI & IoT Innovator",
-  "Co-Founder @ Kenet Technologies",
-  "Samsung Solve for Tomorrow — Top 10 Nationally"
-];
-
 const Hero = () => {
-  const [roleIndex, setRoleIndex] = useState(0);
+  const containerRef = useRef(null);
+  const textRef = useRef(null);
+  const subtitleRef = useRef(null);
+
+  const titles = [
+    "Full Stack Developer",
+    "AI & IoT Innovator",
+    "Co-Founder @ Kenet Technologies",
+    "Samsung Top 10 Nationally"
+  ];
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setRoleIndex((current) => (current + 1) % ROLES.length);
-    }, 4000); // 4 seconds per role
-    return () => clearInterval(intervalId);
+    // Typewriter effect interval
+    const interval = setInterval(() => {
+      setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [titles.length]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Blur to sharp animation for heading words
+      const words = document.querySelectorAll('.hero-word');
+      
+      gsap.fromTo(words, 
+        { 
+          opacity: 0, 
+          filter: "blur(20px)", 
+          y: 40 
+        },
+        { 
+          opacity: 1, 
+          filter: "blur(0px)", 
+          y: 0, 
+          duration: 1.2, 
+          stagger: 0.2, 
+          ease: "power3.out",
+          delay: 1.5 // After preloader
+        }
+      );
+
+      // Fade in other elements
+      gsap.fromTo('.hero-fade-in',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, stagger: 0.2, delay: 2.2, ease: "power2.out" }
+      );
+    }, containerRef);
+    
+    return () => ctx.revert();
   }, []);
 
-  const headingWords = "Hi, I'm Anmol Garg".split(" ");
-
   return (
-    <section className="min-h-screen relative flex items-center pt-24 pb-12 overflow-hidden" id="home">
-      <div className="container mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+    <section 
+      id="hero" 
+      ref={containerRef}
+      className="relative w-full h-screen min-h-[800px] flex items-center pt-20 overflow-hidden"
+    >
+      <Hero3D />
+
+      <div className="container mx-auto px-6 md:px-12 z-10 grid md:grid-cols-2 gap-8 relative">
         
-        {/* Left Side: Content */}
-        <div className="flex flex-col items-start justify-center h-full pt-10 lg:pt-0">
+        {/* Left Content */}
+        <div className="flex flex-col justify-center max-w-2xl pointer-events-auto">
           
-          {/* Location Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6, duration: 0.6 }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-off-white border border-gray-100 mb-6 shadow-sm"
-          >
-            <MapPin size={16} className="text-electric-indigo" />
-            <span className="text-sm font-medium text-gray-600">Noida, India</span>
-          </motion.div>
-
-          {/* Big Heading */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-extrabold tracking-tight mb-4 flex flex-wrap gap-[0.3em]">
-            {headingWords.map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  ease: [0.33, 1, 0.68, 1],
-                  delay: 2 + i * 0.1, // starts after preloader
-                }}
-                className={word === "Anmol" || word === "Garg" ? "text-gradient" : "text-gray-900"}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </h1>
-
-          {/* Animated Role Typewriter */}
-          <div className="h-10 md:h-12 flex items-center mb-8 relative w-full overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={roleIndex}
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center"
-              >
-                <p className="text-xl md:text-2xl lg:text-3xl font-body font-medium text-gray-700">
-                  {ROLES[roleIndex]}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+          <div className="hero-fade-in inline-flex items-center space-x-2 bg-dark/50 border border-white/10 rounded-full px-4 py-1.5 w-max mb-6 backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-cyan-glow animate-pulse"></span>
+            <span className="text-sm tracking-wide text-gray-300">Noida, India</span>
           </div>
 
-          {/* CTA Buttons */}
-          <motion.div 
-            className="flex flex-wrap gap-4 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.5, duration: 0.6 }}
-          >
-            <a 
-              href="#projects" 
-              className="group interactive relative px-8 py-3 rounded-full bg-electric-indigo text-white font-medium overflow-hidden shadow-lg shadow-electric-indigo/20 flex items-center gap-2"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-electric-indigo to-soft-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10">See My Work</span>
-              <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-            </a>
-            
-            <a 
-              href="#contact" 
-              className="interactive px-8 py-3 rounded-full border-2 border-gray-200 text-gray-800 font-medium hover:border-electric-indigo hover:text-electric-indigo transition-colors duration-300"
-            >
-              Let's Connect
-            </a>
-          </motion.div>
+          <div ref={textRef} className="font-heading font-extrabold text-5xl md:text-7xl lg:text-8xl leading-none mb-6">
+            <div className="hero-word text-white">Hi, I'm</div>
+            <div className="hero-word text-gradient glow-cyan mix-blend-screen" style={{ WebkitTextFillColor: 'transparent' }}>Anmol</div>
+            <div className="hero-word text-gradient glow-violet mix-blend-screen" style={{ WebkitTextFillColor: 'transparent' }}>Garg</div>
+          </div>
 
-          {/* Social Row */}
-          <motion.div 
-            className="flex items-center gap-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.8, duration: 0.8 }}
-          >
-            <a href="https://github.com/AnmolGarg8" target="_blank" rel="noreferrer" className="interactive group flex items-center gap-2 text-gray-500 hover:text-electric-indigo transition-colors">
-              <span className="p-2 rounded-full bg-gray-50 group-hover:bg-electric-indigo/10 transition-colors">
-                <Github size={20} />
-              </span>
-              <span className="text-sm font-medium">AnmolGarg8</span>
+          <div className="hero-fade-in h-[32px] mb-8 overflow-hidden">
+             {/* Typewriter text container */}
+             <div 
+               key={currentTitleIndex}
+               className="text-xl md:text-2xl text-gray-300 font-medium animate-[slideUp_0.5s_ease-out]"
+             >
+               {titles[currentTitleIndex]}
+             </div>
+          </div>
+
+          <div className="hero-fade-in flex flex-wrap items-center gap-4 mb-10">
+            <button className="px-6 py-3 bg-cyan-glow text-dark font-bold rounded hover:shadow-[0_0_20px_#00F5FF] hover:scale-105 transition-all duration-300 flex items-center space-x-2 group">
+              <span>See My Work</span>
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button className="px-6 py-3 border border-white/20 text-white font-medium rounded hover:bg-white/5 hover:border-cyan-glow/50 transition-all duration-300">
+              Let's Connect
+            </button>
+          </div>
+
+          <div className="hero-fade-in flex items-center space-x-6 text-gray-400">
+            <a href="https://github.com/AnmolGarg8" target="_blank" rel="noreferrer" className="hover:text-cyan-glow hover:scale-110 transition-all duration-300">
+              <FaGithub size={24} />
             </a>
-            <a href="https://linkedin.com/in/anmol-garg2005" target="_blank" rel="noreferrer" className="interactive group flex items-center gap-2 text-gray-500 hover:text-electric-indigo transition-colors">
-              <span className="p-2 rounded-full bg-gray-50 group-hover:bg-electric-indigo/10 transition-colors">
-                <Linkedin size={20} />
-              </span>
-              <span className="text-sm font-medium border-b border-transparent group-hover:border-electric-indigo">anmol-garg2005</span>
+            <a href="https://linkedin.com/in/anmol-garg2005" target="_blank" rel="noreferrer" className="hover:text-violet-neon hover:scale-110 transition-all duration-300">
+              <FaLinkedin size={24} />
             </a>
-            <a href="mailto:anmolgarg1605@gmail.com" className="interactive group flex items-center gap-2 text-gray-500 hover:text-electric-indigo transition-colors">
-              <span className="p-2 rounded-full bg-gray-50 group-hover:bg-electric-indigo/10 transition-colors">
-                <Mail size={20} />
-              </span>
+            <a href="mailto:garganmol205@gmail.com" className="hover:text-cyan-glow hover:scale-110 transition-all duration-300">
+              <Mail size={24} />
             </a>
-          </motion.div>
+          </div>
 
         </div>
 
-        {/* Right Side: 3D Object */}
-        <motion.div 
-          className="relative lg:block"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2, duration: 1, ease: "easeOut" }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-tr from-electric-indigo/10 to-soft-gold/10 rounded-full blur-[100px] -z-10 animate-pulse"></div>
-          <Hero3D />
-        </motion.div>
+        {/* Right empty to let 3D sphere show perfectly via Hero3D */}
       </div>
 
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-60">
+        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-glow to-transparent"></div>
+        <ArrowRight size={16} className="text-cyan-glow mt-2 transform rotate-90" />
+      </div>
+
+      <style>{`
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </section>
   );
 };

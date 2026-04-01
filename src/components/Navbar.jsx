@@ -1,89 +1,63 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-
-const navLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Contact', href: '#contact' },
-];
+import { useEffect, useState } from 'react';
+import gsap from 'gsap';
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 50);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop - 80,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
-    <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/70 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'
+    <header 
+      className={`fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 md:px-12 py-4 transition-all duration-300 ${
+        hasScrolled ? 'bg-dark/80 backdrop-blur-md border-b border-white/5 py-3' : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        <a href="#" className="font-heading font-bold text-2xl interactive text-gray-900 group">
-          A<span className="text-electric-indigo group-hover:text-soft-gold transition-colors">G</span>
-        </a>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-8 items-center font-body text-sm font-medium">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[2px] after:bg-electric-indigo hover:after:w-full after:transition-all after:duration-300 interactive text-gray-700 hover:text-gray-900"
-            >
-              {link.name}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            className="px-5 py-2 rounded-full border border-electric-indigo text-electric-indigo hover:bg-electric-indigo hover:text-white transition-all interactive duration-300 shadow-sm hover:shadow-md"
-          >
-            Say Hello
-          </a>
-        </nav>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden z-50 text-gray-900 interactive p-2"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+      <div className="flex items-center space-x-2 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+        <div className="text-2xl font-heading font-extrabold flex">
+          <span className="text-cyan-glow group-hover:glow-cyan transition-all duration-300">A</span>
+          <span className="text-white">G</span>
+        </div>
+        <div className="w-1 h-5 transform-origin-bottom flex flex-col justify-end space-y-[2px]">
+          <div className="w-1 h-1 bg-violet-neon rounded-full group-hover:h-3 transition-all duration-300"></div>
+          <div className="w-1 h-1 bg-cyan-glow rounded-full group-hover:h-1 transition-all duration-300"></div>
+        </div>
       </div>
 
-      {/* Mobile Nav Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
-            animate={{ opacity: 1, clipPath: 'circle(150% at top right)' }}
-            exit={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="fixed inset-0 bg-white/95 backdrop-blur-3xl flex flex-col justify-center items-center gap-8 z-40 h-screen w-screen"
+      <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+        {['About', 'Experience', 'Projects', 'Contact'].map((item) => (
+          <button 
+            key={item}
+            onClick={() => scrollTo(item.toLowerCase())}
+            className="text-gray-400 hover:text-white relative group overflow-hidden"
           >
-            {navLinks.map((link, i) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 * i, duration: 0.3 }}
-                onClick={() => setIsOpen(false)}
-                className="font-heading text-4xl font-semibold text-gray-900 hover:text-electric-indigo interactive transition-colors"
-              >
-                {link.name}
-              </motion.a>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {item}
+            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-cyan-glow transition-all duration-300 ease-out group-hover:w-full"></span>
+          </button>
+        ))}
+      </nav>
+
+      <button 
+        onClick={() => scrollTo('contact')}
+        className="px-5 py-2 rounded border border-cyan-glow/50 text-cyan-glow text-sm font-medium hover:bg-cyan-glow hover:text-dark transition-all duration-300 shadow-[0_0_10px_rgba(0,245,255,0)] hover:shadow-[0_0_15px_rgba(0,245,255,0.4)]"
+      >
+        Say Hello
+      </button>
     </header>
   );
 };

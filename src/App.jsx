@@ -1,61 +1,75 @@
-import { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Cursor from './components/Cursor';
-import Preloader from './components/Preloader';
+import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Education from './components/Education';
 import Experience from './components/Experience';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Cursor from './components/Cursor';
+import Preloader from './components/Preloader';
+
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
-    // Wait for 3 seconds then hide preloader
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-    return () => clearTimeout(timer);
+    // Reveal section dividers
+    const lines = document.querySelectorAll('.section-divider-line');
+    lines.forEach((line) => {
+      gsap.fromTo(line, 
+        { scaleX: 0, transformOrigin: "left center" },
+        {
+          scaleX: 1,
+          scrollTrigger: {
+            trigger: line,
+            start: "top 85%",
+            end: "bottom center",
+            scrub: 1,
+          }
+        }
+      );
+    });
   }, []);
 
   return (
-    <>
-      <Preloader loading={loading} />
+    <div className="relative min-h-screen font-body text-white bg-dark">
+      <div className="noise-bg pointer-events-none z-50"></div>
       
-      {!loading && (
-        <div className="bg-pure-white min-h-screen text-gray-900 overflow-x-hidden relative" id="smooth-wrapper">
-          <Cursor />
-          <Navbar />
-          <div id="smooth-content">
-            <Hero />
-            <div className="section-break bg-off-white h-full pb-10">
-              <About />
-              <Education />
-              <Experience />
-            </div>
-            
-            <Skills />
-            
-            <div className="section-break bg-off-white py-20">
-              <Projects />
-              <Achievements />
-            </div>
-            
-            <Contact />
-            <Footer />
-          </div>
-        </div>
-      )}
-    </>
+      <Cursor />
+      <Preloader />
+      
+      <Navbar />
+
+      <main className="relative z-10 w-full flex flex-col items-center">
+        <Hero />
+        
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
+        <About />
+        
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
+        <Experience />
+        
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
+        <Skills />
+        
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
+        <Projects />
+        
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-gold-pulse to-transparent opacity-30 section-divider-line my-10"></div>
+        <Achievements />
+        
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-glow to-transparent opacity-30 section-divider-line my-10"></div>
+        <Contact />
+      </main>
+
+      <Footer />
+    </div>
   );
 }
 
