@@ -74,31 +74,17 @@ const About = () => {
           </p>
         </div>
 
-        {/* Row 2: Stats & Actions */}
-        <div className="about-stats-row">
-            <div ref={statsRef} className="flex flex-row gap-12 md:gap-16">
+        {/* Row 2: Stats */}
+        <div className="about-stats-row bg-[#07070F]">
+            <div ref={statsRef} className="flex flex-row gap-16">
               <div className="stat-item">
                 <span className="stat-number leading-none">{countProjects}+</span>
-                <span className="stat-label">PROJECTS</span>
+                <span className="stat-label uppercase tracking-widest text-[0.6rem] text-white/30">PROJECTS</span>
               </div>
               <div className="stat-item">
                 <span className="stat-number leading-none">{countStartup}</span>
-                <span className="stat-label">STARTUP FOUNDED</span>
+                <span className="stat-label uppercase tracking-widest text-[0.6rem] text-white/30">STARTUP FOUNDED</span>
               </div>
-              <div className="stat-item">
-                <span className="stat-number leading-none">TOP {countNationally}</span>
-                <span className="stat-label">NATIONALLY</span>
-              </div>
-            </div>
-
-            <div className="gsap-fade-up flex items-center gap-6 ml-auto flex-wrap">
-              <div className="inline-flex items-center space-x-3 border border-[#FFD700]/30 rounded-none px-4 py-2 glow-gold bg-[#FFD700]/5 backdrop-blur-sm">
-                <span className="text-[#FFD700] text-xs font-bold tracking-[0.2em]">🏅 SAMSUNG TOP 10</span>
-              </div>
-
-              <button className="px-6 py-3 border border-cyan-glow text-cyan-glow bg-cyan-glow/5 hover:bg-cyan-glow hover:text-[#07070F] text-xs font-bold tracking-[0.2em] transition-all duration-300">
-                DOWNLOAD RESUME
-              </button>
             </div>
         </div>
       </div>

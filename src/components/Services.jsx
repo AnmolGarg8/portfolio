@@ -73,31 +73,36 @@ const Services = () => {
   return (
     <section id="services" ref={containerRef} className="what-i-do-section w-full">
         
-        {/* Watermark Column */}
-        <div className="what-watermark-col">
-            <div className="what-watermark uppercase">
-                <div>WHAT</div>
-                <div>I DO</div>
+        {/* Left Column: Vertical Label */}
+        <div className="what-label-col">
+            <div className="what-vertical-text">
+                WHAT I DO
             </div>
         </div>
 
-        {/* Robot Column */}
+        {/* Center Column: Robot */}
         <div className="what-robot-col robot-canvas-container"></div>
 
-        {/* Cards Column */}
+        {/* Right Column: Cards */}
         <div className="what-cards-col">
+            <div className="text-[0.6rem] tracking-[0.4em] text-cyan-glow mb-4 opacity-70">— WHAT I DO</div>
             {services.map((s, i) => (
                 <div 
                     key={s.id}
                     className={`service-card cursor-pointer group ${activeIndex === i ? 'expanded' : ''}`}
                     onClick={() => setActiveIndex(i)}
                 >
-                    <div className="service-card-number">⬡ {s.id}</div>
-                    <h3 className="service-card-title">{s.title}</h3>
-                    <div className="service-card-tags">{s.tech}</div>
-                    <div className="service-card-desc">
-                        {s.details}
+                    <div className="flex items-center justify-between mb-1">
+                        <h3 className="service-card-title text-sm">{s.title}</h3>
+                        <span className="text-[0.6rem] text-cyan-glow/40 tracking-widest">{s.id}</span>
                     </div>
+                    <div className="service-card-tags text-[0.7rem] text-white/30">{s.tech}</div>
+                    
+                    {activeIndex === i && (
+                        <div className="mt-4 text-[0.85rem] text-white/50 leading-relaxed animate-in fade-in slide-in-from-top-2 duration-300">
+                            {s.details}
+                        </div>
+                    )}
                 </div>
             ))}
         </div>
