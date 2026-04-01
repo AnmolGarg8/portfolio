@@ -71,28 +71,29 @@ const Services = () => {
     }, []);
 
     return (
-        <section id="services" ref={containerRef} className="w-full py-32 relative overflow-hidden pointer-events-none">
-            <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-[1fr_2fr_1.5fr] gap-12 relative z-10 pointer-events-auto items-center">
+        <section id="services" ref={containerRef} className="w-full relative overflow-hidden pointer-events-none">
+            <div className="container mx-auto relative z-10 pointer-events-auto flex flex-col md:flex-row items-center justify-end md:justify-between py-12 md:py-0">
                 
-                {/* Left: MASSIVE TEXT */}
-                <div className="flex flex-col justify-center">
-                    <h2 className="font-heading font-extrabold text-[5rem] lg:text-[7rem] leading-[0.8] tracking-[0.05em] text-white/10 uppercase">
+                {/* Left: MASSIVE TEXT Watermark */}
+                <div className="hidden md:flex flex-col justify-center pointer-events-none" style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', opacity: 0.06, zIndex: 0 }}>
+                    <h2 className="font-heading font-extrabold leading-[0.8] tracking-[0.05em] text-white uppercase" style={{ fontSize: 'clamp(4rem, 8vw, 7rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
                         <div className="what-do-title">WHAT</div>
                         <div className="what-do-title">I DO</div>
                     </h2>
                 </div>
 
                 {/* Center: Empty spacing for Robot Sitting Pose */}
-                <div className="hidden lg:block h-[500px]"></div>
+                <div className="hidden md:block w-full max-w-[500px] h-[500px] relative" style={{ zIndex: 1, pointerEvents: 'none' }}></div>
 
                 {/* Right: Accordion Cards */}
-                <div className="services-list flex flex-col space-y-4">
+                <div className="services-list flex flex-col w-full relative" style={{ maxWidth: '420px', overflowY: 'auto', maxHeight: '70vh', zIndex: 1, paddingRight: '10px' }}>
                     {services.map((s, i) => (
                         <div 
                             key={s.id}
-                            className={`service-card bracket-card cursor-pointer p-6 transition-all duration-500 group ${
+                            className={`service-card bracket-card cursor-pointer transition-all duration-500 group ${
                                 activeIndex === i ? 'bg-cyan-glow/5 border-cyan-glow/50' : 'hover:bg-white/5'
                             }`}
+                            style={{ marginBottom: '1rem', padding: '1.5rem', overflow: 'hidden' }}
                             onClick={() => setActiveIndex(i)}
                         >
                             <div className="flex items-center justify-between mb-2">

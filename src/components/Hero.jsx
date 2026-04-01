@@ -68,22 +68,22 @@ const Hero = () => {
     <section 
       id="hero" 
       ref={containerRef}
-      className="hero-glow relative w-full h-screen min-h-[850px] flex items-center pt-24 overflow-hidden pointer-events-none" 
-      // pointer-events none to let mouse track thru to robot, except on specific elements
+      className="hero-glow relative w-full h-screen min-h-[850px] flex items-center overflow-hidden" 
+      style={{ padding: '0 4rem' }}
     >
       {/* Blurred Orbs */}
       <div className="hero-orb absolute top-20 left-20 w-64 h-64 rounded-full bg-cyan-glow/20 blur-[80px]"></div>
       <div className="hero-orb absolute bottom-20 right-20 w-64 h-64 rounded-full bg-violet-neon/20 blur-[80px]"></div>
 
-      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10 w-full">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-[1fr_minmax(0,500px)_1fr] items-center gap-8 relative z-10 w-full" style={{ zIndex: 1 }}>
         
         {/* Left Column */}
-        <div className="flex flex-col justify-center pointer-events-auto z-20">
+        <div className="flex flex-col justify-center pointer-events-none relative" style={{ zIndex: 1, maxWidth: '580px', width: '100%' }}>
           <div className="hero-label-snap inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-6 w-max bg-cyan-glow/5 backdrop-blur-sm">
             HELLO! I'M
           </div>
           
-          <h1 className="font-heading font-extrabold text-[5rem] lg:text-[7rem] leading-[0.85] tracking-[0.05em]">
+          <h1 className="font-heading font-extrabold leading-[0.85] tracking-[0.05em]" style={{ fontSize: 'clamp(1.8rem, 6vw, 4.5rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
             <div className="hero-name-line cinematic-text text-white">ANMOL</div>
             <div className="hero-name-line cinematic-text text-white">GARG</div>
           </h1>
@@ -94,21 +94,21 @@ const Hero = () => {
         </div>
 
         {/* Center Empty for Robot */}
-        <div className="hidden lg:block"></div>
+        <div className="robot-canvas-container w-full relative h-[300px] md:h-[600px]" style={{ maxWidth: '500px', zIndex: 2 }}></div>
 
         {/* Right Column */}
-        <div className="hero-right-col flex flex-col justify-center lg:items-end lg:text-right pointer-events-auto z-20">
+        <div className="hero-right-col flex flex-col justify-center lg:items-end lg:text-right pointer-events-none relative" style={{ zIndex: 1, maxWidth: '580px', width: '100%' }}>
             <div className="text-cyan-glow text-xs font-bold tracking-[0.25em] mb-8">
               B.TECH CSE · NOIDA, INDIA
             </div>
             
             <div className="relative h-[80px] md:h-[120px] flex lg:justify-end items-center mb-6">
                 {/* Ghost Text */}
-                <span className="absolute text-[4rem] md:text-[6rem] font-heading font-bold text-white/5 pointer-events-none tracking-wider">
+                <span className="absolute font-heading font-bold text-white/5 pointer-events-none tracking-wider" style={{ fontSize: 'clamp(2rem, 8vw, 6rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
                    DEVELOPER
                 </span>
                 {/* Typewriter Text */}
-                <div key={currentTitle} className="text-3xl md:text-4xl font-heading font-bold text-white animate-[slideUp_0.5s_ease-out] z-10">
+                <div key={currentTitle} className="font-heading font-bold text-white animate-[slideUp_0.5s_ease-out] z-10 pointer-events-auto" style={{ fontSize: 'clamp(1.5rem, 4vw, 3.5rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
                    {titles[currentTitle]}
                 </div>
             </div>
@@ -122,7 +122,7 @@ const Hero = () => {
       </div>
 
       {/* Fixed Sidebar Socials */}
-      <div className="fixed-sidebar fixed left-6 lg:left-12 top-1/2 -translate-y-1/2 flex flex-col space-y-6 z-50 pointer-events-auto">
+      <div className="fixed-sidebar fixed left-6 top-1/2 -translate-y-1/2 flex-col space-y-6 z-50 pointer-events-auto hidden md:flex" style={{ left: '1.5rem' }}>
         <div className="w-[1px] h-12 bg-white/20 mx-auto mb-4"></div>
         {[
           { icon: <FaGithub size={20}/>, url: 'https://github.com/AnmolGarg8' },
@@ -137,8 +137,22 @@ const Hero = () => {
         <div className="w-[1px] h-12 bg-white/20 mx-auto mt-4"></div>
       </div>
 
+      {/* Horizontal Socials for Mobile */}
+      <div className="flex md:hidden justify-center space-x-6 mt-4 pointer-events-auto z-50">
+        {[
+          { icon: <FaGithub size={20}/>, url: 'https://github.com/AnmolGarg8' },
+          { icon: <FaLinkedin size={20}/>, url: 'https://linkedin.com/in/anmol-garg2005' },
+          { icon: <FaTwitter size={20}/>, url: '#' },
+          { icon: <FaInstagram size={20}/>, url: '#' }
+        ].map((item, i) => (
+          <a key={i} href={item.url} target="_blank" rel="noreferrer" className="text-white/40 hover:text-cyan-glow transition-colors duration-300">
+            {item.icon}
+          </a>
+        ))}
+      </div>
+
       {/* Fixed Bottom Right Resume Button */}
-      <div className="fixed-sidebar fixed right-6 lg:right-12 bottom-12 z-50 pointer-events-auto">
+      <div className="fixed-sidebar fixed z-50 pointer-events-auto" style={{ bottom: '2rem', right: '2rem' }}>
         <a href="#" className="flex items-center space-x-3 px-6 py-3 bg-[#0a0a14] border border-white hover:bg-white hover:text-black transition-all duration-300 group">
           <span className="text-xs font-bold tracking-[0.25em]">RESUME</span>
           <span className="opacity-70 group-hover:text-black">⬡</span>

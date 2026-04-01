@@ -23,7 +23,7 @@ const Navbar = () => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 md:px-12 py-6 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 md:px-12 py-6 transition-all duration-300 ${
         hasScrolled ? 'bg-[#07070F]/80 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent'
       }`}
     >

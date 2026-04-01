@@ -241,9 +241,15 @@ export const Robot = ({ scrollY = 0 }) => {
         </RoundedBox>
         {/* Glowing Chest Panel */}
         <mesh position={[0, 0.2, 0.51]}>
-          <planeGeometry args={[0.8, 0.6]} />
-          <meshStandardMaterial color="#00F5FF" emissive="#00F5FF" emissiveIntensity={0.4} wireframe />
+          <boxGeometry args={[0.4, 0.3, 0.05]} />
+          <meshStandardMaterial color={0x00F5FF} emissive={0x00F5FF} emissiveIntensity={0.6} roughness={0.1} metalness={0.8} />
         </mesh>
+        <pointLight position={[0, 0.2, 0.55]} color="#00F5FF" intensity={1.5} distance={2} />
+        <group position={[0, 0.2, 0.54]}>
+            <mesh position={[0, 0.08, 0]}><boxGeometry args={[0.3, 0.02, 0.06]} /><meshBasicMaterial color="#00F5FF" /></mesh>
+            <mesh position={[0, 0, 0]}><boxGeometry args={[0.3, 0.02, 0.06]} /><meshBasicMaterial color="#00F5FF" /></mesh>
+            <mesh position={[0, -0.08, 0]}><boxGeometry args={[0.3, 0.02, 0.06]} /><meshBasicMaterial color="#00F5FF" /></mesh>
+        </group>
       </group>
 
       {/* SHOULDERS & ARMS */}

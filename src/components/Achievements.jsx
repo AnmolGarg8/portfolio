@@ -60,7 +60,7 @@ const Achievements = () => {
                     </div>
                 </div>
 
-                <h2 className="achieve-fade text-6xl md:text-8xl lg:text-9xl font-heading font-extrabold mb-6 tracking-tighter">
+                <h2 className="achieve-fade font-heading font-extrabold mb-6 tracking-tighter" style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
                     <span 
                         className="shimmer-text text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(255,215,0,0.6)]" 
                         style={{

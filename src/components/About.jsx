@@ -50,41 +50,41 @@ const About = () => {
   }, []);
 
   return (
-    <section id="about" ref={containerRef} className="w-full py-32 relative overflow-hidden pointer-events-none">
+    <section id="about" ref={containerRef} className="w-full relative overflow-hidden pointer-events-none">
       
-      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10 w-full pointer-events-auto">
+      <div className="container mx-auto relative z-10 w-full pointer-events-auto" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4rem', flexWrap: 'wrap' }}>
         
         {/* Left Side: Empty spacing for Robot Profile view */}
-        <div className="hidden lg:block min-h-[500px]"></div>
+        <div className="hidden md:block min-h-[500px]" style={{ flex: '0 0 40%', maxHeight: '500px', overflow: 'hidden' }}></div>
 
         {/* Right Side: Content */}
-        <div className="flex flex-col justify-center max-w-2xl">
+        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '580px', width: '100%' }}>
           
-          <div className="gsap-fade-up inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-8 w-max glow-cyan">
+          <div className="gsap-fade-up inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-4 w-max glow-cyan">
             ABOUT ME
           </div>
 
-          <h2 className="about-title text-[2.5rem] md:text-[3.5rem] font-heading font-extrabold leading-[1.1] text-white tracking-[0.05em] mb-8">
+          <h2 className="about-title font-heading font-extrabold leading-[1.1] text-white tracking-[0.05em]" style={{ fontSize: 'clamp(2rem, 4vw, 4.5rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
             I BUILD INTELLIGENT SYSTEMS AT THE INTERSECTION OF AI, IOT & FULL STACK DEVELOPMENT.
           </h2>
 
-          <p className="gsap-fade-up text-lg text-white/70 font-light leading-relaxed mb-12">
+          <p className="gsap-fade-up text-white/70 font-light leading-relaxed">
             Aspiring Software Engineer with deep interests in <span className="text-white font-medium">AI, Machine Learning, IoT and Cybersecurity</span>. I create sensor-based systems and scalable applications that solve real-world problems. National innovator — <span className="text-[#FFD700] glow-gold">Top 10 Semifinalist, Samsung Solve for Tomorrow 2025.</span>
           </p>
 
           {/* Stats */}
-          <div ref={statsRef} className="gsap-fade-up grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-y border-white/10 mb-10">
+          <div ref={statsRef} className="gsap-fade-up grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 border-t border-white/10" style={{ marginTop: '2rem', position: 'relative', zIndex: 10 }}>
             <div className="flex flex-col">
-              <span className="text-[3rem] font-heading font-bold text-cyan-glow tracking-tighter leading-none mb-2">{countProjects}</span>
-              <span className="text-xs text-white/50 tracking-[0.2em]">PROJECTS</span>
+              <span className="font-heading font-bold text-cyan-glow tracking-tighter leading-none mb-2" style={{ fontSize: '2.5rem' }}>{countProjects}</span>
+              <span className="text-white/50 tracking-[0.2em]" style={{ fontSize: '0.75rem', fontFamily: '"Space Grotesk", sans-serif' }}>PROJECTS</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-[3rem] font-heading font-bold text-violet-neon tracking-tighter leading-none mb-2">{countStartup}</span>
-              <span className="text-xs text-white/50 tracking-[0.2em]">STARTUP FOUNDED</span>
+              <span className="font-heading font-bold text-violet-neon tracking-tighter leading-none mb-2" style={{ fontSize: '2.5rem' }}>{countStartup}</span>
+              <span className="text-white/50 tracking-[0.2em]" style={{ fontSize: '0.75rem', fontFamily: '"Space Grotesk", sans-serif' }}>STARTUP FOUNDED</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-[3rem] font-heading font-bold text-[#FFD700] tracking-tighter leading-none mb-2">TOP {countNationally}</span>
-              <span className="text-xs text-white/50 tracking-[0.2em]">NATIONALLY</span>
+              <span className="font-heading font-bold text-[#FFD700] tracking-tighter leading-none mb-2" style={{ fontSize: '2.5rem' }}>TOP {countNationally}</span>
+              <span className="text-white/50 tracking-[0.2em]" style={{ fontSize: '0.75rem', fontFamily: '"Space Grotesk", sans-serif' }}>NATIONALLY</span>
             </div>
           </div>
 

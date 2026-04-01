@@ -3,11 +3,26 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
   body {
     background-color: #07070F;
     color: #ffffff;
     cursor: none;
     overflow-x: hidden;
+  }
+  section {
+    padding: 6rem 4rem;
+  }
+  @media (max-width: 768px) {
+    section {
+      padding: 4rem 1.5rem;
+    }
+  }
+  p {
+    max-width: 60ch;
+    line-height: 1.7;
   }
 }
 
