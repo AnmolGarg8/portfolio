@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import NeuralNetwork from '../components/NeuralNetwork';
+import Character from '../components/Character';
 
 const Hero = () => {
   const heroRef = useRef(null);
@@ -118,7 +118,7 @@ const Hero = () => {
         position: 'relative',
         overflow: 'hidden'
       }}>
-        <NeuralNetwork />
+        <Character />
         
         {/* Fade edges */}
         <div className="hero-visual-mask" style={{
