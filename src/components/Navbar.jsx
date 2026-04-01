@@ -1,70 +1,70 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Navbar = () => {
-  const [hasScrolled, setHasScrolled] = useState(false);
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setHasScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 md:px-12 py-6 transition-all duration-300 ${
-        hasScrolled ? 'bg-[#07070F]/80 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent'
-      }`}
+    <nav 
+      style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        zIndex: 1000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '1.5rem 3rem',
+        background: scrolled ? 'rgba(7,7,15,0.8)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        transition: 'all 0.3s ease',
+        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : 'none'
+      }}
     >
-      <div className="flex-1 flex group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-        <div className="logo">
-          <div className="logo-inner">
-            <span className="logo-bracket">[</span>
-            <span className="logo-text">AG</span>
-            <span className="logo-bracket">]</span>
-          </div>
-          <div className="logo-dot"></div>
-        </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontFamily: 'Syne', fontWeight: 900, fontSize: '1.5rem', letterSpacing: '0.1em' }}>
+        <span style={{ 
+          background: 'linear-gradient(135deg, #00F5FF, #9B59FF)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>[AG]</span>
+        <span style={{ color: '#00F5FF', animation: 'blink 1s infinite' }}>.</span>
       </div>
 
-      <div className="hidden lg:flex flex-1 justify-center text-sm font-medium text-white/50 tracking-wider">
-        anmolgarg1605@gmail.com
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+      `}} />
+
+      <div style={{ display: 'flex', gap: '3rem', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.15em', fontFamily: 'Space Grotesk' }}>
+        {['ABOUT', 'WORK', 'CONTACT'].map(item => (
+          <a key={item} href={`#${item.toLowerCase()}`} style={{ color: 'white', textDecoration: 'none', transition: 'color 0.3s' }} onMouseEnter={e => e.target.style.color = '#00F5FF'} onMouseLeave={e => e.target.style.color = 'white'}>
+            {item}
+          </a>
+        ))}
       </div>
 
-      <div className="flex-1 flex justify-end items-center space-x-8 text-sm font-medium tracking-[0.25em]">
-        <nav className="hidden md:flex items-center space-x-6">
-          {['ABOUT', 'WORK', 'CONTACT'].map((item) => (
-            <button 
-              key={item}
-              onClick={() => scrollTo(item === 'WORK' ? 'projects' : item.toLowerCase())}
-              className="text-gray-400 hover:text-white relative group overflow-hidden tracking-[0.25em] text-xs"
-            >
-              {item}
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-cyan-glow transition-all duration-300 ease-out group-hover:w-full"></span>
-            </button>
-          ))}
-        </nav>
-
-        <button 
-          onClick={() => scrollTo('contact')}
-          className="px-5 py-2 rounded-none border border-cyan-glow/50 text-white text-xs tracking-[0.25em] font-medium hover:bg-cyan-glow hover:text-dark transition-all duration-300 glow-cyan backdrop-blur-sm"
-        >
-          SAY HELLO
-        </button>
+      <div>
+         <a href="#contact" style={{
+           display: 'inline-block',
+           border: '1px solid rgba(255,255,255,0.3)',
+           padding: '0.6rem 1.2rem',
+           fontSize: '0.75rem',
+           letterSpacing: '0.15em',
+           fontFamily: 'Space Grotesk',
+           color: 'white',
+           textDecoration: 'none',
+           textTransform: 'uppercase',
+           transition: 'all 0.3s ease',
+           cursor: 'pointer'
+         }} onMouseEnter={e => { e.target.style.borderColor = '#00F5FF'; e.target.style.color = '#00F5FF'; }} onMouseLeave={e => { e.target.style.borderColor = 'rgba(255,255,255,0.3)'; e.target.style.color = 'white'; }}>
+           SAY HELLO
+         </a>
       </div>
-    </header>
+    </nav>
   );
-};
-
-export default Navbar;
+}
