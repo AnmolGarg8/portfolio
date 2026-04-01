@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { FaGithub, FaLinkedin, FaInstagram, FaTwitter } from 'react-icons/fa';
+import useWindowSize from '../hooks/useWindowSize';
 
 const Hero = () => {
   const containerRef = useRef(null);
+  const size = useWindowSize();
 
   const titles = ["INNOVATOR", "BUILDER", "CREATOR", "CO-FOUNDER"];
   const [currentTitle, setCurrentTitle] = useState(0);
@@ -68,24 +70,23 @@ const Hero = () => {
     <section 
       id="hero" 
       ref={containerRef}
-      className="hero-glow relative w-full h-screen min-h-[850px] flex items-center overflow-hidden" 
-      style={{ padding: '0 4rem' }}
+      className="hero-glow relative w-full hero-section px-[1.5rem] md:px-[5rem] min-h-screen flex items-center overflow-hidden" 
     >
       {/* Blurred Orbs */}
       <div className="hero-orb absolute top-20 left-20 w-64 h-64 rounded-full bg-cyan-glow/20 blur-[80px]"></div>
       <div className="hero-orb absolute bottom-20 right-20 w-64 h-64 rounded-full bg-violet-neon/20 blur-[80px]"></div>
 
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-[1fr_minmax(0,500px)_1fr] items-center gap-8 relative z-10 w-full" style={{ zIndex: 1 }}>
+      <div className="container mx-auto hero-grid-wrapper relative z-10 w-full" style={{ display: 'grid', gridTemplateColumns: size.width < 768 ? '1fr' : '1fr 480px 1fr', alignItems: 'center', gap: '2rem' }}>
         
         {/* Left Column */}
-        <div className="flex flex-col justify-center pointer-events-none relative" style={{ zIndex: 1, maxWidth: '580px', width: '100%' }}>
+        <div className="hero-left flex flex-col justify-center relative" style={{ gridColumn: size.width < 768 ? 'auto' : '1', zIndex: 2 }}>
           <div className="hero-label-snap inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-6 w-max bg-cyan-glow/5 backdrop-blur-sm">
             HELLO! I'M
           </div>
           
-          <h1 className="font-heading font-extrabold leading-[0.85] tracking-[0.05em]" style={{ fontSize: 'clamp(1.8rem, 6vw, 4.5rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
-            <div className="hero-name-line cinematic-text text-white">ANMOL</div>
-            <div className="hero-name-line cinematic-text text-white">GARG</div>
+          <h1 className="hero-statement font-heading font-extrabold text-white large-heading">
+            <div className="hero-name-line cinematic-text">ANMOL</div>
+            <div className="hero-name-line cinematic-text">GARG</div>
           </h1>
 
           <div className="hero-name-line text-white/50 text-sm font-medium tracking-[0.1em] mt-8 max-w-xs leading-loose">
@@ -93,22 +94,22 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Center Empty for Robot */}
-        <div className="robot-canvas-container w-full relative h-[300px] md:h-[600px]" style={{ maxWidth: '500px', zIndex: 2 }}></div>
+        {/* Center Column: Robot */}
+        <div className="hero-robot robot-canvas-container" style={{ gridColumn: size.width < 768 ? 'auto' : '2', gridRow: size.width < 768 ? '1' : 'auto', zIndex: 1, height: size.width < 768 ? '320px' : '85vh', width: '100%' }}></div>
 
         {/* Right Column */}
-        <div className="hero-right-col flex flex-col justify-center lg:items-end lg:text-right pointer-events-none relative" style={{ zIndex: 1, maxWidth: '580px', width: '100%' }}>
+        <div className="hero-right hero-right-col flex flex-col justify-center lg:items-end lg:text-right relative" style={{ gridColumn: size.width < 768 ? 'auto' : '3', zIndex: 2 }}>
             <div className="text-cyan-glow text-xs font-bold tracking-[0.25em] mb-8">
               B.TECH CSE · NOIDA, INDIA
             </div>
             
             <div className="relative h-[80px] md:h-[120px] flex lg:justify-end items-center mb-6">
                 {/* Ghost Text */}
-                <span className="absolute font-heading font-bold text-white/5 pointer-events-none tracking-wider" style={{ fontSize: 'clamp(2rem, 8vw, 6rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
+                <span className="absolute font-heading font-bold text-white/5 pointer-events-none tracking-wider large-heading" style={{ fontSize: 'clamp(2rem, 8vw, 6rem)' }}>
                    DEVELOPER
                 </span>
                 {/* Typewriter Text */}
-                <div key={currentTitle} className="font-heading font-bold text-white animate-[slideUp_0.5s_ease-out] z-10 pointer-events-auto" style={{ fontSize: 'clamp(1.5rem, 4vw, 3.5rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
+                <div key={currentTitle} className="font-heading font-bold text-white animate-[slideUp_0.5s_ease-out] z-10 large-heading" style={{ fontSize: 'clamp(1.5rem, 4vw, 3.5rem)' }}>
                    {titles[currentTitle]}
                 </div>
             </div>
@@ -122,7 +123,7 @@ const Hero = () => {
       </div>
 
       {/* Fixed Sidebar Socials */}
-      <div className="fixed-sidebar fixed left-6 top-1/2 -translate-y-1/2 flex-col space-y-6 z-50 pointer-events-auto hidden md:flex" style={{ left: '1.5rem' }}>
+      <div className="fixed-sidebar social-sidebar fixed flex-col space-y-6 z-[500] hidden md:flex">
         <div className="w-[1px] h-12 bg-white/20 mx-auto mb-4"></div>
         {[
           { icon: <FaGithub size={20}/>, url: 'https://github.com/AnmolGarg8' },
@@ -138,7 +139,7 @@ const Hero = () => {
       </div>
 
       {/* Horizontal Socials for Mobile */}
-      <div className="flex md:hidden justify-center space-x-6 mt-4 pointer-events-auto z-50">
+      <div className="flex md:hidden justify-center space-x-6 mt-4 w-full absolute bottom-8 z-[500]">
         {[
           { icon: <FaGithub size={20}/>, url: 'https://github.com/AnmolGarg8' },
           { icon: <FaLinkedin size={20}/>, url: 'https://linkedin.com/in/anmol-garg2005' },
@@ -152,7 +153,7 @@ const Hero = () => {
       </div>
 
       {/* Fixed Bottom Right Resume Button */}
-      <div className="fixed-sidebar fixed z-50 pointer-events-auto" style={{ bottom: '2rem', right: '2rem' }}>
+      <div className="fixed-sidebar resume-fixed fixed z-[500]">
         <a href="#" className="flex items-center space-x-3 px-6 py-3 bg-[#0a0a14] border border-white hover:bg-white hover:text-black transition-all duration-300 group">
           <span className="text-xs font-bold tracking-[0.25em]">RESUME</span>
           <span className="opacity-70 group-hover:text-black">⬡</span>
@@ -166,6 +167,7 @@ const Hero = () => {
         }
       `}</style>
     </section>
+
   );
 };
 

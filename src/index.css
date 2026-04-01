@@ -13,16 +13,51 @@
     overflow-x: hidden;
   }
   section {
-    padding: 6rem 4rem;
-  }
-  @media (max-width: 768px) {
-    section {
-      padding: 4rem 1.5rem;
-    }
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
   }
   p {
     max-width: 60ch;
     line-height: 1.7;
+  }
+}
+
+.robot-canvas-container {
+  position: relative !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+  pointer-events: none;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+.hero-statement,
+.about-statement,
+.large-heading {
+  font-size: clamp(2.2rem, 3.8vw, 5rem);
+  word-break: keep-all !important;
+  word-wrap: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  white-space: normal;
+  max-width: 800px; /* Increased to give text more room */
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.no-break {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+}
+
+@media (max-width: 768px) {
+  .large-heading {
+    font-size: clamp(1.8rem, 7vw, 2.8rem);
   }
 }
 

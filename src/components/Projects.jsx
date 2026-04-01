@@ -58,24 +58,24 @@ const Projects = () => {
 
   const getBorderColor = (color) => {
       switch(color) {
-          case 'cyan': return 'border-t-[#00F5FF] shadow-[0_-5px_15px_rgba(0,245,255,0.1)] hover:shadow-[0_-5px_30px_rgba(0,245,255,0.4)]';
-          case 'violet': return 'border-t-[#9B59FF] shadow-[0_-5px_15px_rgba(155,89,255,0.1)] hover:shadow-[0_-5px_30px_rgba(155,89,255,0.4)]';
-          case 'gold': return 'border-t-[#FFD700] shadow-[0_-5px_15px_rgba(255,215,0,0.1)] hover:shadow-[0_-5px_30px_rgba(255,215,0,0.4)]';
+          case 'cyan': return 'border-t-[#00F5FF]';
+          case 'violet': return 'border-t-[#9B59FF]';
+          case 'gold': return 'border-t-[#FFD700]';
           default: return 'border-t-white';
       }
   };
 
   return (
-    <section id="projects" ref={containerRef} className="w-full py-32 relative overflow-hidden pointer-events-none">
-      <div className="container mx-auto px-6 md:px-12 z-10 relative pointer-events-auto">
+    <section id="projects" ref={containerRef} className="projects-section w-full relative overflow-hidden pointer-events-none" style={{ padding: '8rem 5rem', isolation: 'isolate' }}>
+      <div className="container mx-auto z-10 relative pointer-events-auto">
         
-        <div className="flex flex-col mb-16 gap-8">
-            <div className="proj-heading inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-4 w-max glow-cyan">
+        <div className="flex flex-col mb-12">
+            <div className="proj-heading inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] w-max glow-cyan">
                 SELECTED WORK
             </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[2rem] mt-[3rem]">
             {projectsData.map((project, index) => (
                 <motion.div 
                     key={project.id}
@@ -83,9 +83,9 @@ const Projects = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6, delay: index * 0.15 }}
-                    whileHover={{ y: -10, rotateX: 2, rotateY: -2, scale: 1.02 }}
-                    style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
-                    className={`glass-panel rounded-lg p-8 flex flex-col justify-between border-t border-white/5 transition-colors duration-500 group cursor-pointer h-full ${getBorderColor(project.color)}`}
+                    whileHover={{ y: -4, borderColor: 'rgba(0,245,255,0.3)', boxShadow: '0 20px 60px rgba(0,245,255,0.08)' }}
+                    className={`rounded-[12px] p-8 flex flex-col justify-between border border-white/5 transition-all duration-500 group cursor-pointer h-full ${getBorderColor(project.color)}`}
+                    style={{ background: 'rgba(255,255,255,0.03)', borderTopWidth: '4px' }}
                 >
                     <div className="relative z-10 pointer-events-none">
                         <div className={`text-[10px] font-bold tracking-[0.2em] mb-4 ${

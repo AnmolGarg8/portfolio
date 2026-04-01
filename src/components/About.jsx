@@ -15,9 +15,10 @@ const About = () => {
   useEffect(() => {
     let ctx = gsap.context(() => {
       // Heading SplitText simple simulation
+      // Remove any dynamic text splitting that might break word-keeping rules
       const text = document.querySelector('.about-title');
       if (text) {
-        text.innerHTML = text.textContent.split('').map(char => `<span class="split-char inline-block opacity-0 translate-y-4">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+        // No logic here to split text, just rely on raw HTML + CSS word-breaking
         
         gsap.to('.split-char', {
           scrollTrigger: {
@@ -50,25 +51,27 @@ const About = () => {
   }, []);
 
   return (
-    <section id="about" ref={containerRef} className="w-full relative overflow-hidden pointer-events-none">
+    <section id="about" ref={containerRef} className="w-full relative overflow-hidden pointer-events-none" style={{ padding: '8rem 5rem', isolation: 'isolate' }}>
       
-      <div className="container mx-auto relative z-10 w-full pointer-events-auto" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4rem', flexWrap: 'wrap' }}>
+      <div className="container mx-auto relative z-10 w-full pointer-events-auto" style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 420px) 1fr', alignItems: 'start', gap: '8rem' }}>
         
-        {/* Left Side: Empty spacing for Robot Profile view */}
-        <div className="hidden md:block min-h-[500px]" style={{ flex: '0 0 40%', maxHeight: '500px', overflow: 'hidden' }}></div>
+        {/* Left Column: Robot */}
+        <div className="about-robot hidden md:block" style={{ height: '480px', overflow: 'hidden', position: 'relative', width: '100%' }}></div>
 
-        {/* Right Side: Content */}
-        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '580px', width: '100%' }}>
+        {/* Right Column: Content */}
+        <div className="about-content flex flex-col gap-8 relative" style={{ zIndex: 10, paddingRight: '2rem' }}>
           
-          <div className="gsap-fade-up inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-4 w-max glow-cyan">
+          <div className="gsap-fade-up inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] w-max glow-cyan">
             ABOUT ME
           </div>
 
-          <h2 className="about-title font-heading font-extrabold leading-[1.1] text-white tracking-[0.05em]" style={{ fontSize: 'clamp(2rem, 4vw, 4.5rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
-            I BUILD INTELLIGENT SYSTEMS AT THE INTERSECTION OF AI, IOT & FULL STACK DEVELOPMENT.
-          </h2>
+          <div className="max-w-3xl relative z-10">
+            <h2 className="about-title about-statement font-heading font-extrabold leading-[1.1] text-white tracking-[0.05em] large-heading">
+              I BUILD <span className="no-break">INTELLIGENT SYSTEMS</span> AT THE INTERSECTION OF <span className="no-break">AI, IOT & FULL STACK</span> <span className="no-break">DEVELOPMENT.</span>
+            </h2>
+          </div>
 
-          <p className="gsap-fade-up text-white/70 font-light leading-relaxed">
+          <p className="gsap-fade-up text-white/70 font-light leading-relaxed max-w-2xl">
             Aspiring Software Engineer with deep interests in <span className="text-white font-medium">AI, Machine Learning, IoT and Cybersecurity</span>. I create sensor-based systems and scalable applications that solve real-world problems. National innovator — <span className="text-[#FFD700] glow-gold">Top 10 Semifinalist, Samsung Solve for Tomorrow 2025.</span>
           </p>
 
@@ -88,7 +91,7 @@ const About = () => {
             </div>
           </div>
 
-          <div className="gsap-fade-up flex items-center gap-6 flex-wrap">
+          <div className="gsap-fade-up flex items-center gap-6 flex-wrap" style={{ marginTop: '1.5rem' }}>
             <div className="inline-flex items-center space-x-3 border border-[#FFD700]/30 rounded-none px-4 py-2 glow-gold bg-[#FFD700]/5 backdrop-blur-sm">
               <span className="text-[#FFD700] text-xs font-bold tracking-[0.2em]">🏅 SAMSUNG SOLVE FOR TOMORROW — TOP 10</span>
             </div>
@@ -101,6 +104,17 @@ const About = () => {
         </div>
 
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .container {
+            grid-template-columns: 1fr !important;
+          }
+          .about-robot {
+            display: none !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

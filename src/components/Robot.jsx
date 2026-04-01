@@ -162,9 +162,20 @@ export const Robot = ({ scrollY = 0 }) => {
 
     }
 
-    // Apply mobile scale
+    // Apply mobile scale and visibility
     if (group.current) {
         group.current.scale.setScalar(isMobile ? 0.6 : 1.0);
+        
+        // Hide robot after Services section (Projects and below)
+        // Services ends around wH * 2.5
+        const currentScroll = window.scrollY;
+        const wH = window.innerHeight;
+        
+        if (currentScroll > wH * 2.5) {
+            group.current.visible = false;
+        } else {
+            group.current.visible = true;
+        }
     }
 
     // 4. Antenna Pulse
