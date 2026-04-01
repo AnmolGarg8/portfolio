@@ -37,25 +37,34 @@ const Eye = ({ position }) => {
 const HairStrand = ({ position, rotation, scale = [1, 1, 1] }) => (
   <mesh position={position} rotation={rotation} scale={scale}>
     <capsuleGeometry args={[0.18, 0.5, 8, 16]} />
-    <meshStandardMaterial color="#31221a" roughness={0.4} envMapIntensity={0.5} />
+    <meshStandardMaterial color="#31221a" roughness={0.4} />
   </mesh>
 );
 
 const Character = () => {
   const group = useRef();
+  const bodyRef = useRef();
 
   useFrame((state) => {
-    if (!group.current) return;
+    if (!group.current || !bodyRef.current) return;
+    const t = state.clock.getElapsedTime();
+    
+    // Smooth idle bob (slow up-down loop)
+    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, -2.4 + Math.sin(t * 1.5) * 0.15, 0.05);
+    
+    // Subtle idle breathing (chest rise/fall)
+    const breath = 1 + Math.sin(t * 2) * 0.015;
+    bodyRef.current.scale.set(breath, 1, breath);
+
+    // Mouse tracking for head
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, state.mouse.x * 0.35, 0.05);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -state.mouse.y * 0.1, 0.05);
-    // Gentle floating
-    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, -2.4 + Math.sin(state.clock.getElapsedTime() * 1.5) * 0.05, 0.05);
   });
 
   return (
     <group ref={group} scale={1.85} position={[0, -2.4, 0]}>
-      {/* Textured Dark Navy Sweater */}
-      <group position={[0, 0.4, 0]}>
+      {/* Textured Knit Sweater (Bust) */}
+      <group position={[0, 0.4, 0]} ref={bodyRef}>
         <mesh>
           <capsuleGeometry args={[0.72, 1.4, 16, 32]} />
           <meshStandardMaterial color="#0f172a" roughness={1} />
@@ -75,31 +84,30 @@ const Character = () => {
            <meshStandardMaterial color="#FFDBAC" />
         </mesh>
 
-        {/* Face Shape (Stylized with strong chin) */}
+        {/* Face Shape */}
         <mesh position={[0, 0.1, 0]}>
            <sphereGeometry args={[0.85, 64, 64]} />
            <meshStandardMaterial color="#FFDBAC" roughness={0.4} />
         </mesh>
-        {/* Chin refinement */}
+        {/* Strong Chin */}
         <mesh position={[0, -0.4, 0.2]} scale={[1, 0.8, 1.2]}>
            <sphereGeometry args={[0.4, 32, 32]} />
            <meshStandardMaterial color="#FFDBAC" />
         </mesh>
 
-        {/* Big Smile */}
+        {/* Friendly Smile with Teeth */}
         <group position={[0, -0.28, 0.8]}>
            {/* Teeth */}
            <mesh position={[0, 0.05, 0]}>
-              <RoundedBox args={[0.42, 0.12, 0.02]} radius={0.03} smoothness={4}>
+              <RoundedBox args={[0.42, 0.12, 0.02]} radius={0.03}>
                  <meshStandardMaterial color="white" emissive="white" emissiveIntensity={0.2} />
               </RoundedBox>
            </mesh>
-           {/* Lips Upper */}
+           {/* Lips */}
            <mesh rotation={[Math.PI, 0, 0]} position={[0, 0.14, 0.02]}>
               <torusGeometry args={[0.24, 0.02, 16, 32, Math.PI]} />
               <meshStandardMaterial color="#e8988e" />
            </mesh>
-           {/* Lips Lower */}
            <mesh rotation={[0, 0, Math.PI]} position={[0, -0.04, 0.02]}>
               <torusGeometry args={[0.26, 0.03, 16, 32, Math.PI]} />
               <meshStandardMaterial color="#e8988e" />
@@ -112,7 +120,7 @@ const Character = () => {
            <meshStandardMaterial color="#e8988e" />
         </mesh>
 
-        {/* Eyes (Larger, expressive) */}
+        {/* Expressive Eyes */}
         <Eye position={[0.35, 0.25, 0.68]} />
         <Eye position={[-0.35, 0.25, 0.68]} />
 
@@ -126,9 +134,8 @@ const Character = () => {
            </RoundedBox>
         </group>
 
-        {/* Thick Brushed Up Hair (Lots of strands for Volume) */}
+        {/* Brown Swept-back Hair */}
         <group position={[0, 0.7, 0.1]}>
-           {/* Front Quiff Strands */}
            {[-0.4, -0.2, 0, 0.2, 0.4].map((x, i) => (
              <HairStrand 
                key={i} 
@@ -137,17 +144,14 @@ const Character = () => {
                scale={[1.2, 1.8, 1.2]} 
              />
            ))}
-           {/* Side/Back Volumes */}
            <RoundedBox args={[1.4, 0.8, 1.2]} radius={0.4} position={[0, 0.1, -0.1]}>
               <meshStandardMaterial color="#31221a" />
            </RoundedBox>
-           <HairStrand position={[0.6, 0.2, 0]} rotation={[0, 0, -0.5]} scale={[1, 1.4, 1]} />
-           <HairStrand position={[-0.6, 0.2, 0]} rotation={[0, 0, 0.5]} scale={[1, 1.4, 1]} />
         </group>
       </group>
 
       {/* Atmospheric Effects */}
-      <Sparkles count={60} scale={6} size={8} speed={0.5} opacity={0.6} color="#A78BFA" />
+      <Sparkles count={80} scale={6} size={10} speed={0.4} opacity={0.7} color="#A78BFA" />
       <ContactShadows position={[0, 0, 0]} opacity={0.5} scale={12} blur={3} far={5} />
     </group>
   );
@@ -157,10 +161,12 @@ const CharacterWrapper = () => (
   <div className="character-canvas" style={{ width: '100%', height: '100%', position: 'absolute' }}>
     <Canvas gl={{ alpha: true, antialias: true }} dpr={[1, 2]}>
       <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={35} />
-      <ambientLight intensity={1.5} />
+      <ambientLight intensity={1.8} />
       <spotLight position={[10, 10, 10]} angle={0.25} penumbra={1} intensity={5} />
-      <pointLight position={[-10, 5, 5]} intensity={8} color="#7C3AED" /> {/* Powerful Side Rim */}
-      <pointLight position={[10, -5, -5]} intensity={3} color="#00E5FF" />
+      {/* Soft Purple Rim Light */}
+      <pointLight position={[-10, 5, 5]} intensity={10} color="#7C3AED" />
+      <pointLight position={[10, 5, 5]} intensity={10} color="#7C3AED" />
+      <pointLight position={[0, 10, -5]} intensity={4} color="#A855F7" />
       <Character />
     </Canvas>
   </div>
