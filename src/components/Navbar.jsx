@@ -1,70 +1,127 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: 'ABOUT', href: '#about' },
+    { name: 'WORK', href: '#work' },
+    { name: 'ACHIEVEMENTS', href: '#achievements' },
+    { name: 'CONTACT', href: '#contact' },
+  ];
+
   return (
-    <nav 
-      style={{
-        position: 'fixed',
-        top: 0, left: 0, right: 0,
-        zIndex: 1000,
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} style={{
+      position: 'fixed',
+      top: 0,
+      width: '100%',
+      zIndex: 1000,
+      background: isScrolled ? 'rgba(6, 6, 8, 0.9)' : 'transparent',
+      backdropFilter: isScrolled ? 'blur(20px)' : 'none',
+      borderBottom: isScrolled ? '1px solid rgba(248, 250, 252, 0.12)' : 'none',
+      transition: 'all 0.4s ease',
+      padding: '1.2rem 4rem',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }}>
+      <div className="nav-logo" style={{
+        fontFamily: 'Clash Display',
+        fontWeight: 700,
+        fontSize: '1.5rem',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '1.5rem 3rem',
-        background: scrolled ? 'rgba(7,7,15,0.8)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        transition: 'all 0.3s ease',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : 'none'
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontFamily: 'Syne', fontWeight: 900, fontSize: '1.5rem', letterSpacing: '0.1em' }}>
+        gap: '0.5rem'
+      }}>
+        <span className="gradient-text" style={{ cursor: 'pointer' }}>[AG].</span>
         <span style={{ 
-          background: 'linear-gradient(135deg, #00F5FF, #9B59FF)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>[AG]</span>
-        <span style={{ color: '#00F5FF', animation: 'blink 1s infinite' }}>.</span>
+          width: '6px', 
+          height: '6px', 
+          backgroundColor: '#00E5FF', 
+          borderRadius: '50%',
+          boxShadow: '0 0 10px #00E5FF',
+          animation: 'blink 1.5s infinite' 
+        }}></span>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-      `}} />
-
-      <div style={{ display: 'flex', gap: '3rem', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.15em', fontFamily: 'Space Grotesk' }}>
-        {['ABOUT', 'WORK', 'CONTACT'].map(item => (
-          <a key={item} href={`#${item.toLowerCase()}`} style={{ color: 'white', textDecoration: 'none', transition: 'color 0.3s' }} onMouseEnter={e => e.target.style.color = '#00F5FF'} onMouseLeave={e => e.target.style.color = 'white'}>
-            {item}
+      <div className="nav-links" style={{
+        display: 'flex',
+        gap: '3rem',
+        alignItems: 'center'
+      }}>
+        {navLinks.map((link) => (
+          <a
+            key={link.name}
+            href={link.href}
+            className="nav-link-item"
+            style={{
+              fontFamily: 'Inter',
+              fontWeight: 500,
+              fontSize: '0.75rem',
+              letterSpacing: '0.15em',
+              color: '#F8FAFC',
+              position: 'relative',
+              padding: '0.5rem 0'
+            }}
+          >
+            {link.name}
+            <span className="nav-hover-line"></span>
           </a>
         ))}
       </div>
 
-      <div>
-         <a href="#contact" style={{
-           display: 'inline-block',
-           border: '1px solid rgba(255,255,255,0.3)',
-           padding: '0.6rem 1.2rem',
-           fontSize: '0.75rem',
-           letterSpacing: '0.15em',
-           fontFamily: 'Space Grotesk',
-           color: 'white',
-           textDecoration: 'none',
-           textTransform: 'uppercase',
-           transition: 'all 0.3s ease',
-           cursor: 'pointer'
-         }} onMouseEnter={e => { e.target.style.borderColor = '#00F5FF'; e.target.style.color = '#00F5FF'; }} onMouseLeave={e => { e.target.style.borderColor = 'rgba(255,255,255,0.3)'; e.target.style.color = 'white'; }}>
-           SAY HELLO
-         </a>
-      </div>
+      <a href="#contact" className="nav-say-hello" style={{
+        border: '1px solid #00E5FF',
+        color: '#00E5FF',
+        padding: '0.6rem 1.4rem',
+        fontFamily: 'JetBrains Mono',
+        fontSize: '0.75rem',
+        letterSpacing: '0.1em',
+        transition: 'all 0.3s ease'
+      }}>
+        [ SAY HELLO ]
+      </a>
+
+      <style>{`
+        .nav-link-item:hover {
+          color: #00E5FF;
+        }
+        .nav-hover-line {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background: #00E5FF;
+          transition: width 0.3s ease;
+        }
+        .nav-link-item:hover .nav-hover-line {
+          width: 100%;
+        }
+        .nav-say-hello:hover {
+          background: #00E5FF;
+          color: #060608;
+          box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+        }
+        @media (max-width: 768px) {
+          .navbar {
+            padding: 1rem 1.5rem !important;
+          }
+          .nav-links {
+            display: none !important;
+          }
+        }
+      `}</style>
     </nav>
   );
-}
+};
+
+export default Navbar;

@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-export default function CustomCursor() {
-  const dotRef = useRef(null);
-  const ringRef = useRef(null);
+const CustomCursor = () => {
+  const dot = useRef(null);
+  const ring = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     let mouseX = 0;
@@ -10,79 +12,113 @@ export default function CustomCursor() {
     let ringX = 0;
     let ringY = 0;
 
-    const onMouseMove = (e) => {
+    const moveCursor = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-      }
-    };
-
-    window.addEventListener('mousemove', onMouseMove);
-
-    const render = () => {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
       
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-      }
-      requestAnimationFrame(render);
-    };
-    const req = requestAnimationFrame(render);
-
-    const handleMouseOver = (e) => {
-      if (['A', 'BUTTON'].includes(e.target.tagName) || e.target.closest('a') || e.target.closest('button')) {
-        if (ringRef.current) ringRef.current.style.width = '64px';
-        if (ringRef.current) ringRef.current.style.height = '64px';
+      if (dot.current) {
+        dot.current.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
       }
     };
 
-    const handleMouseOut = (e) => {
-      if (['A', 'BUTTON'].includes(e.target.tagName) || e.target.closest('a') || e.target.closest('button')) {
-        if (ringRef.current) ringRef.current.style.width = '32px';
-        if (ringRef.current) ringRef.current.style.height = '32px';
+    const animateRing = () => {
+      ringX += (mouseX - ringX) * 0.15; // lerp for delay
+      ringY += (mouseY - ringY) * 0.15;
+      
+      if (ring.current) {
+        ring.current.style.transform = `translate(${ringX}px, ${ringY}px)`;
       }
+      
+      requestAnimationFrame(animateRing);
     };
 
-    document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseout', handleMouseOut);
+    const handleHover = () => setIsHovered(true);
+    const handleUnhover = () => setIsHovered(false);
+    const handleClick = () => {
+      setIsClicked(true);
+      setTimeout(() => setIsClicked(false), 200);
+    };
+
+    window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mousedown', handleClick);
+    
+    const interactiveElements = document.querySelectorAll('a, button, .service-item, .project-card, input, textarea');
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', handleHover);
+      el.addEventListener('mouseleave', handleUnhover);
+    });
+
+    const animationId = requestAnimationFrame(animateRing);
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mouseout', handleMouseOut);
-      cancelAnimationFrame(req);
+      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('mousedown', handleClick);
+      cancelAnimationFrame(animationId);
+      interactiveElements.forEach(el => {
+        el.removeEventListener('mouseenter', handleHover);
+        el.removeEventListener('mouseleave', handleUnhover);
+      });
     };
   }, []);
 
   return (
-    <>
-      <div 
-        ref={dotRef}
+    <div className="cursor-wrapper" style={{ pointerEvents: 'none' }}>
+      <div
+        ref={dot}
+        className="cursor-dot"
         style={{
-          width: '8px', height: '8px', 
-          backgroundColor: '#00F5FF', 
-          position: 'fixed', 
-          top: -4, left: -4, 
-          pointerEvents: 'none', 
-          zIndex: 9999,
-          borderRadius: '50%'
-        }}
-      />
-      <div 
-        ref={ringRef}
-        style={{
-          width: '32px', height: '32px', 
-          border: '1px solid rgba(0,245,255,0.5)', 
-          position: 'fixed', 
-          top: -16, left: -16, 
-          pointerEvents: 'none', 
-          zIndex: 9998,
+          position: 'fixed',
+          top: -3,
+          left: -3,
+          width: '6px',
+          height: '6px',
+          backgroundColor: '#00E5FF',
           borderRadius: '50%',
-          transition: 'width 0.3s, height 0.3s'
+          zIndex: 9999,
+          pointerEvents: 'none',
+          willChange: 'transform'
         }}
       />
-    </>
+      <div
+        ref={ring}
+        className={`cursor-ring ${isHovered ? 'hovered' : ''} ${isClicked ? 'clicked' : ''}`}
+        style={{
+          position: 'fixed',
+          top: -20,
+          left: -20,
+          width: '40px',
+          height: '40px',
+          border: '1px solid rgba(0, 229, 255, 0.4)',
+          borderRadius: '50%',
+          zIndex: 9998,
+          pointerEvents: 'none',
+          transition: 'width 0.3s, height 0.3s, border-color 0.3s, opacity 0.3s, scale 0.3s',
+          willChange: 'transform'
+        }}
+      />
+      <style>{`
+        body { cursor: none !important; }
+        a, button, input, textarea { cursor: none !important; }
+        
+        .cursor-ring.hovered {
+          scale: 1.8;
+          background: rgba(0, 229, 255, 0.05);
+          border-color: rgba(0, 229, 255, 0.6);
+          opacity: 0.6;
+        }
+        
+        .cursor-ring.clicked {
+          scale: 0.8;
+          border-color: #F8FAFC;
+        }
+        
+        @media (max-width: 1024px) {
+          .cursor-wrapper { display: none !important; }
+          body { cursor: default !important; }
+        }
+      `}</style>
+    </div>
   );
-}
+};
+
+export default CustomCursor;

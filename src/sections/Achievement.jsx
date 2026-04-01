@@ -1,89 +1,121 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Trophy } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Achievement = () => {
-    const containerRef = useRef(null);
+  useEffect(() => {
+    gsap.from('.achievement-inner > *', {
+      scrollTrigger: {
+        trigger: '.achievement',
+        start: 'top 70%'
+      },
+      opacity: 0,
+      y: 40,
+      stagger: 0.2,
+      duration: 1,
+      ease: 'power3.out'
+    });
+  }, []);
 
-    useEffect(() => {
-        let ctx = gsap.context(() => {
-            // Trophy Pulse
-            gsap.fromTo('.trophy-pulse', 
-                { scale: 0.8, opacity: 0.5 },
-                { scale: 1.1, opacity: 1, duration: 2, yoyo: true, repeat: -1, ease: "sine.inOut" }
-            );
+  return (
+    <section className="achievement" id="achievements" style={{
+      padding: '10rem 5rem',
+      textAlign: 'center',
+      position: 'relative',
+      overflow: 'hidden',
+      background: '#0C0C14'
+    }}>
+      <div className="achievement-inner" style={{ position: 'relative', zIndex: 1 }}>
+        <span className="section-label" style={{ marginBottom: '1.5rem' }}>// RECOGNITION</span>
+        
+        <div className="achievement-badge" style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.8rem',
+          border: '1px solid rgba(245, 158, 11, 0.3)',
+          padding: '0.5rem 1.5rem',
+          marginBottom: '3rem',
+          fontFamily: 'JetBrains Mono',
+          fontSize: '0.75rem',
+          color: '#F59E0B',
+          letterSpacing: '0.2em',
+          background: 'rgba(245, 158, 11, 0.05)',
+          textTransform: 'uppercase'
+        }}>
+          <span className="badge-icon" style={{ fontSize: '1.2rem' }}>🏆</span>
+          <span className="badge-text" style={{ position: 'relative', top: '1px' }}>NATIONAL SEMIFINALIST</span>
+        </div>
 
-            // Shimmer text effect
-            gsap.fromTo('.shimmer-text', 
-                { backgroundPosition: '200% center' },
-                { backgroundPosition: '-200% center', duration: 3, repeat: -1, ease: 'linear' }
-            );
+        <h2 className="achievement-title" style={{
+          fontFamily: 'Clash Display',
+          fontWeight: 700,
+          fontSize: 'clamp(3.5rem, 8vw, 9rem)',
+          lineHeight: '0.9',
+          letterSpacing: '-0.02em',
+          color: '#F8FAFC',
+          marginBottom: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}>
+          <span className="title-line">SAMSUNG</span>
+          <span className="title-line">SOLVE FOR</span>
+          <span className="title-line accent-gold">TOMORROW 2025</span>
+        </h2>
 
-            // Ring expansion
-            gsap.fromTo('.concentric-ring',
-                { scale: 0.5, opacity: 0.5 },
-                { scale: 2.5, opacity: 0, duration: 3, repeat: -1, ease: 'power2.out', stagger: 1 }
-            );
-            
-            // Text fade up
-            gsap.from('.achieve-fade', {
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top 75%",
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.2,
-                ease: "power2.out"
-            });
-        }, containerRef);
-        return () => ctx.revert();
-    }, []);
+        <p className="achievement-sub" style={{
+          fontFamily: 'Inter',
+          color: 'rgba(248, 250, 252, 0.4)',
+          fontSize: '1.1rem',
+          letterSpacing: '0.05em',
+          maxWidth: '60ch',
+          margin: '0 auto'
+        }}>
+          Top 10 out of thousands of entries across India
+        </p>
 
-    return (
-        <section id="achievement" ref={containerRef} className="w-full py-40 relative overflow-hidden bg-[#07070F]">
-            
-            <div className="absolute inset-0 flex justify-center items-center opacity-30 pointer-events-none">
-                <div className="concentric-ring absolute w-[300px] h-[300px] border border-[#FFD700] rounded-full"></div>
-                <div className="concentric-ring absolute w-[300px] h-[300px] border border-[#FFD700] rounded-full"></div>
-                <div className="concentric-ring absolute w-[300px] h-[300px] border border-[#FFD700] rounded-full"></div>
-                
-                <div className="w-[600px] h-[600px] bg-[#FFD700]/5 rounded-full blur-[100px] mix-blend-screen"></div>
-            </div>
+        <div className="achievement-rings" style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          pointerEvents: 'none',
+          zIndex: -1
+        }}>
+          <div className="ring ring-1"></div>
+          <div className="ring ring-2"></div>
+          <div className="ring ring-3"></div>
+        </div>
+      </div>
 
-            <div className="container mx-auto px-6 md:px-12 z-10 relative flex flex-col items-center justify-center text-center">
-                
-                <div className="relative mb-12">
-                    <div className="trophy-pulse w-32 h-32 md:w-40 md:h-40 bg-[#FFD700]/5 rounded-full border border-[#FFD700]/50 flex items-center justify-center backdrop-blur-md" style={{ boxShadow: '0 0 20px rgba(255,215,0,0.2)' }}>
-                        <Trophy size={64} className="text-[#FFD700] drop-shadow-[0_0_15px_#FFD700]" />
-                    </div>
-                </div>
-
-                <h2 className="achieve-fade font-heading font-black mb-6 tracking-tighter" style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', wordBreak: 'keep-all', overflowWrap: 'normal', hyphens: 'none' }}>
-                    <span 
-                        className="shimmer-text text-transparent bg-clip-text" 
-                        style={{
-                            backgroundImage: 'linear-gradient(to right, #FFD700 20%, #FFFDE7 40%, #FFFDE7 60%, #FFD700 80%)',
-                            backgroundSize: '200% auto',
-                            filter: 'drop-shadow(0 0 15px rgba(255,215,0,0.6))'
-                        }}
-                    >
-                        TOP 10
-                    </span>
-                </h2>
-                
-                <p className="achieve-fade text-lg md:text-xl text-white/70 font-bold tracking-[0.2em] max-w-2xl text-center uppercase">
-                    Samsung Solve for Tomorrow 2025 <br/>
-                    <span className="text-white/40 block mt-2 text-sm">National Semifinalist</span>
-                </p>
-                
-            </div>
-        </section>
-    );
+      <style>{`
+        .accent-gold {
+          background: linear-gradient(135deg, #F59E0B, #EF4444);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .ring {
+          position: absolute;
+          border-radius: 50%;
+          border: 1px solid rgba(245, 158, 11, 0.08);
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          animation: expandRing 4s ease-out infinite;
+        }
+        .ring-1 { width: 300px; height: 300px; animation-delay: 0s; }
+        .ring-2 { width: 500px; height: 500px; animation-delay: 1.3s; }
+        .ring-3 { width: 700px; height: 700px; animation-delay: 2.6s; }
+        
+        @media (max-width: 768px) {
+          .achievement-title { font-size: 3rem !important; }
+        }
+      `}</style>
+    </section>
+  );
 };
 
 export default Achievement;

@@ -1,48 +1,64 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { Github, Linkedin, Twitter, Instagram } from 'lucide-react';
 
-export default function SocialSidebar() {
+const SocialSidebar = () => {
   const socials = [
-    { icon: <FaGithub size={18} />, url: 'https://github.com/AnmolGarg8' },
-    { icon: <FaLinkedin size={18} />, url: 'https://linkedin.com/in/anmol-garg2005' },
-    { icon: <FaTwitter size={18} />, url: '#' },
-    { icon: <FaInstagram size={18} />, url: '#' },
+    { icon: <Github size={18} />, href: 'https://github.com/AnmolGarg8' },
+    { icon: <Linkedin size={18} />, href: 'https://linkedin.com/in/anmol-garg2005' },
+    { icon: <Twitter size={18} />, href: '#' },
+    { icon: <Instagram size={18} />, href: '#' },
   ];
 
   return (
-    <div style={{
+    <div className="social-sidebar" style={{
       position: 'fixed',
-      left: '1.2rem',
+      left: '1.5rem',
       top: '50%',
       transform: 'translateY(-50%)',
-      zIndex: 500,
       display: 'flex',
       flexDirection: 'column',
-      gap: '1.5rem'
+      gap: '2rem',
+      zIndex: 500,
+      alignItems: 'center'
     }}>
-      {socials.map((s, i) => (
+      <div className="social-line top"></div>
+      
+      {socials.map((social, i) => (
         <a 
           key={i} 
-          href={s.url} 
+          href={social.href} 
           target="_blank" 
-          rel="noreferrer"
+          rel="noopener noreferrer"
+          className="social-icon-wrapper"
           style={{
-            color: 'rgba(255,255,255,0.35)',
-            transition: 'all 0.3s ease',
-            display: 'block'
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.color = '#00F5FF';
-            e.currentTarget.style.transform = 'translateX(3px)';
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.color = 'rgba(255,255,255,0.35)';
-            e.currentTarget.style.transform = 'translateX(0)';
+            color: 'rgba(248, 250, 252, 0.4)',
+            transition: 'all 0.3s ease'
           }}
         >
-          {s.icon}
+          {social.icon}
         </a>
       ))}
+      
+      <div className="social-line bottom"></div>
+
+      <style>{`
+        .social-line {
+          width: 1px;
+          height: 60px;
+          background: rgba(248, 250, 252, 0.12);
+        }
+        .social-icon-wrapper:hover {
+          color: #00E5FF;
+          transform: translateX(4px);
+        }
+        @media (max-width: 1024px) {
+          .social-sidebar {
+            display: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default SocialSidebar;
