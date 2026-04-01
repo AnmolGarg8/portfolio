@@ -74,17 +74,7 @@ const Projects = () => {
     return 'text-cyan-glow bg-cyan-glow/10 border-cyan-glow/20';
   };
 
-  const defaultTiltOptions = {
-      reverse:        false,
-      max:            15,
-      perspective:    1000,
-      scale:          1.02,
-      speed:          1000,
-      transition:     true,
-      axis:           null,
-      reset:          true,
-      easing:         "cubic-bezier(.03,.98,.52,.99)",
-  };
+
 
   return (
     <section id="projects" ref={containerRef} className="w-full py-24 relative overflow-hidden">
@@ -130,8 +120,11 @@ const Projects = () => {
                         transition={{ duration: 0.5 }}
                         className="h-full"
                     >
-                        <Tilt options={defaultTiltOptions} className="h-full">
-                            <div className={`glass-panel h-full rounded-2xl p-8 flex flex-col justify-between border-t-2 transition-all duration-500 group ${getBorderColor(project.category)}`}>
+                            <motion.div 
+                                whileHover={{ y: -5, scale: 1.02 }}
+                                transition={{ duration: 0.3, ease: 'easeOut' }}
+                                className={`glass-panel h-full rounded-2xl p-8 flex flex-col justify-between border-t-2 transition-colors duration-500 group ${getBorderColor(project.category)}`}
+                            >
                                 <div>
                                     <h3 className="text-2xl font-bold font-heading text-white mb-4 group-hover:text-cyan-glow transition-colors duration-300">
                                         {project.title}
@@ -162,8 +155,7 @@ const Projects = () => {
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                        </Tilt>
+                            </motion.div>
                     </motion.div>
                 ))}
             </AnimatePresence>
