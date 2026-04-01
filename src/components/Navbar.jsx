@@ -27,8 +27,15 @@ const Navbar = () => {
         hasScrolled ? 'bg-[#07070F]/80 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent'
       }`}
     >
-      <div className="flex-1 text-2xl font-heading font-extrabold flex group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-        <span className="text-cyan-glow tracking-[0.25em] glow-cyan">AG</span>
+      <div className="flex-1 flex group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+        <div className="logo">
+          <div className="logo-inner">
+            <span className="logo-bracket">[</span>
+            <span className="logo-text">AG</span>
+            <span className="logo-bracket">]</span>
+          </div>
+          <div className="logo-dot"></div>
+        </div>
       </div>
 
       <div className="hidden lg:flex flex-1 justify-center text-sm font-medium text-white/50 tracking-wider">

@@ -102,16 +102,16 @@ const Hero = () => {
           </div>
           
           <div className="relative h-[80px] md:h-[120px] flex justify-end items-center mb-6">
-              <span className="absolute font-heading font-bold text-white/5 pointer-events-none tracking-wider uppercase" style={{ fontSize: 'clamp(2rem, 8vw, 6rem)' }}>
+              <span className="absolute font-heading font-extrabold text-white/5 pointer-events-none tracking-wider hero-ghost-text uppercase">
                   DEVELOPER
               </span>
-              <div key={currentTitle} className="font-heading font-bold text-white animate-[slideUp_0.5s_ease-out] z-10" style={{ fontSize: 'clamp(1.8rem, 3vw, 3.5rem)', fontWeight: 800 }}>
+              <div key={currentTitle} className="font-heading font-extrabold text-white animate-[slideUp_0.5s_ease-out] z-10 hero-role-text">
                   {titles[currentTitle]}
               </div>
           </div>
 
           <div className="mt-6">
-              <span className="inline-block px-4 py-2 border border-white/20 text-white/70 text-xs font-bold tracking-[0.2em] bg-white/5 backdrop-blur-md">
+              <span className="hero-cofounder-badge font-bold bg-white/5 backdrop-blur-md">
                   CO-FOUNDER @ KENET TECHNOLOGIES
               </span>
           </div>

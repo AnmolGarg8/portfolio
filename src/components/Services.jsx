@@ -74,26 +74,26 @@ const Services = () => {
     <section id="services" ref={containerRef} className="what-i-do-section w-full">
         
         {/* Watermark Column */}
-        <div className="what-watermark font-heading font-extrabold uppercase">
-            <div>WHAT</div>
-            <div>I DO</div>
+        <div className="what-watermark-col">
+            <div className="what-watermark uppercase">
+                <div>WHAT</div>
+                <div>I DO</div>
+            </div>
         </div>
 
         {/* Robot Column */}
         <div className="what-robot-col robot-canvas-container"></div>
 
         {/* Cards Column */}
-        <div className="what-cards-col pr-4">
+        <div className="what-cards-col">
             {services.map((s, i) => (
                 <div 
                     key={s.id}
-                    className={`service-card bracket-card cursor-pointer transition-all duration-500 group ${
-                        activeIndex === i ? 'expanded' : ''
-                    }`}
+                    className={`service-card cursor-pointer group ${activeIndex === i ? 'expanded' : ''}`}
                     onClick={() => setActiveIndex(i)}
                 >
                     <div className="service-card-number">⬡ {s.id}</div>
-                    <h3 className="service-card-title uppercase">{s.title}</h3>
+                    <h3 className="service-card-title">{s.title}</h3>
                     <div className="service-card-tags">{s.tech}</div>
                     <div className="service-card-desc">
                         {s.details}
@@ -101,7 +101,6 @@ const Services = () => {
                 </div>
             ))}
         </div>
-
         <style>{`
             @media (max-width: 768px) {
                 .what-i-do-section {
