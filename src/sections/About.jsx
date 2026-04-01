@@ -18,15 +18,20 @@ const About = () => {
       ease: 'power3.out'
     });
 
-    gsap.from('.about-content > *', {
-      scrollTrigger: {
-        trigger: '.about-content',
-        start: 'top 95%'
-      },
-      y: 40,
-      stagger: 0.15,
-      duration: 0.7
-    });
+    gsap.fromTo('.about-content > *', 
+      { opacity: 0.1, y: 40 },
+      {
+        scrollTrigger: {
+          trigger: '.about-content',
+          start: 'top 90%'
+        },
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: 'power3.out'
+      }
+    );
 
     // Count-up for stats
     document.querySelectorAll('.stat-number[data-target]').forEach(el => {
@@ -91,7 +96,7 @@ const About = () => {
         </div>
       </div>
 
-      <div className="about-content">
+      <div className="about-content" style={{ position: 'relative', zIndex: 5 }}>
         <span className="section-label">// ABOUT ME</span>
         <h2 className="about-heading" style={{
           fontFamily: 'Clash Display',

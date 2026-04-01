@@ -92,16 +92,20 @@ const SkillCard = ({ category }) => (
 
 const Skills = () => {
   useEffect(() => {
-    gsap.from('.skill-card', {
-      scrollTrigger: {
-        trigger: '.skills-grid',
-        start: 'top 85%'
-      },
-      y: 60,
-      stagger: 0.12,
-      duration: 0.7,
-      ease: 'power3.out'
-    });
+    gsap.fromTo('.skill-card', 
+      { opacity: 0.1, y: 60 },
+      {
+        scrollTrigger: {
+          trigger: '.skills-grid',
+          start: 'top 90%'
+        },
+        opacity: 1,
+        y: 0,
+        stagger: 0.12,
+        duration: 0.7,
+        ease: 'power3.out'
+      }
+    );
   }, []);
 
   return (

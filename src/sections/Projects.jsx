@@ -36,16 +36,20 @@ const projects = [
 
 const Projects = () => {
   useEffect(() => {
-    gsap.from('.project-card', {
-      scrollTrigger: {
-        trigger: '.projects-list',
-        start: 'top 85%'
-      },
-      x: -60,
-      stagger: 0.2,
-      duration: 0.8,
-      ease: 'power3.out'
-    });
+    gsap.fromTo('.project-card', 
+      { opacity: 0.1, x: -60 },
+      {
+        scrollTrigger: {
+          trigger: '.projects-list',
+          start: 'top 90%'
+        },
+        opacity: 1,
+        x: 0,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: 'power3.out'
+      }
+    );
   }, []);
 
   return (
