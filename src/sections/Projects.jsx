@@ -60,7 +60,7 @@ const Projects = () => {
       <div className="projects-header">
         <span className="section-label">// SELECTED WORK</span>
         <h2 style={{
-          fontFamily: 'Space Grotesk',
+          fontFamily: 'Times New Roman',
           fontSize: 'clamp(2rem, 4vw, 3.5rem)',
           fontWeight: 700,
           color: '#F8FAFC'
@@ -88,7 +88,7 @@ const Projects = () => {
             '--accent-color': p.accent
           }}>
             <span className="project-num" style={{
-              fontFamily: 'Space Grotesk',
+              fontFamily: 'Times New Roman',
               fontSize: '3rem',
               fontWeight: 700,
               color: 'var(--dim)',
@@ -105,14 +105,14 @@ const Projects = () => {
                 textTransform: 'uppercase'
               }}>{p.category}</div>
               <h3 className="project-name" style={{
-                fontFamily: 'Space Grotesk',
+                fontFamily: 'Times New Roman',
                 fontSize: '1.8rem',
                 fontWeight: 700,
                 color: '#F8FAFC',
                 marginBottom: '0.6rem'
               }}>{p.name}</h3>
               <p className="project-desc" style={{
-                fontFamily: 'Inter',
+                fontFamily: 'Times New Roman',
                 fontSize: '0.95rem',
                 color: 'var(--muted)',
                 lineHeight: '1.6',

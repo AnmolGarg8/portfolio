@@ -13,7 +13,7 @@ const services = [
   },
   {
     title: 'IOT & EMBEDDED SYSTEMS',
-    description: 'Hardware prototyping with smart sensors and MSMEs. Designing low-latency communication protocols for interconnected industrial and consumer devices.',
+    description: 'Hardware prototyping with smart sensors and MSMEs. Designing low-latency communication protocols for Times New Romanconnected industrial and consumer devices.',
     tags: ['Smart Sensors', 'MSMEs', 'Hardware Prototyping', 'Embedded C']
   },
   {
@@ -41,7 +41,7 @@ const WhatIDo = () => {
     }}>
       <div className="whatido-left" style={{ position: 'sticky', top: '15rem' }}>
         <h2 className="whatido-heading" style={{
-          fontFamily: 'Clash Display',
+          fontFamily: 'Times New Roman',
           fontWeight: 700,
           fontSize: 'clamp(3rem, 7vw, 9rem)',
           lineHeight: '0.88',
@@ -80,7 +80,7 @@ const WhatIDo = () => {
                 minWidth: '2.5rem'
               }}>0{i + 1}</span>
               <span className="service-title" style={{
-                fontFamily: 'Clash Display',
+                fontFamily: 'Times New Roman',
                 fontSize: '1.4rem',
                 fontWeight: 700,
                 color: '#F8FAFC',
@@ -103,7 +103,7 @@ const WhatIDo = () => {
             }}>
               <p style={{
                 color: 'var(--muted)',
-                fontFamily: 'Inter',
+                fontFamily: 'Times New Roman',
                 lineHeight: '1.8',
                 margin: '1.2rem 0',
                 maxWidth: '50ch'

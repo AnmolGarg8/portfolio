@@ -85,7 +85,7 @@ const About = () => {
       <div className="about-content" style={{ position: 'relative', zIndex: 5 }}>
         <span className="section-label">// ABOUT ME</span>
         <h2 className="about-heading" style={{
-          fontFamily: 'Space Grotesk',
+          fontFamily: 'Times New Roman',
           fontWeight: 700,
           fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
           lineHeight: '1.15',
@@ -95,7 +95,7 @@ const About = () => {
           Building the future, one <span className="gradient-text">intelligent system</span> at a time.
         </h2>
         <p className="about-bio" style={{
-          fontFamily: 'Inter',
+          fontFamily: 'Times New Roman',
           fontSize: '1rem',
           lineHeight: '1.8',
           color: 'var(--muted)',
@@ -112,7 +112,7 @@ const About = () => {
           border: '1px solid var(--dim)',
           color: 'var(--muted)',
           padding: '0.8rem 1.8rem',
-          fontFamily: 'Inter',
+          fontFamily: 'Times New Roman',
           fontSize: '0.85rem',
           letterSpacing: '0.08em',
           textDecoration: 'none',

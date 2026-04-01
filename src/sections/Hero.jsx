@@ -43,7 +43,7 @@ const Hero = () => {
         </div>
 
         <h1 className="hero-title" style={{
-          fontFamily: 'Space Grotesk',
+          fontFamily: 'Times New Roman',
           fontWeight: 700,
           fontSize: 'clamp(3rem, 7vw, 8rem)',
           lineHeight: '0.9',
@@ -58,7 +58,7 @@ const Hero = () => {
         </h1>
 
         <div className="hero-role" style={{
-          fontFamily: 'Inter',
+          fontFamily: 'Times New Roman',
           fontSize: '1.1rem',
           color: 'var(--muted)',
           marginBottom: '1rem',
@@ -90,7 +90,7 @@ const Hero = () => {
             background: '#00E5FF',
             color: '#060608',
             padding: '0.9rem 2rem',
-            fontFamily: 'Inter',
+            fontFamily: 'Times New Roman',
             fontWeight: 600,
             fontSize: '0.9rem',
             letterSpacing: '0.05em',
@@ -103,7 +103,7 @@ const Hero = () => {
             border: '1px solid rgba(248, 250, 252, 0.12)',
             color: 'rgba(248, 250, 252, 0.4)',
             padding: '0.9rem 2rem',
-            fontFamily: 'Inter',
+            fontFamily: 'Times New Roman',
             fontSize: '0.9rem',
             display: 'inline-block'
           }}>
