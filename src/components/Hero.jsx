@@ -70,90 +70,69 @@ const Hero = () => {
     <section 
       id="hero" 
       ref={containerRef}
-      className="hero-glow relative w-full hero-section px-[1.5rem] md:px-[5rem] min-h-screen flex items-center overflow-hidden" 
+      className="hero-glow hero-section" 
     >
       {/* Blurred Orbs */}
       <div className="hero-orb absolute top-20 left-20 w-64 h-64 rounded-full bg-cyan-glow/20 blur-[80px]"></div>
       <div className="hero-orb absolute bottom-20 right-20 w-64 h-64 rounded-full bg-violet-neon/20 blur-[80px]"></div>
 
-      <div className="container mx-auto hero-grid-wrapper relative z-10 w-full" style={{ display: 'grid', gridTemplateColumns: size.width < 768 ? '1fr' : '1fr 480px 1fr', alignItems: 'center', gap: '2rem' }}>
+      {/* Left Column */}
+      <div className="hero-left flex flex-col justify-center">
+        <div className="hero-label-snap inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-6 w-max bg-cyan-glow/5 backdrop-blur-sm">
+          HELLO! I'M
+        </div>
         
-        {/* Left Column */}
-        <div className="hero-left flex flex-col justify-center relative" style={{ gridColumn: size.width < 768 ? 'auto' : '1', zIndex: 2 }}>
-          <div className="hero-label-snap inline-block px-3 py-1 border border-cyan-glow/50 text-cyan-glow text-xs font-bold tracking-[0.25em] mb-6 w-max bg-cyan-glow/5 backdrop-blur-sm">
-            HELLO! I'M
+        <h1 className="hero-statement font-heading font-extrabold text-white" style={{ fontSize: 'clamp(3rem, 5.5vw, 6.5rem)', fontWeight: 900, lineHeight: 0.95 }}>
+          <div className="hero-name-line cinematic-text">ANMOL</div>
+          <div className="hero-name-line cinematic-text">GARG</div>
+        </h1>
+
+        <div className="hero-name-line text-white/50 text-sm font-medium tracking-[0.1em] mt-8 max-w-xs leading-loose">
+          Full Stack Developer <br/> & AI Innovator
+        </div>
+      </div>
+
+      {/* Center Column: Robot */}
+      <div className="hero-robot-container robot-canvas-container"></div>
+
+      {/* Right Column */}
+      <div className="hero-right hero-right-col flex flex-col justify-center items-end text-right">
+          <div className="text-cyan-glow text-xs font-bold tracking-[0.25em] mb-8">
+            B.TECH CSE · NOIDA, INDIA
           </div>
           
-          <h1 className="hero-statement font-heading font-extrabold text-white large-heading">
-            <div className="hero-name-line cinematic-text">ANMOL</div>
-            <div className="hero-name-line cinematic-text">GARG</div>
-          </h1>
-
-          <div className="hero-name-line text-white/50 text-sm font-medium tracking-[0.1em] mt-8 max-w-xs leading-loose">
-            Full Stack Developer <br/> & AI Innovator
+          <div className="relative h-[80px] md:h-[120px] flex justify-end items-center mb-6">
+              <span className="absolute font-heading font-bold text-white/5 pointer-events-none tracking-wider uppercase" style={{ fontSize: 'clamp(2rem, 8vw, 6rem)' }}>
+                  DEVELOPER
+              </span>
+              <div key={currentTitle} className="font-heading font-bold text-white animate-[slideUp_0.5s_ease-out] z-10" style={{ fontSize: 'clamp(1.8rem, 3vw, 3.5rem)', fontWeight: 800 }}>
+                  {titles[currentTitle]}
+              </div>
           </div>
-        </div>
 
-        {/* Center Column: Robot */}
-        <div className="hero-robot robot-canvas-container" style={{ gridColumn: size.width < 768 ? 'auto' : '2', gridRow: size.width < 768 ? '1' : 'auto', zIndex: 1, height: size.width < 768 ? '320px' : '85vh', width: '100%' }}></div>
-
-        {/* Right Column */}
-        <div className="hero-right hero-right-col flex flex-col justify-center lg:items-end lg:text-right relative" style={{ gridColumn: size.width < 768 ? 'auto' : '3', zIndex: 2 }}>
-            <div className="text-cyan-glow text-xs font-bold tracking-[0.25em] mb-8">
-              B.TECH CSE · NOIDA, INDIA
-            </div>
-            
-            <div className="relative h-[80px] md:h-[120px] flex lg:justify-end items-center mb-6">
-                {/* Ghost Text */}
-                <span className="absolute font-heading font-bold text-white/5 pointer-events-none tracking-wider large-heading" style={{ fontSize: 'clamp(2rem, 8vw, 6rem)' }}>
-                   DEVELOPER
-                </span>
-                {/* Typewriter Text */}
-                <div key={currentTitle} className="font-heading font-bold text-white animate-[slideUp_0.5s_ease-out] z-10 large-heading" style={{ fontSize: 'clamp(1.5rem, 4vw, 3.5rem)' }}>
-                   {titles[currentTitle]}
-                </div>
-            </div>
-
-            <div className="mt-6">
-               <span className="inline-block px-4 py-2 border border-white/20 text-white/70 text-xs font-bold tracking-[0.2em] bg-white/5 backdrop-blur-md">
-                   CO-FOUNDER @ KENET TECHNOLOGIES
-               </span>
-            </div>
-        </div>
+          <div className="mt-6">
+              <span className="inline-block px-4 py-2 border border-white/20 text-white/70 text-xs font-bold tracking-[0.2em] bg-white/5 backdrop-blur-md">
+                  CO-FOUNDER @ KENET TECHNOLOGIES
+              </span>
+          </div>
       </div>
 
       {/* Fixed Sidebar Socials */}
-      <div className="fixed-sidebar social-sidebar fixed flex-col space-y-6 z-[500] hidden md:flex">
-        <div className="w-[1px] h-12 bg-white/20 mx-auto mb-4"></div>
+      <div className="fixed-sidebar social-sidebar hidden md:flex">
         {[
           { icon: <FaGithub size={20}/>, url: 'https://github.com/AnmolGarg8' },
           { icon: <FaLinkedin size={20}/>, url: 'https://linkedin.com/in/anmol-garg2005' },
           { icon: <FaTwitter size={20}/>, url: '#' },
           { icon: <FaInstagram size={20}/>, url: '#' }
         ].map((item, i) => (
-          <a key={i} href={item.url} target="_blank" rel="noreferrer" className="text-white/40 hover:text-cyan-glow transition-colors duration-300 hover:-translate-y-1">
-            {item.icon}
-          </a>
-        ))}
-        <div className="w-[1px] h-12 bg-white/20 mx-auto mt-4"></div>
-      </div>
-
-      {/* Horizontal Socials for Mobile */}
-      <div className="flex md:hidden justify-center space-x-6 mt-4 w-full absolute bottom-8 z-[500]">
-        {[
-          { icon: <FaGithub size={20}/>, url: 'https://github.com/AnmolGarg8' },
-          { icon: <FaLinkedin size={20}/>, url: 'https://linkedin.com/in/anmol-garg2005' },
-          { icon: <FaTwitter size={20}/>, url: '#' },
-          { icon: <FaInstagram size={20}/>, url: '#' }
-        ].map((item, i) => (
-          <a key={i} href={item.url} target="_blank" rel="noreferrer" className="text-white/40 hover:text-cyan-glow transition-colors duration-300">
+          <a key={i} href={item.url} target="_blank" rel="noreferrer">
             {item.icon}
           </a>
         ))}
       </div>
 
       {/* Fixed Bottom Right Resume Button */}
-      <div className="fixed-sidebar resume-fixed fixed z-[500]">
+      <div className="fixed-sidebar resume-fixed">
         <a href="#" className="flex items-center space-x-3 px-6 py-3 bg-[#0a0a14] border border-white hover:bg-white hover:text-black transition-all duration-300 group">
           <span className="text-xs font-bold tracking-[0.25em]">RESUME</span>
           <span className="opacity-70 group-hover:text-black">⬡</span>
@@ -167,7 +146,6 @@ const Hero = () => {
         }
       `}</style>
     </section>
-
   );
 };
 

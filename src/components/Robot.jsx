@@ -135,19 +135,21 @@ export const Robot = ({ scrollY = 0 }) => {
         targetPosX = 0;
         targetPosZ = 0;
       } else if (currentScroll >= wH * 0.5 && currentScroll < wH * 1.5) {
-        // About (Profile view)
-        targetPosX = -viewport.width / 4; // Move to left empty space
-        targetRotY = Math.PI / 4; // Turn slightly profile
+        // About (Profile view) - Scale down and move further left
+        targetPosX = -viewport.width / 3.2; // Move further left to clear text
+        targetRotY = Math.PI / 4; 
+        group.current.scale.setScalar(isMobile ? 0.6 : 0.85); // Scale down to avoid overlap
       } else if (currentScroll >= wH * 1.5) {
-        // Services (Sitting/Typing)
+        // Services (Sitting/Typing) - Scale down and center
         targetPosX = 0; 
         targetRotY = 0;
+        group.current.scale.setScalar(isMobile ? 0.6 : 0.9);
         
         // Typing pose
         lArmX = -1.0; 
         rArmX = -1.0;
-        lLowerArmX = -0.5;
-        rLowerArmX = -0.5;
+        lLowerArmX = -0.7; // Tighter typing pose to clear cards
+        rLowerArmX = -0.7;
       }
 
       group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, targetPosX, 0.05);
@@ -162,16 +164,16 @@ export const Robot = ({ scrollY = 0 }) => {
 
     }
 
-    // Apply mobile scale and visibility
+    // Apply visibility
     if (group.current) {
-        group.current.scale.setScalar(isMobile ? 0.6 : 1.0);
+        // Scale is handled per-section above, mobile base ensured here
+        if (isMobile) group.current.scale.setScalar(0.6);
         
         // Hide robot after Services section (Projects and below)
-        // Services ends around wH * 2.5
         const currentScroll = window.scrollY;
         const wH = window.innerHeight;
         
-        if (currentScroll > wH * 2.5) {
+        if (currentScroll > wH * 4.0) {
             group.current.visible = false;
         } else {
             group.current.visible = true;
