@@ -1,12 +1,12 @@
 import React from 'react';
-import { Github, Linkedin, Twitter, Instagram } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa6';
 
 const SocialSidebar = () => {
   const socials = [
-    { icon: <Github size={18} />, href: 'https://github.com/AnmolGarg8' },
-    { icon: <Linkedin size={18} />, href: 'https://linkedin.com/in/anmol-garg2005' },
-    { icon: <Twitter size={18} />, href: '#' },
-    { icon: <Instagram size={18} />, href: '#' },
+    { icon: <FaGithub size={18} />, href: 'https://github.com/AnmolGarg8' },
+    { icon: <FaLinkedin size={18} />, href: 'https://linkedin.com/in/anmol-garg2005' },
+    { icon: <FaTwitter size={18} />, href: '#' },
+    { icon: <FaInstagram size={18} />, href: '#' },
   ];
 
   return (
