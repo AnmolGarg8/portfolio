@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Loader from './components/Loader';
-import CustomCursor from './components/CustomCursor';
-import ScrollProgress from './components/ScrollProgress';
+import React from 'react';
 
 // Sections
 import Hero from './sections/Hero';
@@ -13,33 +10,24 @@ import Achievement from './sections/Achievement';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 
+import CustomCursor from './components/CustomCursor';
+import ScrollProgress from './components/ScrollProgress';
+
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  const onLoaderComplete = () => {
-    setLoading(false);
-  };
-
   return (
     <div className="app-container">
       <CustomCursor />
       <ScrollProgress />
-      {loading ? (
-        <Loader onComplete={onLoaderComplete} />
-      ) : (
-        <>
-          <main>
-            <Hero />
-            <About />
-            <Skills />
-            <WhatIDo />
-            <Projects />
-            <Achievement />
-            <Contact />
-          </main>
-          <Footer />
-        </>
-      )}
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <WhatIDo />
+        <Projects />
+        <Achievement />
+        <Contact />
+      </main>
+      <Footer />
     </div>
   );
 }
