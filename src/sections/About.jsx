@@ -32,20 +32,6 @@ const About = () => {
         ease: 'power3.out'
       }
     );
-
-    // Count-up for stats
-    document.querySelectorAll('.stat-number[data-target]').forEach(el => {
-      gsap.to(el, {
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 80%'
-        },
-        innerText: el.dataset.target,
-        duration: 1.5,
-        snap: { innerText: 1 },
-        ease: 'power1.out'
-      });
-    });
   }, []);
 
   return (
@@ -99,7 +85,7 @@ const About = () => {
       <div className="about-content" style={{ position: 'relative', zIndex: 5 }}>
         <span className="section-label">// ABOUT ME</span>
         <h2 className="about-heading" style={{
-          fontFamily: 'Clash Display',
+          fontFamily: 'Space Grotesk',
           fontWeight: 700,
           fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
           lineHeight: '1.15',
@@ -119,31 +105,6 @@ const About = () => {
           Aspiring Software Engineer from Noida, India, passionate about Artificial Intelligence, Machine Learning, IoT and Cybersecurity. I build intelligent sensor-based systems and scalable full-stack applications that solve real-world problems. Co-Founder of Kenet Technologies — Top 10 National Semifinalist at Samsung Solve for Tomorrow 2025.
         </p>
         
-        <div className="about-stats" style={{
-          display: 'flex',
-          gap: '3.5rem',
-          margin: '2.5rem 0',
-          padding: '2rem 0',
-          borderTop: '1px solid var(--dim)',
-          borderBottom: '1px solid var(--dim)'
-        }}>
-          <div className="stat-item">
-            <div style={{ display: 'flex', alignItems: 'baseline' }}>
-              <span className="stat-number" data-target="3" style={{ fontSize: '2.5rem', fontWeight: 700, fontFamily: 'Clash Display', color: '#00E5FF' }}>0</span>
-              <span style={{ fontSize: '1.5rem', fontWeight: 700, color: '#00E5FF' }}>+</span>
-            </div>
-            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PROJECTS</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number" data-target="1" style={{ fontSize: '2.5rem', fontWeight: 700, fontFamily: 'Clash Display', color: '#00E5FF' }}>0</span>
-            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>STARTUP FOUNDED</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number gold" style={{ fontSize: '1.8rem', fontWeight: 700, fontFamily: 'Clash Display', color: '#F59E0B' }}>TOP 10</span>
-            <span className="stat-label" style={{ fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>NATIONALLY</span>
-          </div>
-        </div>
-
         <a href="#" className="btn-download" style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -172,10 +133,6 @@ const About = () => {
           .about {
             grid-template-columns: 1fr !important;
             gap: 4rem !important;
-          }
-          .about-stats {
-            gap: 2rem !important;
-            flex-wrap: wrap;
           }
         }
       `}</style>

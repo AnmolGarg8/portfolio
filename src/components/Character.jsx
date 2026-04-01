@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, ContactShadows, Environment } from '@react-three/drei';
+import { Float, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
 const Eye = ({ position, mouse }) => {
@@ -45,11 +45,16 @@ const Character = () => {
 
   useFrame((state) => {
     if (!group.current) return;
-    // Subtle breathing and floating
     const t = state.clock.getElapsedTime();
     group.current.position.y = Math.sin(t * 0.5) * 0.1;
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, state.mouse.x * 0.2, 0.05);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -state.mouse.y * 0.2, 0.05);
+
+    group.current.traverse((child) => {
+      if (child.isMesh && child.material && child.material.name === 'glow') {
+        child.material.emissiveIntensity = 2 + Math.sin(t * 3) * 1;
+      }
+    });
   });
 
   return (
@@ -63,7 +68,7 @@ const Character = () => {
             roughness={0.2} 
             metalness={0.8}
             emissive="#7C3AED"
-            emissiveIntensity={0.05}
+            emissiveIntensity={0.1}
           />
         </mesh>
 
@@ -84,7 +89,7 @@ const Character = () => {
         {/* Stylized Mouth / Face Detail */}
         <mesh position={[0, -0.4, 0.9]} rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[0.2, 0.02, 16, 32, Math.PI]} />
-          <meshStandardMaterial color="#00E5FF" emissive="#00E5FF" emissiveIntensity={2} />
+          <meshStandardMaterial name="glow" color="#00E5FF" emissive="#00E5FF" emissiveIntensity={3} />
         </mesh>
 
         {/* Body (Simplified Cyber Suit) */}
@@ -94,12 +99,13 @@ const Character = () => {
           {/* Glowing chest piece */}
           <mesh position={[0, 0.4, 0.5]}>
             <boxGeometry args={[0.4, 0.4, 0.1]} />
-            <meshStandardMaterial color="#00E5FF" emissive="#00E5FF" emissiveIntensity={3} />
+            <meshStandardMaterial name="glow" color="#00E5FF" emissive="#00E5FF" emissiveIntensity={3} />
           </mesh>
         </mesh>
       </Float>
 
-      <Environment preset="city" />
+      {/* Lights inside the scene */}
+      <pointLight position={[5, 5, 5]} intensity={1} color="#00E5FF" />
       <ContactShadows position={[0, -3.5, 0]} opacity={0.4} scale={10} blur={2} far={4.5} />
     </group>
   );
@@ -122,8 +128,9 @@ const CharacterWrapper = () => {
         gl={{ alpha: true, antialias: true }}
         dpr={[1, 2]}
       >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={2} />
+        <ambientLight intensity={0.8} />
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} />
+        <pointLight position={[-10, -10, -10]} intensity={1} color="#7C3AED" />
         <Character />
       </Canvas>
     </div>

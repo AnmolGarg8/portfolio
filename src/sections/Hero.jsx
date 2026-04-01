@@ -43,7 +43,7 @@ const Hero = () => {
         </div>
 
         <h1 className="hero-title" style={{
-          fontFamily: 'Clash Display',
+          fontFamily: 'Space Grotesk',
           fontWeight: 700,
           fontSize: 'clamp(3rem, 7vw, 8rem)',
           lineHeight: '0.9',
@@ -124,10 +124,21 @@ const Hero = () => {
         <div className="hero-visual-mask" style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse at center, transparent 30%, #060608 90%)',
+          background: 'radial-gradient(circle at 70% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 60%), radial-gradient(ellipse at center, transparent 30%, #060608 90%)',
           pointerEvents: 'none',
           zIndex: 2
         }}></div>
+
+        {/* Decorative Grid */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `linear-gradient(rgba(0, 229, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+          opacity: 0.5,
+          zIndex: 0,
+          pointerEvents: 'none'
+        }} />
       </div>
 
       <style>{`
