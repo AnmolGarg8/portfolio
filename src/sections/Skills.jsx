@@ -102,4 +102,3 @@ const Skills = () => {
 };
 
 export default Skills;
- Greenland: 0,

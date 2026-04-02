@@ -182,4 +182,3 @@ const Projects = () => {
 };
 
 export default Projects;
- Greenland: 0,

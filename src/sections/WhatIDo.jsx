@@ -157,4 +157,3 @@ const WhatIDo = () => {
 };
 
 export default WhatIDo;
- Greenland: 0,
