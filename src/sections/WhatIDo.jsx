@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const services = [
   {
@@ -37,40 +37,40 @@ const services = [
 
 const AbstractGraphic = ({ index }) => {
   if (index === 0) return (
-    <div style={{ position: 'relative', width: '120px', height: '120px' }}>
-      <div style={{ position: 'absolute', inset: 0, border: '1px solid rgba(124, 58, 237, 0.3)', borderRadius: '15px' }} />
-      <div style={{ position: 'absolute', top: '20px', left: '20px', right: '20px', height: '6px', background: 'rgba(124, 58, 237, 0.4)', borderRadius: '3px' }} />
-      <div style={{ position: 'absolute', top: '35px', left: '20px', width: '50px', height: '4px', background: 'rgba(124, 58, 237, 0.2)', borderRadius: '2px' }} />
-      <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px', height: '30px', border: '1px dashed rgba(124, 58, 237, 0.3)', borderRadius: '4px' }} />
+    <div style={{ position: 'relative', width: '130px', height: '130px' }}>
+      <div style={{ position: 'absolute', inset: 0, border: '1px solid rgba(124, 58, 237, 0.4)', borderRadius: '15px' }} />
+      <div style={{ position: 'absolute', top: '25%', left: '20%', right: '20%', height: '8px', background: 'rgba(124, 58, 237, 0.5)', borderRadius: '4px' }} />
+      <div style={{ position: 'absolute', top: '45%', left: '20%', width: '40px', height: '5px', background: 'rgba(124, 58, 237, 0.3)', borderRadius: '2px' }} />
+      <div style={{ position: 'absolute', bottom: '20%', left: '20%', right: '20%', height: '25px', border: '1px dashed rgba(124, 58, 237, 0.4)', borderRadius: '4px' }} />
     </div>
   );
   if (index === 1) return (
-    <div style={{ position: 'relative', width: '120px', height: '120px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+    <div style={{ position: 'relative', width: '130px', height: '130px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
       {[...Array(9)].map((_, i) => (
         <div key={i} style={{ 
-          width: '32px', height: '32px', border: '1px solid rgba(167, 139, 250, 0.3)', borderRadius: '50%',
+          width: '35px', height: '35px', border: '1px solid rgba(167, 139, 250, 0.35)', borderRadius: '50%',
           display: 'flex', alignItems: 'center', justifyContent: 'center'
         }}>
-          <div style={{ width: '6px', height: '6px', background: i % 2 === 0 ? '#a78bfa' : 'transparent', borderRadius: '50%', border: '1px solid #a78bfa' }} />
+          <div style={{ width: '8px', height: '8px', background: i % 2 === 0 ? '#a78bfa' : 'transparent', borderRadius: '50%', border: '1px solid #a78bfa' }} />
         </div>
       ))}
     </div>
   );
   if (index === 2) return (
-    <div style={{ position: 'relative', width: '120px', height: '120px' }}>
-      <div style={{ position: 'absolute', top: '50%', left: '0', right: '0', height: '0.5px', background: 'rgba(16, 185, 129, 0.3)', transform: 'translateY(-50%)' }} />
-      <div style={{ position: 'absolute', left: '50%', top: '0', bottom: '0', width: '0.5px', background: 'rgba(16, 185, 129, 0.3)', transform: 'translateX(-50%)' }} />
-      <div style={{ position: 'absolute', inset: '30px', border: '1px solid #10b981', borderRadius: '50%' }} />
-      <div style={{ position: 'absolute', inset: '10px', border: '0.5px dashed rgba(16, 185, 129, 0.5)', borderRadius: '50%' }} />
+    <div style={{ position: 'relative', width: '130px', height: '130px' }}>
+      <div style={{ position: 'absolute', top: '50%', left: '0', right: '0', height: '1px', background: 'rgba(16, 185, 129, 0.4)', transform: 'translateY(-50%)' }} />
+      <div style={{ position: 'absolute', left: '50%', top: '0', bottom: '0', width: '1px', background: 'rgba(16, 185, 129, 0.4)', transform: 'translateX(-50%)' }} />
+      <div style={{ position: 'absolute', inset: '35px', border: '2px solid #10b981', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', inset: '15px', border: '1px dashed rgba(16, 185, 129, 0.5)', borderRadius: '50%' }} />
     </div>
   );
   return (
-    <div style={{ position: 'relative', width: '120px', height: '120px' }}>
+    <div style={{ position: 'relative', width: '130px', height: '130px' }}>
       <div style={{ 
         position: 'absolute', top: '20%', left: '20%', right: '20%', bottom: '20%', 
-        background: 'rgba(244, 63, 94, 0.1)', border: '1px solid #f43f5e', clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
+        background: 'rgba(244, 63, 94, 0.1)', border: '2px solid #f43f5e', clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
       }} />
-      <div style={{ position: 'absolute', top: '45%', left: '40%', width: '20%', height: '15%', border: '1px solid #f43f5e', borderRadius: '2px' }} />
+      <div style={{ position: 'absolute', top: '48%', left: '42%', width: '16%', height: '14%', border: '1px solid #f43f5e', borderRadius: '2px' }} />
     </div>
   );
 };
@@ -80,158 +80,74 @@ const WhatIDo = () => {
 
   return (
     <section id="services" style={{
-      padding: '120px 10vw',
-      background: '#080810',
-      display: 'grid',
-      gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 2fr)',
-      gap: '8rem',
-      alignItems: 'start'
+      padding: '120px 10vw', background: '#080810', display: 'grid', gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 2fr)',
+      gap: '8rem', alignItems: 'start'
     }}>
       
-      {/* LEFT: STICKY HEADING */}
+      {/* LEFT: STICKY heading */}
       <div style={{ position: 'sticky', top: '150px' }}>
         <span className="section-label reveal">// WHAT I DO</span>
-        <h2 className="reveal" style={{
-          fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-          lineHeight: '1.1',
-          color: '#FFFFFF',
-          margin: '1.5rem 0 3rem'
-        }}>
-          How I Can <br />
-          Help You
-        </h2>
+        <h2 className="reveal" style={{ 
+          fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', lineHeight: '1.05', color: '#FFFFFF', margin: '1.5rem 0 3.5rem' 
+        }}>How I Can <br />Help You</h2>
 
-        {/* Progress Bar */}
-        <div style={{ position: 'relative', width: '2px', height: '200px', background: 'rgba(255,255,255,0.05)', marginLeft: '10px' }}>
+        <div style={{ position: 'relative', width: '2px', height: '220px', background: 'rgba(255,255,255,0.06)', marginLeft: '12px' }}>
           <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
+            position: 'absolute', top: 0, left: 0, width: '100%',
             height: `${((activeTab + 1) / services.length) * 100}%`,
-            background: '#7c3aed',
-            transition: 'height 0.4s cubic-bezier(0.85, 0, 0.15, 1)',
-            boxShadow: '0 0 10px #7c3aed'
+            background: '#7c3aed', transition: 'height 0.5s cubic-bezier(0.19, 1, 0.22, 1)', boxShadow: '0 0 15px #7c3aed'
           }} />
         </div>
 
-        {/* Dynamic Watermark Number */}
-        <div style={{
-          position: 'absolute',
-          top: '200px',
-          left: '-20px',
-          fontFamily: 'Cormorant Garamond',
-          fontSize: '12rem',
-          fontWeight: 700,
-          color: '#fff',
-          opacity: 0.05,
-          pointerEvents: 'none',
-          zIndex: -1,
-          transition: 'all 0.4s'
+        <div key={activeTab} style={{
+          position: 'absolute', top: '180px', left: '-30px', fontFamily: 'Cormorant Garamond', fontSize: '14rem', 
+          fontWeight: 700, color: '#fff', opacity: 0.04, pointerEvents: 'none', zIndex: -1, animation: 'fadeUp 0.8s forwards'
         }}>
           {services[activeTab].num}
         </div>
       </div>
 
-      {/* RIGHT: TAB SYSTEM */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-        {/* Tab Buttons */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      {/* RIGHT: TABS */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
           {services.map((service, i) => (
             <button key={i} onClick={() => setActiveTab(i)} style={{
-              background: activeTab === i ? 'rgba(124, 58, 237, 0.06)' : 'transparent',
-              border: 'none',
-              borderLeft: activeTab === i ? '3px solid #7c3aed' : '3px solid transparent',
-              textAlign: 'left',
-              padding: '1.5rem 2rem',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '2rem',
-              transition: '0.3s'
+              background: activeTab === i ? 'rgba(124, 58, 237, 0.08)' : 'transparent', border: 'none',
+              borderLeft: activeTab === i ? '4px solid #7c3aed' : '4px solid transparent',
+              textAlign: 'left', padding: '1.8rem 2.5rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2.5rem', transition: '0.4s'
             }}>
-              <span style={{ 
-                fontFamily: 'DM Mono', 
-                fontSize: '0.8rem', 
-                color: activeTab === i ? '#7c3aed' : 'rgba(255,255,255,0.2)',
-                fontWeight: 700
-              }}>{service.num}</span>
-              <span style={{ 
-                fontFamily: 'Syne', 
-                fontSize: '1rem', 
-                fontWeight: 700, 
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: activeTab === i ? '#fff' : 'rgba(255,255,255,0.3)'
-              }}>{service.name}</span>
+              <span style={{ fontFamily: 'DM Mono', fontSize: '0.85rem', color: activeTab === i ? '#7c3aed' : 'rgba(255,255,255,0.2)', fontWeight: 700 }}>{service.num}</span>
+              <span style={{ fontFamily: 'Syne', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeTab === i ? '#fff' : 'rgba(255,255,255,0.3)' }}>{service.name}</span>
             </button>
           ))}
         </div>
 
-        {/* Tab Content Panel */}
         <div key={activeTab} className="reveal-stagger active" style={{
-          background: 'linear-gradient(135deg, #0f0f1e 0%, #0a0a14 100%)',
-          borderRadius: '24px',
-          padding: '4rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          border: '1px solid rgba(255,255,255,0.04)',
-          boxShadow: '0 40px 100px rgba(0,0,0,0.4)',
-          position: 'relative',
-          overflow: 'hidden'
+          background: 'linear-gradient(135deg, #0f0f1e 0%, #0a0a14 100%)', borderRadius: '28px', padding: '4.5rem',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid rgba(255,255,255,0.04)',
+          boxShadow: '0 40px 120px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05)', position: 'relative', overflow: 'hidden'
         }}>
-          {/* Main Info */}
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <h3 style={{
-              fontFamily: 'Cormorant Garamond',
-              fontSize: '2.5rem',
-              fontWeight: 500,
-              fontStyle: 'italic',
-              color: '#fff',
-              lineHeight: 1
-            }}>{services[activeTab].name}</h3>
-            
-            <p style={{
-              fontFamily: 'DM Mono',
-              fontSize: '0.85rem',
-              color: 'rgba(255,255,255,0.5)',
-              maxWidth: '450px',
-              lineHeight: '1.7'
-            }}>{services[activeTab].desc}</p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+            <h3 style={{ fontFamily: 'Cormorant Garamond', fontSize: '2.8rem', fontWeight: 500, fontStyle: 'italic', color: '#fff', lineHeight: 1 }}>{services[activeTab].name}</h3>
+            <p style={{ fontFamily: 'DM Mono', fontSize: '0.88rem', color: 'rgba(255,255,255,0.5)', maxWidth: '480px', lineHeight: '1.8' }}>{services[activeTab].desc}</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
               {services[activeTab].deliverables.map((item, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1.2rem', fontFamily: 'DM Mono', fontSize: '0.8rem', color: '#fff' }}>
-                  <span style={{ color: '#7c3aed', fontSize: '1.2rem' }}>›</span>
-                  {item}
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontFamily: 'DM Mono', fontSize: '0.82rem', color: '#fff' }}>
+                  <span style={{ color: '#7c3aed', fontSize: '1.4rem' }}>›</span>{item}
                 </div>
               ))}
             </div>
-
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginTop: '1rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginTop: '1.2rem' }}>
               {services[activeTab].tags.map((tag, i) => (
                 <span key={i} style={{
-                  fontFamily: 'DM Mono',
-                  fontSize: '0.65rem',
-                  color: services[activeTab].accent,
+                  fontFamily: 'DM Mono', fontSize: '0.68rem', color: services[activeTab].accent,
                   border: `1px solid rgba(${activeTab === 0 ? '124, 58, 237' : activeTab === 1 ? '167, 139, 250' : activeTab === 2 ? '16, 185, 129' : '244, 63, 94'}, 0.3)`,
-                  padding: '0.4rem 1rem',
-                  borderRadius: '50px'
+                  padding: '0.5rem 1.2rem', borderRadius: '50px'
                 }}>{tag}</span>
               ))}
             </div>
           </div>
-
-          {/* Graphic Side */}
-          <div style={{ 
-            width: '200px', 
-            height: '200px', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            opacity: 0.8
-          }}>
+          <div style={{ width: '220px', height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.8 }}>
             <AbstractGraphic index={activeTab} />
           </div>
         </div>
@@ -241,3 +157,4 @@ const WhatIDo = () => {
 };
 
 export default WhatIDo;
+ Greenland: 0,

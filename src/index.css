@@ -66,7 +66,7 @@ h1, h2, h3, .font-heading {
 /* Animations */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(40px);
   transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -74,6 +74,13 @@ h1, h2, h3, .font-heading {
   opacity: 1;
   transform: translateY(0);
 }
+
+@media (max-width: 768px) {
+  section {
+    padding: 60px 5vw !important;
+  }
+}
+
 
 /* Smooth Scroll */
 html {

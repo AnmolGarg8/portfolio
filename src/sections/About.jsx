@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const About = () => {
   const [typedLines, setTypedLines] = useState([]);
@@ -25,7 +25,7 @@ const About = () => {
         clearInterval(interval);
         setIsTypingDone(true);
       }
-    }, 250);
+    }, 200);
     return () => clearInterval(interval);
   }, []);
 
@@ -34,20 +34,19 @@ const About = () => {
       padding: '120px 10vw',
       background: '#080810',
       width: '100vw',
-      overflow: 'hidden'
+      display: 'flex',
+      alignItems: 'center'
     }}>
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)',
         gap: '6rem',
-        alignItems: 'start'
+        alignItems: 'start',
+        width: '100%'
       }}>
         
-        {/* LEFT: INTERACTIVE TERMINAL */}
-        <div className="reveal active" style={{ 
-          position: 'relative',
-          animation: 'fadeUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards'
-        }}>
+        {/* LEFT: TERMINAL */}
+        <div className="reveal" style={{ transitionDelay: '0.2s' }}>
           <div style={{
             background: '#08080f',
             borderRadius: '14px',
@@ -78,27 +77,20 @@ const About = () => {
               }}>anmol_garg.json</div>
             </div>
 
-            {/* Terminal Body */}
             <div style={{ padding: '2rem', minHeight: '320px', position: 'relative' }}>
               <div style={{ fontFamily: 'DM Mono', fontSize: '0.9rem', lineHeight: '1.8' }}>
-                {typedLines.map((line, i) => {
-                  // Basic syntax highlighting
-                  const isKey = line.includes('":');
-                  const isBrace = line === '{' || line === '}';
-                  
-                  return (
-                    <div key={i} style={{ whiteSpace: 'pre-wrap' }}>
-                      {line.split(/(":|",|\[|\]|{|}|")/g).map((part, j) => {
-                        let color = 'white';
-                        if (part === '{' || part === '}' || part === '[' || part === ']') color = 'rgba(255,255,255,0.4)';
-                        else if (part.startsWith('  "')) color = '#a78bfa'; // keys
-                        else if (part.length > 2 && !part.includes(':')) color = '#86efac'; // strings
-                        
-                        return <span key={j} style={{ color }}>{part}</span>;
-                      })}
-                    </div>
-                  );
-                })}
+                {typedLines.map((line, i) => (
+                  <div key={i} style={{ whiteSpace: 'pre-wrap' }}>
+                    {line.split(/(":|",|\[|\]|{|}|")/g).map((part, j) => {
+                      let color = 'white';
+                      if (part === '{' || part === '}' || part === '[' || part === ']') color = 'rgba(255,255,255,0.4)';
+                      else if (part.startsWith('  "')) color = '#a78bfa'; // keys
+                      else if (part.length > 2 && !part.includes(':')) color = '#86efac'; // strings
+                      else if (!isNaN(part) || part === 'true' || part === 'false') color = '#fb923c'; // types
+                      return <span key={j} style={{ color }}>{part}</span>;
+                    })}
+                  </div>
+                ))}
                 {isTypingDone && (
                   <span style={{ 
                     display: 'inline-block', 
@@ -110,12 +102,8 @@ const About = () => {
                   }}>█</span>
                 )}
               </div>
-
-              {/* Scanline Overlay */}
               <div style={{
-                position: 'absolute',
-                inset: 0,
-                pointerEvents: 'none',
+                position: 'absolute', inset: 0, pointerEvents: 'none',
                 background: 'repeating-linear-gradient(rgba(124, 58, 237, 0.02) 0px, rgba(124, 58, 237, 0.02) 1px, transparent 1px, transparent 2px)',
                 backgroundSize: '100% 2px'
               }} />
@@ -123,93 +111,50 @@ const About = () => {
           </div>
         </div>
 
-        {/* RIGHT: BIO CONTENT */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-          <div className="reveal" style={{ animation: 'fadeUp 0.8s 0.2s forwards' }}>
-            <span className="section-label">// ABOUT ME</span>
-            <h2 style={{
-              fontSize: 'clamp(2.5rem, 4vw, 4rem)',
-              lineHeight: '1.1',
-              color: '#FFFFFF',
-              margin: '1.5rem 0 2.5rem'
-            }}>
-              Building the future, one <br />
-              <span style={{ fontStyle: 'italic', color: '#a78bfa' }}>intelligent system</span> <br />
-              at a time.
-            </h2>
+        {/* RIGHT: CONTENT */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
+          <div className="reveal" style={{ transitionDelay: '0.3s' }}>
+            <span className="section-label" style={{ marginBottom: '1.5rem' }}>// ABOUT ME</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', lineHeight: '1', color: '#FFFFFF', margin: 0 }}>Building the future, one</h2>
+              <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', lineHeight: '1', color: '#a78bfa', fontStyle: 'italic', margin: 0 }}>intelligent system</h2>
+              <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', lineHeight: '1', color: '#FFFFFF', margin: 0 }}>at a time.</h2>
+            </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <p style={{
-                fontFamily: 'DM Mono',
-                fontSize: '0.85rem',
-                color: 'rgba(240,238,255,0.55)',
-                lineHeight: '1.85',
-                maxWidth: '90%'
-              }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '2.5rem' }}>
+              <p style={{ fontFamily: 'DM Mono', fontSize: '0.85rem', color: 'rgba(240,238,255,0.55)', lineHeight: '1.85' }}>
                 I am a focused developer passionate about crafting high-impact digital solutions. From architecting end-to-end full stack applications to building hardware-integrated IoT systems, I thrive at the intersection of complexity and elegance.
               </p>
-              <p style={{
-                fontFamily: 'DM Mono',
-                fontSize: '0.85rem',
-                color: 'rgba(240,238,255,0.55)',
-                lineHeight: '1.85',
-                maxWidth: '90%'
-              }}>
+              <p style={{ fontFamily: 'DM Mono', fontSize: '0.85rem', color: 'rgba(240,238,255,0.55)', lineHeight: '1.85' }}>
                 As the Co-Founder of Kenet Technologies, I focus on building scalable platforms that leverage AI and machine learning to solve real-world problems.
               </p>
             </div>
           </div>
 
-          {/* Stat Pills */}
-          <div className="reveal" style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '2.5rem',
-            animation: 'fadeUp 0.8s 0.4s forwards'
-          }}>
+          {/* Stats */}
+          <div className="reveal" style={{ display: 'flex', alignItems: 'center', gap: '3rem', transitionDelay: '0.4s' }}>
             {[
               { val: '3+', label: 'PROJECTS' },
               { val: 'Top 10', label: 'NATIONAL' },
               { val: '2024', label: 'BATCH' },
-              { val: '4', label: 'TECH DOMAINS' }
+              { val: '4', label: 'DOMAINS' }
             ].map((stat, i) => (
               <React.Fragment key={i}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <span style={{ 
-                    fontFamily: 'Cormorant Garamond', 
-                    fontSize: '2.2rem', 
-                    fontWeight: 700, 
-                    color: '#fff',
-                    lineHeight: 1
-                  }}>{stat.val}</span>
-                  <span style={{ 
-                    fontFamily: 'DM Mono', 
-                    fontSize: '0.6rem', 
-                    color: 'rgba(255,255,255,0.3)',
-                    letterSpacing: '0.15em'
-                  }}>{stat.label}</span>
+                  <span style={{ fontFamily: 'Cormorant Garamond', fontSize: '2.5rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{stat.val}</span>
+                  <span style={{ fontFamily: 'DM Mono', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em' }}>{stat.label}</span>
                 </div>
-                {i < 3 && <div style={{ width: '1px', height: '40px', background: 'rgba(255,255,255,0.1)' }} />}
+                {i < 3 && <div style={{ width: '1px', height: '45px', background: 'rgba(255,255,255,0.1)' }} />}
               </React.Fragment>
             ))}
           </div>
 
-          {/* Resume Button */}
-          <div className="reveal" style={{ animation: 'fadeUp 0.8s 0.6s forwards' }}>
+          <div className="reveal" style={{ transitionDelay: '0.5s' }}>
             <button className="btn-fill-purple" style={{
-              background: 'transparent',
-              border: '1px solid #7c3aed',
-              color: '#fff',
-              padding: '1.2rem 2.8rem',
-              fontFamily: 'Syne',
-              fontWeight: 700,
-              fontSize: '0.85rem',
-              letterSpacing: '0.1em',
-              cursor: 'pointer',
-              transition: '0.3s'
-            }}>
-              DOWNLOAD RESUME ↓
-            </button>
+              background: 'transparent', border: '1px solid #7c3aed', color: '#fff', padding: '1.2rem 2.5rem',
+              fontFamily: 'Syne', fontWeight: 700, fontSize: '0.8rem', letterSpacing: '0.15em', cursor: 'pointer',
+              textTransform: 'uppercase'
+            }}>DOWNLOAD RESUME ↓</button>
           </div>
         </div>
       </div>
