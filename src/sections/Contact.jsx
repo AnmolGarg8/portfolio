@@ -2,35 +2,37 @@ import React from 'react';
 
 const Contact = () => {
   return (
-    <section className="contact" id="contact" style={{
-      padding: '10rem 10vw',
+    <section className="contact reveal" id="contact" style={{
+      padding: '120px 10vw',
       background: '#080810',
       display: 'grid',
-      gridTemplateColumns: '1fr 1.2fr',
-      gap: '8rem',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+      gap: '80px',
       alignItems: 'start'
     }}>
       
       {/* LEFT: CONTACT INFO */}
       <div className="reveal">
         <span className="section-label">// CONTACT</span>
-        <h2 style={{
+        <h2 className="reveal-stagger" style={{
           fontSize: 'clamp(2.5rem, 5vw, 4rem)',
           lineHeight: '1.1',
           color: '#FFFFFF',
-          marginBottom: '2rem'
+          marginBottom: '2rem',
+          transitionDelay: '0.1s'
         }}>
           Let's Build <br />
           Something <span className="italic-accent">Incredible</span>
         </h2>
         
-        <p style={{
+        <p className="reveal-stagger" style={{
           fontFamily: 'DM Mono',
           fontSize: '0.95rem',
           color: 'rgba(255, 255, 255, 0.4)',
           marginBottom: '4rem',
           maxWidth: '400px',
-          lineHeight: '1.8'
+          lineHeight: '1.8',
+          transitionDelay: '0.2s'
         }}>
           Whether it's a startup idea, a complex AI system, or a quick chat about tech — I'm always open to new connections.
         </p>
@@ -73,7 +75,14 @@ const Contact = () => {
       </div>
 
       {/* RIGHT: FORM */}
-      <div className="reveal" style={{ background: '#0a0a14', padding: '4rem', borderRadius: '4px', border: '1px solid rgba(255, 255, 255, 0.03)' }}>
+      <div className="reveal-stagger" style={{ 
+        background: '#0a0a14', 
+        padding: '4rem', 
+        borderRadius: '24px', 
+        border: '1px solid rgba(255, 255, 255, 0.04)',
+        boxShadow: '0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.02)',
+        transitionDelay: '0.4s'
+      }}>
         <form style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
             <label style={{ fontFamily: 'DM Mono', fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.3)', letterSpacing: '0.1em' }}>YOUR NAME</label>

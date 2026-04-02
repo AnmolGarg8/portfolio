@@ -1,82 +1,128 @@
 import React from 'react';
 
-const SkillTile = ({ title, icon, tags, watermark, isWide = false, isFull = false, hasMesh = false, hasShimmer = false, delay }) => {
+const BentoTile = ({ category, name, tags, wide, fullWidth, mesh, shimmer, index }) => {
   return (
-    <div className={`reveal ${hasMesh ? 'mesh-gradient-bg' : ''}`} style={{
-      gridColumn: isFull ? 'span 4' : isWide ? 'span 2' : 'span 1',
-      background: !hasMesh ? 'linear-gradient(135deg, #0f0f1e 0%, #111128 100%)' : 'none',
-      border: '1px solid rgba(255, 255, 255, 0.06)',
-      borderRadius: '28px',
-      padding: isFull ? '3rem 4rem' : '4rem',
-      position: 'relative',
-      overflow: 'hidden',
-      transition: 'all 0.6s cubic-bezier(0.19, 1, 0.22, 1)',
-      display: 'flex',
-      flexDirection: isFull ? 'row' : 'column',
-      alignItems: isFull ? 'center' : 'flex-start',
-      gap: isFull ? '4rem' : '3.5rem',
-      boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.05)',
-      transitionDelay: delay
-    }} id="skill-tile">
-      {hasShimmer && <div className="shimmer-bg" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1 }} />}
-
-      {/* Watermark */}
+    <div 
+      className={`reveal-stagger ${mesh ? 'mesh-gradient-bg' : ''} ${shimmer ? 'shimmer-bg' : ''}`}
+      style={{
+        gridColumn: fullWidth ? 'span 4' : (wide ? 'span 2' : 'span 1'),
+        background: mesh ? 'none' : 'linear-gradient(135deg, #0f0f1e 0%, #111128 100%)',
+        border: '1px solid rgba(255,255,255,0.06)',
+        borderRadius: '24px',
+        padding: '32px',
+        position: 'relative',
+        overflow: 'hidden',
+        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+        display: 'flex',
+        flexDirection: fullWidth ? 'row' : 'column',
+        alignItems: fullWidth ? 'center' : 'flex-start',
+        gap: '24px',
+        minHeight: fullWidth ? 'auto' : '240px',
+        transitionDelay: `${0.1 * index}s`,
+        cursor: 'default'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(124,58,237,0.5)';
+        e.currentTarget.style.boxShadow = '0 0 40px rgba(124,58,237,0.12)';
+        e.currentTarget.style.transform = 'translateY(-6px)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
+        e.currentTarget.style.boxShadow = 'none';
+        e.currentTarget.style.transform = 'translateY(0)';
+      }}
+    >
+      {/* Category Icon */}
       <div style={{
-        position: 'absolute', bottom: '0', right: '3.5rem', fontFamily: 'Cormorant Garamond',
-        fontSize: '5rem', fontWeight: 700, color: '#fff', opacity: 0.04, zIndex: 0, pointerEvents: 'none'
-      }}>{watermark}</div>
-
-      <div style={{
-        width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(124, 58, 237, 0.15)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem',
-        zIndex: 2, border: '1px solid rgba(124, 58, 237, 0.2)'
-      }}>{icon}</div>
-
-      <div style={{ 
-        display: 'flex', flexDirection: 'column', gap: isFull ? '0.2rem' : '1.85rem',
-        zIndex: 2, flex: isFull ? 'none' : '1', width: isFull ? '200px' : 'auto'
+        width: '40px',
+        height: '40px',
+        borderRadius: '50%',
+        background: 'rgba(124,58,237,0.15)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#a78bfa',
+        fontSize: '1.2rem',
+        flexShrink: 0
       }}>
-        <h3 style={{
-          fontFamily: 'Syne', fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.25em',
-          color: '#fff', textTransform: 'uppercase', margin: 0
-        }}>{title}</h3>
-        
-        {!isFull && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
-            {tags.map((tag, i) => (
-              <span key={i} className="skill-tag" style={{
-                fontFamily: 'DM Mono', fontSize: '0.75rem', color: '#a78bfa',
-                background: 'rgba(124, 58, 237, 0.12)', border: '1px solid rgba(124, 58, 237, 0.25)',
-                padding: '0.5rem 1.15rem', borderRadius: '50px', transition: '0.3s'
-              }}>{tag}</span>
-            ))}
-          </div>
-        )}
+        {category === 'FRONTEND' ? '◇' : 
+         category === 'BACKEND' ? '◈' : 
+         category === 'SECURITY' ? '⚔' : '⌬'}
       </div>
 
-      {isFull && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', zIndex: 2, flex: 1, justifyContent: 'flex-start' }}>
+      <div style={{ flex: 1, width: '100%' }}>
+        <span style={{ 
+          display: 'block',
+          fontFamily: 'Syne', 
+          fontWeight: '700', 
+          fontSize: '0.7rem', 
+          letterSpacing: '0.2em', 
+          color: '#f0eeff', 
+          textTransform: 'uppercase',
+          marginBottom: fullWidth ? '4px' : '16px'
+        }}>
+          {category}
+        </span>
+
+        {fullWidth && (
+          <h3 style={{ 
+            fontFamily: 'Cormorant Garamond', 
+            fontSize: '1.5rem', 
+            color: '#f0eeff',
+            marginBottom: '0' 
+          }}>
+            {name}
+          </h3>
+        )}
+
+        <div style={{ 
+          display: 'flex', 
+          flexWrap: 'wrap', 
+          gap: '8px',
+          marginTop: fullWidth ? '0' : 'auto'
+        }}>
           {tags.map((tag, i) => (
-            <span key={i} className="skill-tag" style={{
-              fontFamily: 'DM Mono', fontSize: '0.8rem', color: '#a78bfa',
-              background: 'rgba(124, 58, 237, 0.1)', border: '1px solid rgba(124, 58, 237, 0.25)',
-              padding: '0.6rem 1.5rem', borderRadius: '50px', transition: '0.3s'
-            }}>{tag}</span>
+            <span 
+              key={i} 
+              style={{
+                padding: '4px 12px',
+                background: 'rgba(124,58,237,0.1)',
+                border: '1px solid rgba(124,58,237,0.25)',
+                borderRadius: '50px',
+                fontFamily: 'DM Mono',
+                fontSize: '0.7rem',
+                color: '#a78bfa',
+                transition: 'all 0.3s ease'
+              }}
+              className="tag-pill"
+            >
+              {tag}
+            </span>
           ))}
         </div>
-      )}
+      </div>
+
+      {/* Watermark */}
+      <span style={{
+        position: 'absolute',
+        bottom: '-1rem',
+        right: '1rem',
+        fontFamily: 'Cormorant Garamond',
+        fontSize: '5rem',
+        fontWeight: '700',
+        opacity: 0.04,
+        color: '#f0eeff',
+        lineHeight: '1',
+        pointerEvents: 'none'
+      }}>
+        {index < 9 ? `0${index + 1}` : index + 1}
+      </span>
 
       <style>{`
-        #skill-tile:hover {
-          transform: translateY(-6px);
-          border-color: rgba(124, 58, 237, 0.5) !important;
-          box-shadow: 0 0 40px rgba(124, 58, 237, 0.12), inset 0 1px 1px rgba(255,255,255,0.08);
-        }
-        .skill-tag:hover {
-          background: rgba(124, 58, 237, 0.2) !important;
-          color: #fff !important;
-          border-color: #a78bfa !important;
-          transform: scale(1.05);
+        .tag-pill:hover {
+          background: rgba(124, 58, 237, 0.25);
+          color: #fff;
+          border-color: #a78bfa;
         }
       `}</style>
     </div>
@@ -84,19 +130,95 @@ const SkillTile = ({ title, icon, tags, watermark, isWide = false, isFull = fals
 };
 
 const Skills = () => {
+  const arsenal = [
+    {
+      category: 'FRONTEND',
+      name: 'Dynamic Interfaces',
+      tags: ['React', 'Next.js', 'Tailwind', 'Three.js', 'Framer Motion'],
+      wide: true,
+      mesh: true
+    },
+    {
+      category: 'BACKEND',
+      name: 'Robust Systems',
+      tags: ['Node.js', 'Go', 'Express', 'Prisma', 'PostgreSQL', 'MongoDB'],
+      wide: false
+    },
+    {
+      category: 'SECURITY',
+      name: 'Hardened Code',
+      tags: ['Linux', 'Network Security', 'OWASP', 'Vulnerability Assessment'],
+      wide: false
+    },
+    {
+      category: 'AI/ML/IOT',
+      name: 'INTELLIGENCE & CONNECTIVITY',
+      tags: ['Python', 'TensorFlow', 'Data Analysis', 'IoT Sensors', 'Embedded C', 'Hardware Prototyping'],
+      fullWidth: true,
+      shimmer: true
+    }
+  ];
+
   return (
-    <section id="arsenal" style={{ padding: '120px 10vw', background: '#080810' }}>
-      <div style={{ marginBottom: '6.5rem' }}>
-        <span className="section-label reveal">// TECH ARSENAL</span>
-        <h2 className="reveal" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', lineHeight: '1.05', color: '#FFFFFF' }}>The <span style={{ fontStyle: 'italic', fontWeight: 500, color: '#a78bfa' }}>Architecture</span> of My Craft</h2>
+    <section id="arsenal" style={{ 
+      padding: '120px 10vw', 
+      background: '#080810',
+      minHeight: '100vh',
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div className="reveal" style={{ marginBottom: '80px' }}>
+          <span className="section-label" style={{ color: '#7c3aed' }}>// TECH ARSENAL</span>
+          <h2 style={{ 
+            fontFamily: 'Cormorant Garamond', 
+            fontSize: 'max(2.5rem, 4vw)', 
+            fontWeight: '700', 
+            lineHeight: '1',
+            color: '#f0eeff'
+          }}>
+            Mastering the <span style={{ fontStyle: 'italic', color: '#a78bfa' }}>Digital Forge</span>.
+          </h2>
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gridAutoRows: 'minmax(240px, auto)',
+          gap: '24px',
+        }}>
+          {arsenal.map((item, idx) => (
+            <BentoTile key={idx} {...item} index={idx} />
+          ))}
+        </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem', gridAutoRows: 'minmax(380px, auto)' }}>
-        <SkillTile title="FRONTEND" icon="🔷" watermark="01" isWide={true} hasMesh={true} delay="0.15s" tags={['React.js', 'JavaScript', 'HTML/CSS', 'Tailwind', 'Next.js']} />
-        <SkillTile title="BACKEND" icon="⌥" watermark="02" delay="0.3s" tags={['Node.js', 'Express.js', 'REST APIs', 'MongoDB']} />
-        <SkillTile title="SECURITY" icon="🔒" watermark="03" delay="0.45s" tags={['Linux', 'Net Security', 'Cybersecurity', 'Git']} />
-        <SkillTile title="AI / ML / IOT" icon="⚛" watermark="04" isFull={true} hasShimmer={true} delay="0.6s" tags={['Python', 'TensorFlow', 'IoT Sensors', 'Embedded C', 'Hardware Prototyping']} />
-      </div>
+      <style>{`
+        @media (max-width: 991px) {
+          div[style*="gridTemplateColumns"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          div[style*="gridColumn: span 2"] {
+            grid-column: span 2 !important;
+          }
+          div[style*="gridColumn: span 4"] {
+            grid-column: span 2 !important;
+          }
+          div[style*="flexDirection: row"] {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+          }
+        }
+        @media (max-width: 480px) {
+          div[style*="gridTemplateColumns"] {
+            grid-template-columns: 1fr !important;
+          }
+          div[style*="gridColumn: span 2"] {
+            grid-column: span 1 !important;
+          }
+          div[style*="gridColumn: span 4"] {
+            grid-column: span 1 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

@@ -2,8 +2,8 @@ import React from 'react';
 
 const Achievement = () => {
   return (
-    <section className="recognition" id="recognition" style={{
-      padding: '15rem 5vw',
+    <section className="recognitionreveal reveal" id="recognition" style={{
+      padding: '120px 5vw',
       textAlign: 'center',
       background: '#080810',
       position: 'relative',
@@ -50,14 +50,15 @@ const Achievement = () => {
           }}>NATIONAL SEMIFINALIST</span>
         </div>
 
-        <h2 style={{
+        <h2 className="reveal-stagger" style={{
           fontFamily: 'Cormorant Garamond',
           fontWeight: 700,
           fontSize: 'clamp(3.5rem, 8vw, 7rem)',
           lineHeight: '0.9',
           color: '#FFFFFF',
           marginBottom: '2rem',
-          letterSpacing: '-2px'
+          letterSpacing: '-2px',
+          transitionDelay: '0.2s'
         }}>
           SAMSUNG <br />
           SOLVE FOR <br />
@@ -65,14 +66,15 @@ const Achievement = () => {
           <span style={{ color: '#f97316' }}>2025</span>
         </h2>
 
-        <p style={{
+        <p className="reveal-stagger" style={{
           fontFamily: 'DM Mono',
           fontSize: '1rem',
           color: 'rgba(255, 255, 255, 0.4)',
           maxWidth: '500px',
           margin: '0 auto',
           letterSpacing: '0.05em',
-          fontWeight: 300
+          fontWeight: 300,
+          transitionDelay: '0.3s'
         }}>
           Top 10 out of thousands of entries across India
         </p>

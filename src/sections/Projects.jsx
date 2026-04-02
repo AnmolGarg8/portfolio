@@ -1,181 +1,384 @@
-import React, { useRef, useState } from 'react';
-
-const projects = [
-  {
-    num: '01',
-    category: 'IOT / FINTECH',
-    name: 'NoteNetra',
-    desc: 'IoT-based system tracking offline MSME cash transactions via smart sensors. Generates alternative credit scores for financial inclusion.',
-    tags: ['IoT', 'React', 'Node.js', 'AI/ML', 'Sensors'],
-    github: '#',
-    type: 'iot'
-  },
-  {
-    num: '02',
-    category: 'ARTIFICIAL INTELLIGENCE',
-    name: 'AIKosh',
-    desc: 'AI-powered platform mapping MSMEs with the most relevant financial agents using intelligent data analysis.',
-    tags: ['AI', 'React', 'Node.js', 'Express', 'Data Analysis'],
-    github: '#',
-    type: 'ai'
-  },
-  {
-    num: '03',
-    category: 'HARDWARE / IOT',
-    name: 'Smart Vape Detection',
-    desc: 'Hardware-based sensor system detecting vaping in restricted campus environments using embedded IoT sensors.',
-    tags: ['IoT', 'Embedded C', 'Hardware', 'Sensors', 'Campus Safety'],
-    github: '#',
-    type: 'hardware'
-  }
-];
-
-const ProjectVisual = ({ type }) => {
-  if (type === 'iot') return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', background: 'rgba(124, 58, 237, 0.05)', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(124,58,237,0.18) 1.2px, transparent 1.2px)', backgroundSize: '24px 24px' }} />
-      <div style={{ position: 'absolute', top: '50%', left: '0', right: '0', height: '1.5px', background: 'rgba(124,58,237,0.25)' }} />
-      <div style={{ position: 'absolute', left: '50%', top: '0', bottom: '0', width: '1.5px', background: 'rgba(124,58,237,0.25)' }} />
-      <div style={{ position: 'absolute', top: '50%', left: '50%', width: '110px', height: '110px', border: '1.5px solid #7c3aed', borderRadius: '12px', transform: 'translate(-50%, -50%) rotate(45deg)' }} />
-      <div style={{ position: 'absolute', top: '50%', left: '50%', width: '70px', height: '70px', border: '1.2px dashed #7c3aed', borderRadius: '50%', transform: 'translate(-50%, -50%)' }} />
-    </div>
-  );
-  if (type === 'ai') return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', background: 'rgba(167, 139, 250, 0.05)', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: '50%', left: '15%', right: '15%', height: '90px', display: 'flex', justifyContent: 'space-between', transform: 'translateY(-50%)' }}>
-        {[...Array(3)].map((_, i) => (
-          <div key={i} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
-             {[...Array(i === 1 ? 5 : 4)].map((_, j) => (
-               <div key={j} style={{ width: '11px', height: '11px', background: 'rgba(167, 139, 250, 0.5)', borderRadius: '50%' }} />
-             ))}
-          </div>
-        ))}
-      </div>
-      <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
-        <line x1="30%" y1="35%" x2="48%" y2="28%" stroke="rgba(167, 139, 250, 0.28)" strokeWidth="1" />
-        <line x1="30%" y1="65%" x2="48%" y2="72%" stroke="rgba(167, 139, 250, 0.28)" strokeWidth="1" />
-        <line x1="48%" y1="50%" x2="70%" y2="50%" stroke="rgba(167, 139, 250, 0.28)" strokeWidth="1" />
-      </svg>
-    </div>
-  );
-  return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', background: 'rgba(16, 185, 129, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ width: '90px', height: '90px', border: '2px solid #10b981', position: 'relative', transform: 'rotate(45deg)' }}>
-        <div style={{ position: 'absolute', inset: '12px', border: '1.2px dashed rgba(16, 185, 129, 0.5)' }} />
-      </div>
-      <div style={{ position: 'absolute', top: '50%', left: '25%', right: '25%', height: '2px', background: 'rgba(16, 185, 129, 0.4)', animation: 'pulse-glow 2.5s infinite' }} />
-    </div>
-  );
-};
+import React, { useRef, useState, useEffect } from 'react';
 
 const ProjectCard = ({ project, index }) => {
   return (
-    <div className="project-card reveal" style={{
-      minWidth: '420px', height: '520px', background: 'linear-gradient(160deg, #0e0e1e, #0a0a15)',
-      border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: '24px', overflow: 'hidden',
-      position: 'relative', scrollSnapAlign: 'start', transition: 'all 0.6s cubic-bezier(0.19, 1, 0.22, 1)',
-      display: 'flex', flexDirection: 'column', boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.05)',
-      transitionDelay: `${index * 0.2}s`
-    }}>
-      <div style={{ height: '40%', position: 'relative', overflow: 'hidden' }} className="visual-zone">
-        <ProjectVisual type={project.type} />
-        <div className="hover-overlay" style={{
-          position: 'absolute', inset: 0, background: 'rgba(124, 58, 237, 0.15)',
-          backdropFilter: 'blur(10px)', opacity: 0, transition: '0.4s',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10
-        }}>
-          <span style={{ 
-            fontFamily: 'Syne', fontWeight: 700, fontSize: '0.9rem', color: '#fff', letterSpacing: '0.25em' 
-          }}>VIEW PROJECT ↗</span>
+    <div 
+      className="project-card reveal-stagger"
+      style={{
+        flex: '0 0 420px',
+        height: '520px',
+        background: 'linear-gradient(160deg, #0e0e1e, #0a0a15)',
+        border: '1px solid rgba(255, 255, 255, 0.06)',
+        borderRadius: '32px',
+        padding: '32px',
+        position: 'relative',
+        overflow: 'hidden',
+        transition: 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)',
+        display: 'flex',
+        flexDirection: 'column',
+        scrollSnapAlign: 'start',
+        cursor: 'pointer',
+        transitionDelay: `${0.1 * index}s`,
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(124, 58, 237, 0.4)';
+        e.currentTarget.style.boxShadow = '0 0 50px rgba(124, 58, 237, 0.08)';
+        e.currentTarget.querySelector('.visual-zone').style.transform = 'scale(1.05)';
+        e.currentTarget.querySelector('.overlay-btn').style.opacity = '1';
+        e.currentTarget.querySelector('.overlay-btn').style.transform = 'translate(-50%, -50%) scale(1)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+        e.currentTarget.style.boxShadow = 'none';
+        e.currentTarget.querySelector('.visual-zone').style.transform = 'scale(1)';
+        e.currentTarget.querySelector('.overlay-btn').style.opacity = '0';
+        e.currentTarget.querySelector('.overlay-btn').style.transform = 'translate(-50%, -50%) scale(0.9)';
+      }}
+    >
+      {/* Top Section - Visual Zone (40% height) */}
+      <div 
+        className="visual-zone"
+        style={{
+          height: '40%',
+          width: '100%',
+          background: 'rgba(124, 58, 237, 0.03)',
+          borderRadius: '20px',
+          marginBottom: '32px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+          transition: 'transform 0.6s cubic-bezier(0.19, 1, 0.22, 1)',
+        }}
+      >
+        {/* Abstract Background for Visual Zone */}
+        <div style={{ position: 'absolute', inset: 0, opacity: 0.2, pointerEvents: 'none' }}>
+           {project.category === 'IOT / FINTECH' && (
+             <svg width="100%" height="100%">
+               <defs>
+                 <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                   <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#7c3aed" strokeWidth="0.5"/>
+                 </pattern>
+               </defs>
+               <rect width="100%" height="100%" fill="url(#grid)" />
+               <circle cx="60" cy="80" r="4" fill="#a78bfa" />
+               <circle cx="120" cy="40" r="3" fill="#67e8f9" />
+               <circle cx="180" cy="100" r="5" fill="#7c3aed" />
+             </svg>
+           )}
+           {project.category === 'ARTIFICIAL INTELLIGENCE' && (
+             <svg width="100%" height="100%">
+               <circle cx="50" cy="50" r="4" fill="#7c3aed" />
+               <circle cx="150" cy="50" r="4" fill="#7c3aed" />
+               <circle cx="100" cy="100" r="4" fill="#7c3aed" />
+               <line x1="50" y1="50" x2="100" y2="100" stroke="#a78bfa" strokeWidth="1" />
+               <line x1="150" y1="50" x2="100" y2="100" stroke="#a78bfa" strokeWidth="1" />
+               <circle cx="100" cy="50" r="2" fill="#67e8f9" />
+               <circle cx="75" cy="75" r="2" fill="#67e8f9" />
+             </svg>
+           )}
+           {project.category === 'HARDWARE / IOT' && (
+             <svg width="100%" height="100%">
+               <path d="M 0 80 Q 50 20 100 80 T 200 80" fill="none" stroke="#7c3aed" strokeWidth="2" strokeDasharray="5,5" />
+               <polygon points="100,40 120,70 80,70" fill="none" stroke="#fb923c" strokeWidth="1" />
+             </svg>
+           )}
+        </div>
+
+        {/* View Project Overlay */}
+        <div 
+          className="overlay-btn"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%) scale(0.9)',
+            padding: '12px 24px',
+            background: 'rgba(124, 58, 237, 0.95)',
+            color: '#fff',
+            fontFamily: 'DM Mono',
+            fontSize: '0.7rem',
+            fontWeight: '600',
+            borderRadius: '50px',
+            opacity: 0,
+            transition: 'all 0.4s ease',
+            whiteSpace: 'nowrap',
+            backdropFilter: 'blur(10px)',
+            zIndex: 2,
+            letterSpacing: '0.1em'
+          }}
+        >
+          VIEW PROJECT →
         </div>
       </div>
 
-      <div style={{ padding: '2.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative', zIndex: 2 }}>
-        <span style={{ fontFamily: 'DM Mono', fontSize: '0.75rem', color: '#a78bfa', letterSpacing: '0.25em', fontWeight: 700 }}>{project.category}</span>
-        <h3 style={{ fontFamily: 'Cormorant Garamond', fontSize: '2.25rem', color: '#FFFFFF', margin: 0, lineHeight: 1.1 }}>{project.name}</h3>
-        <p style={{ fontFamily: 'DM Mono', fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.5)', lineHeight: '1.8', fontWeight: 400 }}>{project.desc}</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginTop: 'auto' }}>
-          {project.tags.map((tag, i) => (
-            <span key={i} style={{
-              fontFamily: 'DM Mono', fontSize: '0.65rem', color: 'rgba(255, 255, 255, 0.35)',
-              border: '1px solid rgba(255, 255, 255, 0.12)', padding: '0.4rem 1rem', borderRadius: '6px'
-            }}>{tag}</span>
+      {/* Project Details */}
+      <div style={{ flex: 1, padding: '0 8px' }}>
+        <div style={{ 
+          fontFamily: 'DM Mono', 
+          fontSize: '0.65rem', 
+          color: '#a78bfa', 
+          textTransform: 'uppercase', 
+          letterSpacing: '0.15em', 
+          marginBottom: '12px' 
+        }}>
+          {project.category}
+        </div>
+        <h3 style={{ 
+          fontFamily: 'Cormorant Garamond', 
+          fontSize: '2rem', 
+          fontWeight: '600', 
+          lineHeight: '1.2', 
+          color: '#f0eeff', 
+          marginBottom: '16px' 
+        }}>
+          {project.name}
+        </h3>
+        <p style={{ 
+          fontFamily: 'DM Mono', 
+          fontSize: '0.78rem', 
+          color: 'rgba(240,238,255,0.45)', 
+          lineHeight: '1.7', 
+          marginBottom: '24px' 
+        }}>
+          {project.description}
+        </p>
+      </div>
+
+      {/* Footer Tags & Links */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        marginTop: 'auto',
+        padding: '0 8px'
+      }}>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {project.tags.slice(0, 2).map((tag, i) => (
+            <span key={i} style={{ 
+              fontFamily: 'DM Mono', 
+              fontSize: '0.65rem', 
+              color: 'rgba(167, 139, 250, 0.6)',
+              textTransform: 'uppercase'
+            }}>
+              #{tag}
+            </span>
           ))}
         </div>
+        <a href={project.github} style={{ 
+          fontFamily: 'DM Mono', 
+          fontSize: '0.7rem', 
+          color: '#f0eeff', 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '6px',
+          fontWeight: '500'
+        }}>
+          GITHUB ↗
+        </a>
       </div>
 
-      <div style={{ padding: '0 2.5rem 2.5rem', display: 'flex', justifyContent: 'flex-end', zIndex: 2 }}>
-        <a href={project.github} className="gh-link" style={{
-          fontFamily: 'DM Mono', fontSize: '0.85rem', color: '#a78bfa', display: 'flex', alignItems: 'center', gap: '0.65rem', fontWeight: 600
-        }}>GITHUB <span style={{ fontSize: '1.35rem' }}>↗</span></a>
-      </div>
-
+      {/* Watermark Section Number */}
       <div style={{
-        position: 'absolute', bottom: '2.5rem', left: '2.5rem', fontFamily: 'Cormorant Garamond',
-        fontSize: '6rem', fontWeight: 700, color: '#fff', opacity: 0.04, zIndex: 1
-      }}>{project.num}</div>
-
-      <style>{`
-        .project-card:hover { transform: translateY(-12px); border-color: rgba(124, 58, 237, 0.5) !important; box-shadow: 0 50px 120px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1); }
-        .project-card:hover .hover-overlay { opacity: 1; }
-        .project-card:hover .visual-zone > div { transform: scale(1.15); transition: 1s ease; }
-        .gh-link:hover { color: #fff !important; transform: translateX(6px); transition: 0.3s; }
-      `}</style>
+        position: 'absolute',
+        bottom: '10px',
+        right: '24px',
+        fontFamily: 'Cormorant Garamond',
+        fontSize: '6rem',
+        fontWeight: '700',
+        opacity: 0.04,
+        color: '#f0eeff',
+        lineHeight: '1',
+        pointerEvents: 'none'
+      }}>
+        {index < 9 ? `0${index + 1}` : index + 1}
+      </div>
     </div>
   );
 };
 
 const Projects = () => {
-  const carouselRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef(null);
+  const [scrollIndex, setScrollIndex] = useState(0);
 
-  const slide = (direction) => {
-    if (carouselRef.current) {
-      const scrollAmount = 480;
-      carouselRef.current.scrollBy({ left: direction === 'right' ? scrollAmount : -scrollAmount, behavior: 'smooth' });
+  const projects = [
+    {
+      name: 'NoteNetra',
+      category: 'IOT / FINTECH',
+      description: 'IoT-based system tracking offline MSME cash transactions via smart sensors. Generates alternative credit scores for financial inclusion.',
+      tags: ['IoT', 'React', 'Node.js', 'AI/ML', 'Sensors'],
+      github: '#'
+    },
+    {
+      name: 'AIKosh',
+      category: 'ARTIFICIAL INTELLIGENCE',
+      description: 'AI-powered platform mapping MSMEs with the most relevant financial agents using intelligent data analysis.',
+      tags: ['AI', 'React', 'Node.js', 'Express', 'Data Analysis'],
+      github: '#'
+    },
+    {
+      name: 'Smart Vape Detection System',
+      category: 'HARDWARE / IOT',
+      description: 'Hardware-based sensor system detecting vaping in restricted campus environments using embedded IoT sensors.',
+      tags: ['IoT', 'Embedded C', 'Hardware', 'Sensors', 'Campus Safety'],
+      github: '#'
     }
+  ];
+
+  const handleScroll = (direction) => {
+    if (!containerRef.current) return;
+    const scrollAmount = direction === 'next' ? 444 : -444; // 420px card + 24px gap
+    containerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   };
 
-  const handleScroll = (e) => {
-    const { scrollLeft, scrollWidth, clientWidth } = e.target;
-    setScrollProgress(scrollLeft / (scrollWidth - clientWidth));
-  };
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const idx = Math.round(el.scrollLeft / 444);
+      setScrollIndex(idx);
+    };
+    el.addEventListener('scroll', onScroll);
+    return () => el.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <section id="work" style={{ padding: '120px 10vw', background: '#080810', overflow: 'hidden' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '7.5rem' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <span className="section-label reveal">// THINGS I'VE BUILT</span>
-          <h2 className="reveal" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', color: '#FFFFFF', lineHeight: 1.1 }}>Digital <span style={{ fontStyle: 'italic', fontWeight: 500, color: '#a78bfa' }}>Constellations</span></h2>
-        </div>
-        <div style={{ display: 'flex', gap: '1.5rem' }} className="reveal">
-          <button onClick={() => slide('left')} className="nav-btn">←</button>
-          <button onClick={() => slide('right')} className="nav-btn">→</button>
+    <section id="work" style={{ 
+      padding: '120px 10vw', 
+      background: '#080810',
+      minHeight: '100vh',
+      overflow: 'hidden'
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 0 60px auto', position: 'relative' }} className="reveal">
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'flex-end',
+          width: '100%'
+        }}>
+          <div>
+            <span className="section-label" style={{ color: '#7c3aed' }}>// THINGS I'VE BUILT</span>
+            <h2 style={{ 
+              fontFamily: 'Cormorant Garamond', 
+              fontSize: '4.5rem', 
+              fontWeight: '700', 
+              lineHeight: '1',
+              color: '#f0eeff'
+            }}>
+              Crafting <span style={{ fontStyle: 'italic', color: '#a78bfa' }}>Impactful</span> <br /> Solutions.
+            </h2>
+          </div>
+
+          <div className="nav-controls" style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+            <button 
+              onClick={() => handleScroll('prev')}
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'transparent',
+                color: '#fff',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = '#7c3aed'; e.currentTarget.style.borderColor = '#7c3aed'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
+            >
+              ←
+            </button>
+            <button 
+              onClick={() => handleScroll('next')}
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'transparent',
+                color: '#fff',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = '#7c3aed'; e.currentTarget.style.borderColor = '#7c3aed'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
+            >
+              →
+            </button>
+          </div>
         </div>
       </div>
 
       <div 
-        ref={carouselRef} onScroll={handleScroll} className="hide-scrollbar"
-        style={{ display: 'flex', gap: '2.5rem', overflowX: 'auto', scrollSnapType: 'x mandatory', paddingBottom: '3rem' }}
+        ref={containerRef}
+        className="projects-carousel hide-scrollbar"
+        style={{
+          display: 'flex',
+          gap: '24px',
+          overflowX: 'auto',
+          scrollSnapType: 'x mandatory',
+          paddingBottom: '60px',
+          paddingLeft: 'max(10vw, calc((100vw - 1200px) / 2))',
+          paddingRight: '10vw',
+          marginLeft: 'calc(-1 * max(10vw, calc((100vw - 1200px) / 2)))',
+          marginRight: '-10vw',
+          width: '100vw'
+        }}
       >
-        {projects.map((project, i) => (
-          <ProjectCard key={i} project={project} index={i} />
+        {projects.map((p, idx) => (
+          <ProjectCard key={idx} project={p} index={idx} />
         ))}
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '4.5rem' }}>
-        {projects.map((_, i) => {
-          const progressVal = (scrollProgress * (projects.length - 1));
-          const isActive = progressVal >= (i - 0.48) && progressVal <= (i + 0.48);
-          return (
-            <div key={i} style={{ width: isActive ? '28px' : '9px', height: '9px', borderRadius: '10px', background: isActive ? '#7c3aed' : 'rgba(255,255,255,0.12)', transition: 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)' }} />
-          );
-        })}
+      {/* Progress Dots */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        gap: '8px', 
+        marginTop: '20px' 
+      }}>
+        {projects.map((_, idx) => (
+          <div 
+            key={idx}
+            style={{
+              width: scrollIndex === idx ? '24px' : '8px',
+              height: '8px',
+              borderRadius: '100px',
+              background: scrollIndex === idx ? '#7c3aed' : 'rgba(255,255,255,0.1)',
+              transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+            }}
+          />
+        ))}
       </div>
 
       <style>{`
-        .nav-btn { width: 48px; height: 48px; borderRadius: 50%; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: #fff; cursor: pointer; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); fontSize: 1.25rem; display: flex; align-items: center; justify-content: center; }
-        .nav-btn:hover { background: #7c3aed !important; border-color: #7c3aed !important; transform: scale(1.15); box-shadow: 0 0 25px rgba(124, 58, 237, 0.5); }
+        @media (max-width: 768px) {
+          .nav-controls {
+            display: none !important;
+          }
+          .projects-carousel {
+            flex-direction: column !important;
+            scroll-snap-type: none !important;
+            padding: 0 5vw !important;
+            margin: 0 !important;
+            width: 100% !important;
+            overflow: visible !important;
+          }
+          .project-card {
+            flex: 0 0 100% !important;
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          h2 {
+            font-size: 3rem !important;
+          }
+        }
       `}</style>
     </section>
   );
