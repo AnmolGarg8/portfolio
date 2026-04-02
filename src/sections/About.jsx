@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const About = () => {
-  const [typedLines, setTypedLines] = useState([]);
-  const [isTypingDone, setIsTypingDone] = useState(false);
-  
-  const jsonContent = [
+  const [typedContent, setTypedContent] = useState([]);
+  const [completeContent] = useState([
     '{',
     '  "name": "Anmol Garg",',
     '  "role": "Full Stack & AI Engineer",',
@@ -13,21 +11,33 @@ const About = () => {
     '  "focus": ["AI", "IoT", "Security"],',
     '  "status": "Building Future Systems"',
     '}'
-  ];
+  ]);
+
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [currentCharIndex, setCurrentCharIndex] = useState(0);
 
   useEffect(() => {
-    let lineIndex = 0;
-    const interval = setInterval(() => {
-      if (lineIndex < jsonContent.length) {
-        setTypedLines(prev => [...prev, jsonContent[lineIndex]]);
-        lineIndex++;
+    if (currentLineIndex < completeContent.length) {
+      if (currentCharIndex < completeContent[currentLineIndex].length) {
+        const timeout = setTimeout(() => {
+          setTypedContent(prev => {
+            const newContent = [...prev];
+            if (!newContent[currentLineIndex]) newContent[currentLineIndex] = "";
+            newContent[currentLineIndex] += completeContent[currentLineIndex][currentCharIndex];
+            return newContent;
+          });
+          setCurrentCharIndex(prev => prev + 1);
+        }, 15); // Character typing speed
+        return () => clearTimeout(timeout);
       } else {
-        clearInterval(interval);
-        setIsTypingDone(true);
+        const lineTimeout = setTimeout(() => {
+          setCurrentLineIndex(prev => prev + 1);
+          setCurrentCharIndex(0);
+        }, 150); // Delay between lines
+        return () => clearTimeout(lineTimeout);
       }
-    }, 200);
-    return () => clearInterval(interval);
-  }, []);
+    }
+  }, [currentLineIndex, currentCharIndex, completeContent]);
 
   return (
     <section id="about" style={{
@@ -46,7 +56,7 @@ const About = () => {
       }}>
         
         {/* LEFT: TERMINAL */}
-        <div className="reveal" style={{ transitionDelay: '0.2s' }}>
+        <div className="reveal active">
           <div style={{
             background: '#08080f',
             borderRadius: '14px',
@@ -77,9 +87,9 @@ const About = () => {
               }}>anmol_garg.json</div>
             </div>
 
-            <div style={{ padding: '2rem', minHeight: '320px', position: 'relative' }}>
-              <div style={{ fontFamily: 'DM Mono', fontSize: '0.9rem', lineHeight: '1.8' }}>
-                {typedLines.map((line, i) => (
+            <div style={{ padding: '2rem', minHeight: '340px', position: 'relative' }}>
+              <div style={{ fontFamily: 'DM Mono', fontSize: '0.85rem', lineHeight: '1.8' }}>
+                {typedContent.map((line, i) => (
                   <div key={i} style={{ whiteSpace: 'pre-wrap' }}>
                     {line.split(/(":|",|\[|\]|{|}|")/g).map((part, j) => {
                       let color = 'white';
@@ -91,13 +101,14 @@ const About = () => {
                     })}
                   </div>
                 ))}
-                {isTypingDone && (
+                {currentLineIndex < completeContent.length && (
                   <span style={{ 
                     display: 'inline-block', 
                     width: '10px', 
                     height: '18px', 
                     background: '#7c3aed', 
-                    marginLeft: '5px',
+                    marginLeft: '2px',
+                    verticalAlign: 'middle',
                     animation: 'blink 1s infinite'
                   }}>█</span>
                 )}
@@ -113,7 +124,7 @@ const About = () => {
 
         {/* RIGHT: CONTENT */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
-          <div className="reveal" style={{ transitionDelay: '0.3s' }}>
+          <div className="reveal">
             <span className="section-label" style={{ marginBottom: '1.5rem' }}>// ABOUT ME</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', lineHeight: '1', color: '#FFFFFF', margin: 0 }}>Building the future, one</h2>
@@ -121,18 +132,17 @@ const About = () => {
               <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', lineHeight: '1', color: '#FFFFFF', margin: 0 }}>at a time.</h2>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '2.5rem' }}>
-              <p style={{ fontFamily: 'DM Mono', fontSize: '0.85rem', color: 'rgba(240,238,255,0.55)', lineHeight: '1.85' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.85rem', marginTop: '3rem' }}>
+              <p style={{ fontFamily: 'DM Mono', fontSize: '0.85rem', color: 'rgba(240,238,255,0.55)', lineHeight: '1.85', maxWidth: '520px' }}>
                 I am a focused developer passionate about crafting high-impact digital solutions. From architecting end-to-end full stack applications to building hardware-integrated IoT systems, I thrive at the intersection of complexity and elegance.
               </p>
-              <p style={{ fontFamily: 'DM Mono', fontSize: '0.85rem', color: 'rgba(240,238,255,0.55)', lineHeight: '1.85' }}>
+              <p style={{ fontFamily: 'DM Mono', fontSize: '0.85rem', color: 'rgba(240,238,255,0.55)', lineHeight: '1.85', maxWidth: '520px' }}>
                 As the Co-Founder of Kenet Technologies, I focus on building scalable platforms that leverage AI and machine learning to solve real-world problems.
               </p>
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="reveal" style={{ display: 'flex', alignItems: 'center', gap: '3rem', transitionDelay: '0.4s' }}>
+          <div className="reveal" style={{ display: 'flex', alignItems: 'center', gap: '3rem' }}>
             {[
               { val: '3+', label: 'PROJECTS' },
               { val: 'Top 10', label: 'NATIONAL' },
@@ -140,20 +150,20 @@ const About = () => {
               { val: '4', label: 'DOMAINS' }
             ].map((stat, i) => (
               <React.Fragment key={i}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <span style={{ fontFamily: 'Cormorant Garamond', fontSize: '2.5rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{stat.val}</span>
-                  <span style={{ fontFamily: 'DM Mono', fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.15em' }}>{stat.label}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <span style={{ fontFamily: 'Cormorant Garamond', fontSize: '2.8rem', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{stat.val}</span>
+                  <span style={{ fontFamily: 'DM Mono', fontSize: '0.6rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.2em' }}>{stat.label}</span>
                 </div>
-                {i < 3 && <div style={{ width: '1px', height: '45px', background: 'rgba(255,255,255,0.1)' }} />}
+                {i < 3 && <div style={{ width: '1px', height: '50px', background: 'rgba(255,255,255,0.08)' }} />}
               </React.Fragment>
             ))}
           </div>
 
-          <div className="reveal" style={{ transitionDelay: '0.5s' }}>
+          <div className="reveal">
             <button className="btn-fill-purple" style={{
-              background: 'transparent', border: '1px solid #7c3aed', color: '#fff', padding: '1.2rem 2.5rem',
-              fontFamily: 'Syne', fontWeight: 700, fontSize: '0.8rem', letterSpacing: '0.15em', cursor: 'pointer',
-              textTransform: 'uppercase'
+              background: 'transparent', border: '1px solid #7c3aed', color: '#fff', padding: '1.35rem 3rem',
+              fontFamily: 'Syne', fontWeight: 700, fontSize: '0.8rem', letterSpacing: '0.2em', cursor: 'pointer',
+              textTransform: 'uppercase', position: 'relative', overflow: 'hidden'
             }}>DOWNLOAD RESUME ↓</button>
           </div>
         </div>
