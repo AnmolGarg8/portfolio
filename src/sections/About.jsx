@@ -1,139 +1,218 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const About = () => {
-  const revealRef = useRef(null);
+  const [typedLines, setTypedLines] = useState([]);
+  const [isTypingDone, setIsTypingDone] = useState(false);
+  
+  const jsonContent = [
+    '{',
+    '  "name": "Anmol Garg",',
+    '  "role": "Full Stack & AI Engineer",',
+    '  "location": "India",',
+    '  "founder": "Kenet Technologies",',
+    '  "focus": ["AI", "IoT", "Security"],',
+    '  "status": "Building Future Systems"',
+    '}'
+  ];
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const revealElements = document.querySelectorAll('.reveal');
-    revealElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    let lineIndex = 0;
+    const interval = setInterval(() => {
+      if (lineIndex < jsonContent.length) {
+        setTypedLines(prev => [...prev, jsonContent[lineIndex]]);
+        lineIndex++;
+      } else {
+        clearInterval(interval);
+        setIsTypingDone(true);
+      }
+    }, 250);
+    return () => clearInterval(interval);
   }, []);
 
-  const terminalData = {
-    name: "Anmol Garg",
-    role: "Full Stack Developer",
-    focus: ["AI", "IoT", "Cybersecurity"],
-    startup: "Kenet Technologies",
-    education: "VIPS, B.Tech CSE 2024-28",
-    achievement: "Samsung Top 10 National",
-    location: "Noida, India",
-    status: "Available for work"
-  };
-
   return (
-    <section className="about" id="about" style={{
-      padding: '10rem 10vw',
-      display: 'grid',
-      gridTemplateColumns: '1.2fr 1fr',
-      gap: '8rem',
-      alignItems: 'center',
+    <section id="about" style={{
+      padding: '120px 10vw',
       background: '#080810',
-      position: 'relative',
+      width: '100vw',
       overflow: 'hidden'
     }}>
-      
-      {/* LEFT: TERMINAL WINDOW */}
-      <div className="reveal" style={{
-        background: '#0a0a14',
-        border: '1px solid rgba(255, 255, 255, 0.05)',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        boxShadow: '0 40px 100px rgba(0,0,0,0.4)',
-        position: 'relative'
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)',
+        gap: '6rem',
+        alignItems: 'start'
       }}>
-        {/* Terminal Header */}
-        <div style={{
-          background: 'rgba(255, 255, 255, 0.03)',
-          padding: '1rem 1.5rem',
-          display: 'flex',
-          gap: '0.6rem',
-          alignItems: 'center',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
-        }}>
-          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#FF5F57' }} />
-          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#FEBC2E' }} />
-          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#28C840' }} />
-          <div style={{ marginLeft: 'auto', fontFamily: 'DM Mono', fontSize: '0.7rem', opacity: 0.3, letterSpacing: '0.1em' }}>anmol_garg.json</div>
-        </div>
         
-        {/* Terminal Body */}
-        <div style={{ padding: '2.5rem', fontFamily: 'DM Mono', fontSize: '0.85rem', lineHeight: '1.8' }}>
-          <div><span style={{ color: '#a78bfa' }}>"name"</span>: <span style={{ color: '#86efac' }}>"{terminalData.name}"</span>,</div>
-          <div><span style={{ color: '#a78bfa' }}>"role"</span>: <span style={{ color: '#86efac' }}>"{terminalData.role}"</span>,</div>
-          <div>
-            <span style={{ color: '#a78bfa' }}>"focus"</span>: [
-            <span style={{ color: '#67e8f9' }}>"{terminalData.focus[0]}"</span>, 
-            <span style={{ color: '#67e8f9' }}>"{terminalData.focus[1]}"</span>, 
-            <span style={{ color: '#67e8f9' }}>"{terminalData.focus[2]}"</span>
-            ],
+        {/* LEFT: INTERACTIVE TERMINAL */}
+        <div className="reveal active" style={{ 
+          position: 'relative',
+          animation: 'fadeUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards'
+        }}>
+          <div style={{
+            background: '#08080f',
+            borderRadius: '14px',
+            boxShadow: '0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,58,237,0.15), inset 0 1px 0 rgba(255,255,255,0.05)',
+            overflow: 'hidden',
+            position: 'relative'
+          }}>
+            {/* macOS Bar */}
+            <div style={{
+              background: 'rgba(255,255,255,0.03)',
+              padding: '0.8rem 1.2rem',
+              display: 'flex',
+              alignItems: 'center',
+              borderBottom: '1px solid rgba(255,255,255,0.05)'
+            }}>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ff5f56' }} />
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e' }} />
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f' }} />
+              </div>
+              <div style={{
+                flex: 1,
+                textAlign: 'center',
+                fontFamily: 'DM Mono',
+                fontSize: '0.7rem',
+                color: 'rgba(255,255,255,0.3)',
+                letterSpacing: '0.05em'
+              }}>anmol_garg.json</div>
+            </div>
+
+            {/* Terminal Body */}
+            <div style={{ padding: '2rem', minHeight: '320px', position: 'relative' }}>
+              <div style={{ fontFamily: 'DM Mono', fontSize: '0.9rem', lineHeight: '1.8' }}>
+                {typedLines.map((line, i) => {
+                  // Basic syntax highlighting
+                  const isKey = line.includes('":');
+                  const isBrace = line === '{' || line === '}';
+                  
+                  return (
+                    <div key={i} style={{ whiteSpace: 'pre-wrap' }}>
+                      {line.split(/(":|",|\[|\]|{|}|")/g).map((part, j) => {
+                        let color = 'white';
+                        if (part === '{' || part === '}' || part === '[' || part === ']') color = 'rgba(255,255,255,0.4)';
+                        else if (part.startsWith('  "')) color = '#a78bfa'; // keys
+                        else if (part.length > 2 && !part.includes(':')) color = '#86efac'; // strings
+                        
+                        return <span key={j} style={{ color }}>{part}</span>;
+                      })}
+                    </div>
+                  );
+                })}
+                {isTypingDone && (
+                  <span style={{ 
+                    display: 'inline-block', 
+                    width: '10px', 
+                    height: '18px', 
+                    background: '#7c3aed', 
+                    marginLeft: '5px',
+                    animation: 'blink 1s infinite'
+                  }}>█</span>
+                )}
+              </div>
+
+              {/* Scanline Overlay */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                pointerEvents: 'none',
+                background: 'repeating-linear-gradient(rgba(124, 58, 237, 0.02) 0px, rgba(124, 58, 237, 0.02) 1px, transparent 1px, transparent 2px)',
+                backgroundSize: '100% 2px'
+              }} />
+            </div>
           </div>
-          <div><span style={{ color: '#a78bfa' }}>"startup"</span>: <span style={{ color: '#86efac' }}>"{terminalData.startup}"</span>,</div>
-          <div><span style={{ color: '#a78bfa' }}>"education"</span>: <span style={{ color: '#86efac' }}>"{terminalData.education}"</span>,</div>
-          <div><span style={{ color: '#a78bfa' }}>"achievement"</span>: <span style={{ color: '#86efac' }}>"{terminalData.achievement}"</span>,</div>
-          <div><span style={{ color: '#a78bfa' }}>"location"</span>: <span style={{ color: '#86efac' }}>"{terminalData.location}"</span>,</div>
-          <div>
-            <span style={{ color: '#a78bfa' }}>"status"</span>: <span style={{ color: '#86efac' }}>"{terminalData.status}"</span>
-            <span style={{ display: 'inline-block', width: '8px', height: '15px', background: '#a78bfa', marginLeft: '5px', animation: 'blink 1s infinite', verticalAlign: 'middle' }} />
+        </div>
+
+        {/* RIGHT: BIO CONTENT */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+          <div className="reveal" style={{ animation: 'fadeUp 0.8s 0.2s forwards' }}>
+            <span className="section-label">// ABOUT ME</span>
+            <h2 style={{
+              fontSize: 'clamp(2.5rem, 4vw, 4rem)',
+              lineHeight: '1.1',
+              color: '#FFFFFF',
+              margin: '1.5rem 0 2.5rem'
+            }}>
+              Building the future, one <br />
+              <span style={{ fontStyle: 'italic', color: '#a78bfa' }}>intelligent system</span> <br />
+              at a time.
+            </h2>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <p style={{
+                fontFamily: 'DM Mono',
+                fontSize: '0.85rem',
+                color: 'rgba(240,238,255,0.55)',
+                lineHeight: '1.85',
+                maxWidth: '90%'
+              }}>
+                I am a focused developer passionate about crafting high-impact digital solutions. From architecting end-to-end full stack applications to building hardware-integrated IoT systems, I thrive at the intersection of complexity and elegance.
+              </p>
+              <p style={{
+                fontFamily: 'DM Mono',
+                fontSize: '0.85rem',
+                color: 'rgba(240,238,255,0.55)',
+                lineHeight: '1.85',
+                maxWidth: '90%'
+              }}>
+                As the Co-Founder of Kenet Technologies, I focus on building scalable platforms that leverage AI and machine learning to solve real-world problems.
+              </p>
+            </div>
+          </div>
+
+          {/* Stat Pills */}
+          <div className="reveal" style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '2.5rem',
+            animation: 'fadeUp 0.8s 0.4s forwards'
+          }}>
+            {[
+              { val: '3+', label: 'PROJECTS' },
+              { val: 'Top 10', label: 'NATIONAL' },
+              { val: '2024', label: 'BATCH' },
+              { val: '4', label: 'TECH DOMAINS' }
+            ].map((stat, i) => (
+              <React.Fragment key={i}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <span style={{ 
+                    fontFamily: 'Cormorant Garamond', 
+                    fontSize: '2.2rem', 
+                    fontWeight: 700, 
+                    color: '#fff',
+                    lineHeight: 1
+                  }}>{stat.val}</span>
+                  <span style={{ 
+                    fontFamily: 'DM Mono', 
+                    fontSize: '0.6rem', 
+                    color: 'rgba(255,255,255,0.3)',
+                    letterSpacing: '0.15em'
+                  }}>{stat.label}</span>
+                </div>
+                {i < 3 && <div style={{ width: '1px', height: '40px', background: 'rgba(255,255,255,0.1)' }} />}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Resume Button */}
+          <div className="reveal" style={{ animation: 'fadeUp 0.8s 0.6s forwards' }}>
+            <button className="btn-fill-purple" style={{
+              background: 'transparent',
+              border: '1px solid #7c3aed',
+              color: '#fff',
+              padding: '1.2rem 2.8rem',
+              fontFamily: 'Syne',
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              letterSpacing: '0.1em',
+              cursor: 'pointer',
+              transition: '0.3s'
+            }}>
+              DOWNLOAD RESUME ↓
+            </button>
           </div>
         </div>
       </div>
-
-      {/* RIGHT: CONTENT */}
-      <div className="reveal">
-        <span className="section-label">// ABOUT ME</span>
-        <h2 style={{
-          fontSize: 'clamp(2rem, 3.5vw, 3rem)',
-          lineHeight: '1.1',
-          marginBottom: '2rem',
-          color: '#FFFFFF'
-        }}>
-          Building the future, one <span className="italic-accent">intelligent system</span> at a time.
-        </h2>
-        
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
-          <p style={{ fontFamily: 'DM Mono', fontSize: '0.95rem', color: 'rgba(248, 250, 252, 0.7)', fontWeight: 300 }}>
-            I am a software engineer and hardware enthusiast from Noida, India, specializing in the convergence of AI, IoT, and Cybersecurity. My work focuses on building resilient systems that solve tangible real-world problems.
-          </p>
-          <p style={{ fontFamily: 'DM Mono', fontSize: '0.95rem', color: 'rgba(248, 250, 252, 0.7)', fontWeight: 300 }}>
-            As the Co-Founder of Kenet Technologies, I was recognized as a Top 10 National Semifinalist at Samsung Solve for Tomorrow 2025, validating my commitment to high-impact innovation and scalable architecture.
-          </p>
-        </div>
-
-        <a href="#" style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '1rem',
-          padding: '1rem 2rem',
-          border: '1px solid rgba(255, 255, 255, 0.15)',
-          color: '#FFFFFF',
-          fontFamily: 'DM Mono',
-          fontSize: '0.8rem',
-          letterSpacing: '0.1em',
-          transition: '0.3s'
-        }} className="about-cta">
-          DOWNLOAD RESUME ↓
-        </a>
-      </div>
-
-      <style>{`
-        .about-cta:hover {
-          border-color: #a78bfa;
-          background: rgba(124, 58, 237, 0.05);
-          transform: translateY(-5px);
-        }
-      `}</style>
     </section>
   );
 };

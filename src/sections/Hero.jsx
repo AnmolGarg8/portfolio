@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import characterImage from '../assets/character.png';
+import characterImage from '../assets/3d.jpeg';
+
 
 const Hero = () => {
   const particles = useMemo(() => Array.from({ length: 6 }).map((_, i) => ({
@@ -96,55 +97,82 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* CENTER COLUMN: CHARACTER CENTERPIECE */}
-        <div style={{ position: 'relative', height: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {/* Radial Glow */}
+        {/* CENTER COLUMN: CHARACTER STAGING AREA */}
+        <div style={{ position: 'relative', height: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          
+          {/* Grounded Floor Shadow (Depth Anchor) */}
           <div style={{
             position: 'absolute',
-            width: '100%',
-            height: '100%',
+            bottom: '5%',
+            width: '280px',
+            height: '40px',
             background: 'radial-gradient(ellipse at center, rgba(124, 60, 237, 0.45) 0%, transparent 70%)',
-            zIndex: 0,
-            animation: 'pulse-glow 6s infinite ease-in-out'
+            filter: 'blur(15px)',
+            zIndex: 1,
+            opacity: 0.8
           }} />
 
-          {/* Orbiting Rings */}
-          <div style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none' }}>
+          {/* Core Cinematic Glow (Behind) */}
+          <div style={{
+            position: 'absolute',
+            width: '120%',
+            height: '110%',
+            background: 'radial-gradient(circle at center, rgba(124, 60, 237, 0.25) 0%, transparent 65%)',
+            zIndex: 0,
+            animation: 'pulse-glow 8s infinite ease-in-out'
+          }} />
+
+          {/* Floating Orbit Rings (3D Depth) */}
+          <div style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none', perspective: '1000px' }}>
             <div style={{ 
-              position: 'absolute', top: '50%', left: '50%', width: '480px', height: '480px', 
-              border: '1px solid rgba(167, 139, 250, 0.15)', borderRadius: '50%', 
-              animation: 'orbit-rotate-1 25s infinite linear' 
+              position: 'absolute', top: '50%', left: '50%', width: '110%', height: '110%', 
+              border: '1px solid rgba(167, 139, 250, 0.1)', borderRadius: '50%', 
+              animation: 'orbit-rotate-1 25s infinite linear',
+              transform: 'translate(-50%, -50%) rotateX(60deg)'
             }} />
             <div style={{ 
-              position: 'absolute', top: '50%', left: '50%', width: '380px', height: '380px', 
-              border: '1px solid rgba(167, 139, 250, 0.12)', borderRadius: '50%', 
-              animation: 'orbit-rotate-2 18s infinite linear' 
+              position: 'absolute', top: '50%', left: '50%', width: '90%', height: '90%', 
+              border: '1px solid rgba(167, 139, 250, 0.08)', borderRadius: '50%', 
+              animation: 'orbit-rotate-2 18s infinite linear',
+              transform: 'translate(-50%, -50%) rotateX(-60deg)'
             }} />
           </div>
 
-          {/* Particles */}
-          <div style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
+          {/* Twinkling Dust Particles */}
+          <div style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none' }}>
             {particles.map(p => (
               <span key={p.id} style={{
                 position: 'absolute', top: p.top, left: p.left, width: p.size, height: p.size,
-                background: 'white', borderRadius: '50%', boxShadow: '0 0 10px #7c3aed',
-                animation: 'twinkle 3s infinite ease-in-out', animationDelay: p.delay
+                background: 'white', borderRadius: '50%', 
+                boxShadow: '0 0 10px rgba(124, 58, 237, 0.8)',
+                animation: 'twinkle 4s infinite ease-in-out', animationDelay: p.delay,
+                opacity: 0.6
               }} />
             ))}
           </div>
 
+          {/* THE CHARACTER IMAGE (High-Fidelity Integration) */}
           <img 
             src={characterImage} 
-            alt="3D Character" 
+            alt="Anmol's Character" 
             style={{
-              height: '100%', width: 'auto', objectFit: 'contain', position: 'relative', zIndex: 5,
+              height: '95%', 
+              width: 'auto', 
+              objectFit: 'contain', 
+              position: 'relative', 
+              zIndex: 10,
               mixBlendMode: 'screen',
-              WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-              maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-              userSelect: 'none', pointerEvents: 'none'
+              filter: 'drop-shadow(0 0 20px rgba(124, 58, 237, 0.15)) contrast(1.15) brightness(1.1) saturate(1.1)',
+              WebkitMaskImage: 'radial-gradient(circle at center, black 45%, transparent 92%)',
+              maskImage: 'radial-gradient(circle at center, black 45%, transparent 92%)',
+              userSelect: 'none', 
+              pointerEvents: 'none',
+              animation: 'character-subtle-bob 7s infinite ease-in-out'
             }}
           />
         </div>
+
+
 
         {/* RIGHT COLUMN: PROFESSIONAL STATS */}
         <div className="reveal active" style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4rem' }}>

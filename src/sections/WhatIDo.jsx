@@ -1,147 +1,240 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const services = [
   {
-    title: 'FULL STACK DEVELOPMENT',
-    description: 'Specializing in building scalable, high-performance web applications using modern frameworks and distributed systems. From complex React dashboards to secure Node.js microservices.',
-    tags: ['React', 'Node.js', 'Express', 'MongoDB', 'REST APIs']
+    num: '01',
+    name: 'Full Stack Development',
+    desc: 'End-to-end web applications built for scale and performance with modern architecture.',
+    deliverables: ['React dashboards & SPAs', 'RESTful API architecture', 'MongoDB database design', 'Production deployment & CI/CD'],
+    tags: ['React', 'Node.js', 'Express', 'MongoDB'],
+    accent: '#7c3aed'
   },
   {
-    title: 'AI & MACHINE LEARNING',
-    description: 'Developing intelligent agents and automated data pipelines. Implementing computer vision and natural language processing to solve real-world predictive modeling challenges.',
-    tags: ['Python', 'TensorFlow', 'Data Analysis']
+    num: '02',
+    name: 'AI & Machine Learning',
+    desc: 'Intelligent systems that learn, adapt and solve real-world problems through data analysis.',
+    deliverables: ['Predictive ML models', 'Data pipelines & analysis', 'TensorFlow implementations', 'Real-world AI integrations'],
+    tags: ['Python', 'TensorFlow', 'Data Analysis'],
+    accent: '#a78bfa'
   },
   {
-    title: 'IOT & EMBEDDED SYSTEMS',
-    description: 'Hardware prototyping with smart sensors and MSMEs. Designing low-latency communication protocols for connected industrial and consumer devices.',
-    tags: ['IoT Sensors', 'Embedded C', 'Hardware']
+    num: '03',
+    name: 'IoT & Embedded Systems',
+    desc: 'Hardware meets software — sensor systems that work and communicate in the real world.',
+    deliverables: ['IoT sensor networks', 'Embedded C firmware', 'Hardware prototyping', 'Real-time data systems'],
+    tags: ['IoT Sensors', 'Embedded C', 'Hardware'],
+    accent: '#10b981'
   },
   {
-    title: 'CYBERSECURITY',
-    description: 'Architecting secure systems and performing network analysis. Focus on Linux hardening and implementing Zero-Trust network principles for enterprise applications.',
-    tags: ['Linux', 'Network Security', 'Vulnerability Assessment']
+    num: '04',
+    name: 'Cybersecurity',
+    desc: 'Hardening systems and thinking like an attacker to keep your digital assets secure.',
+    deliverables: ['Vulnerability assessment', 'Network security audits', 'Linux system hardening', 'Security architecture review'],
+    tags: ['Linux', 'Net Security', 'Cybersecurity'],
+    accent: '#f43f5e'
   }
 ];
 
+const AbstractGraphic = ({ index }) => {
+  if (index === 0) return (
+    <div style={{ position: 'relative', width: '120px', height: '120px' }}>
+      <div style={{ position: 'absolute', inset: 0, border: '1px solid rgba(124, 58, 237, 0.3)', borderRadius: '15px' }} />
+      <div style={{ position: 'absolute', top: '20px', left: '20px', right: '20px', height: '6px', background: 'rgba(124, 58, 237, 0.4)', borderRadius: '3px' }} />
+      <div style={{ position: 'absolute', top: '35px', left: '20px', width: '50px', height: '4px', background: 'rgba(124, 58, 237, 0.2)', borderRadius: '2px' }} />
+      <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px', height: '30px', border: '1px dashed rgba(124, 58, 237, 0.3)', borderRadius: '4px' }} />
+    </div>
+  );
+  if (index === 1) return (
+    <div style={{ position: 'relative', width: '120px', height: '120px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+      {[...Array(9)].map((_, i) => (
+        <div key={i} style={{ 
+          width: '32px', height: '32px', border: '1px solid rgba(167, 139, 250, 0.3)', borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}>
+          <div style={{ width: '6px', height: '6px', background: i % 2 === 0 ? '#a78bfa' : 'transparent', borderRadius: '50%', border: '1px solid #a78bfa' }} />
+        </div>
+      ))}
+    </div>
+  );
+  if (index === 2) return (
+    <div style={{ position: 'relative', width: '120px', height: '120px' }}>
+      <div style={{ position: 'absolute', top: '50%', left: '0', right: '0', height: '0.5px', background: 'rgba(16, 185, 129, 0.3)', transform: 'translateY(-50%)' }} />
+      <div style={{ position: 'absolute', left: '50%', top: '0', bottom: '0', width: '0.5px', background: 'rgba(16, 185, 129, 0.3)', transform: 'translateX(-50%)' }} />
+      <div style={{ position: 'absolute', inset: '30px', border: '1px solid #10b981', borderRadius: '50%' }} />
+      <div style={{ position: 'absolute', inset: '10px', border: '0.5px dashed rgba(16, 185, 129, 0.5)', borderRadius: '50%' }} />
+    </div>
+  );
+  return (
+    <div style={{ position: 'relative', width: '120px', height: '120px' }}>
+      <div style={{ 
+        position: 'absolute', top: '20%', left: '20%', right: '20%', bottom: '20%', 
+        background: 'rgba(244, 63, 94, 0.1)', border: '1px solid #f43f5e', clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
+      }} />
+      <div style={{ position: 'absolute', top: '45%', left: '40%', width: '20%', height: '15%', border: '1px solid #f43f5e', borderRadius: '2px' }} />
+    </div>
+  );
+};
+
 const WhatIDo = () => {
-  const [open, setOpen] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section className="what-i-do" id="services" style={{
-      padding: '10rem 10vw',
+    <section id="services" style={{
+      padding: '120px 10vw',
       background: '#080810',
       display: 'grid',
-      gridTemplateColumns: '1fr 1.5fr',
+      gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 2fr)',
       gap: '8rem',
       alignItems: 'start'
     }}>
       
-      {/* LEFT COLUMN: STICKY TITLE */}
-      <div className="reveal" style={{ position: 'sticky', top: '10rem' }}>
-        <div style={{
-          fontFamily: 'Cormorant Garamond',
-          fontSize: '10rem',
-          fontWeight: 700,
+      {/* LEFT: STICKY HEADING */}
+      <div style={{ position: 'sticky', top: '150px' }}>
+        <span className="section-label reveal">// WHAT I DO</span>
+        <h2 className="reveal" style={{
+          fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+          lineHeight: '1.1',
           color: '#FFFFFF',
-          opacity: 0.08,
-          lineHeight: 0.8,
-          position: 'absolute',
-          top: '-4rem',
-          left: '-2rem',
-          zIndex: -1
-        }}>04</div>
-        <span className="section-label">// WHAT I DO</span>
-        <h2 style={{
-          fontSize: 'clamp(3rem, 5vw, 4.5rem)',
-          color: '#FFFFFF',
-          lineHeight: '1',
-          marginTop: '1rem'
+          margin: '1.5rem 0 3rem'
         }}>
           How I Can <br />
-          <span className="italic-accent">Help</span> You
+          Help You
         </h2>
+
+        {/* Progress Bar */}
+        <div style={{ position: 'relative', width: '2px', height: '200px', background: 'rgba(255,255,255,0.05)', marginLeft: '10px' }}>
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: `${((activeTab + 1) / services.length) * 100}%`,
+            background: '#7c3aed',
+            transition: 'height 0.4s cubic-bezier(0.85, 0, 0.15, 1)',
+            boxShadow: '0 0 10px #7c3aed'
+          }} />
+        </div>
+
+        {/* Dynamic Watermark Number */}
+        <div style={{
+          position: 'absolute',
+          top: '200px',
+          left: '-20px',
+          fontFamily: 'Cormorant Garamond',
+          fontSize: '12rem',
+          fontWeight: 700,
+          color: '#fff',
+          opacity: 0.05,
+          pointerEvents: 'none',
+          zIndex: -1,
+          transition: 'all 0.4s'
+        }}>
+          {services[activeTab].num}
+        </div>
       </div>
 
-      {/* RIGHT COLUMN: ACCORDION */}
-      <div className="reveal">
-        {services.map((service, i) => (
-          <div 
-            key={i} 
-            onClick={() => setOpen(open === i ? -1 : i)}
-            style={{
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-              padding: '2.5rem 0',
+      {/* RIGHT: TAB SYSTEM */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+        {/* Tab Buttons */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          {services.map((service, i) => (
+            <button key={i} onClick={() => setActiveTab(i)} style={{
+              background: activeTab === i ? 'rgba(124, 58, 237, 0.06)' : 'transparent',
+              border: 'none',
+              borderLeft: activeTab === i ? '3px solid #7c3aed' : '3px solid transparent',
+              textAlign: 'left',
+              padding: '1.5rem 2rem',
               cursor: 'pointer',
-              transition: '0.3s'
-            }}
-          >
-            <div style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between'
+              gap: '2rem',
+              transition: '0.3s'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-                <span style={{ 
-                  fontFamily: 'DM Mono', 
-                  fontSize: '0.8rem', 
-                  color: '#7c3aed',
-                  fontWeight: 600
-                }}>0{i + 1}</span>
-                <h3 style={{
-                  fontFamily: 'DM Mono',
-                  fontSize: '1.1rem',
-                  fontWeight: 700,
-                  color: open === i ? '#a78bfa' : '#FFFFFF',
-                  letterSpacing: '0.05em',
-                  margin: 0,
-                  transition: '0.3s'
-                }}>{service.title}</h3>
-              </div>
-              <div style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1.5rem',
-                color: open === i ? '#a78bfa' : '#FFFFFF',
-                transition: '0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                transform: open === i ? 'rotate(45deg)' : 'rotate(0)'
-              }}>+</div>
+              <span style={{ 
+                fontFamily: 'DM Mono', 
+                fontSize: '0.8rem', 
+                color: activeTab === i ? '#7c3aed' : 'rgba(255,255,255,0.2)',
+                fontWeight: 700
+              }}>{service.num}</span>
+              <span style={{ 
+                fontFamily: 'Syne', 
+                fontSize: '1rem', 
+                fontWeight: 700, 
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: activeTab === i ? '#fff' : 'rgba(255,255,255,0.3)'
+              }}>{service.name}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content Panel */}
+        <div key={activeTab} className="reveal-stagger active" style={{
+          background: 'linear-gradient(135deg, #0f0f1e 0%, #0a0a14 100%)',
+          borderRadius: '24px',
+          padding: '4rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          border: '1px solid rgba(255,255,255,0.04)',
+          boxShadow: '0 40px 100px rgba(0,0,0,0.4)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* Main Info */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <h3 style={{
+              fontFamily: 'Cormorant Garamond',
+              fontSize: '2.5rem',
+              fontWeight: 500,
+              fontStyle: 'italic',
+              color: '#fff',
+              lineHeight: 1
+            }}>{services[activeTab].name}</h3>
+            
+            <p style={{
+              fontFamily: 'DM Mono',
+              fontSize: '0.85rem',
+              color: 'rgba(255,255,255,0.5)',
+              maxWidth: '450px',
+              lineHeight: '1.7'
+            }}>{services[activeTab].desc}</p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {services[activeTab].deliverables.map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1.2rem', fontFamily: 'DM Mono', fontSize: '0.8rem', color: '#fff' }}>
+                  <span style={{ color: '#7c3aed', fontSize: '1.2rem' }}>›</span>
+                  {item}
+                </div>
+              ))}
             </div>
 
-            <div style={{
-              maxHeight: open === i ? '300px' : '0',
-              overflow: 'hidden',
-              transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-              opacity: open === i ? 1 : 0,
-              paddingLeft: '3.5rem'
-            }}>
-              <p style={{
-                fontFamily: 'DM Mono',
-                fontSize: '0.9rem',
-                color: 'rgba(255,255,255,0.6)',
-                margin: '2rem 0',
-                lineHeight: '1.8'
-              }}>{service.description}</p>
-              
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
-                {service.tags.map((tag, j) => (
-                  <span key={j} style={{
-                    fontFamily: 'DM Mono',
-                    fontSize: '0.7rem',
-                    color: '#a78bfa',
-                    border: '1px solid rgba(124, 58, 237, 0.3)',
-                    padding: '0.2rem 0.8rem',
-                    borderRadius: '2px'
-                  }}>{tag}</span>
-                ))}
-              </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginTop: '1rem' }}>
+              {services[activeTab].tags.map((tag, i) => (
+                <span key={i} style={{
+                  fontFamily: 'DM Mono',
+                  fontSize: '0.65rem',
+                  color: services[activeTab].accent,
+                  border: `1px solid rgba(${activeTab === 0 ? '124, 58, 237' : activeTab === 1 ? '167, 139, 250' : activeTab === 2 ? '16, 185, 129' : '244, 63, 94'}, 0.3)`,
+                  padding: '0.4rem 1rem',
+                  borderRadius: '50px'
+                }}>{tag}</span>
+              ))}
             </div>
           </div>
-        ))}
+
+          {/* Graphic Side */}
+          <div style={{ 
+            width: '200px', 
+            height: '200px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            opacity: 0.8
+          }}>
+            <AbstractGraphic index={activeTab} />
+          </div>
+        </div>
       </div>
     </section>
   );

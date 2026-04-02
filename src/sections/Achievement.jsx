@@ -82,4 +82,3 @@ const Achievement = () => {
 };
 
 export default Achievement;
- Greenland: 0,

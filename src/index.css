@@ -159,3 +159,81 @@ a {
   border-radius: 50%;
   animation: pulse-dot 2s infinite ease-out;
 }
+
+/* Rebuild Specific Styles */
+.reveal-stagger {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.reveal-stagger.active {
+  animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button Fill Animation */
+.btn-fill-purple {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-fill-purple::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+  z-index: -1;
+}
+
+.btn-fill-purple:hover::before {
+  transform: scaleX(1);
+}
+
+/* Mesh Gradient for Frontend Tile */
+@keyframes meshGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.mesh-gradient-bg {
+  background: linear-gradient(-45deg, #0f0f1e, #1a1a3a, #080810, #111128);
+  background-size: 400% 400%;
+  animation: meshGradient 15s ease infinite;
+}
+
+/* Shimmer for AI Tile */
+@keyframes shimmerMove {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.05), transparent);
+  background-size: 200% 100%;
+  animation: shimmerMove 3s infinite linear;
+}
+
+/* Hide Scrollbar Utility */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
