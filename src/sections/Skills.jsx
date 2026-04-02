@@ -1,132 +1,107 @@
 import React, { useEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const skillCategories = [
   {
     title: 'FRONTEND',
-    icon: '◈',
-    color: '#00E5FF',
+    icon: '🔷',
     tags: ['React.js', 'JavaScript', 'HTML/CSS', 'Tailwind']
   },
   {
     title: 'BACKEND',
     icon: '⌥',
-    color: '#7C3AED',
     tags: ['Node.js', 'Express.js', 'REST APIs', 'MongoDB']
   },
   {
     title: 'AI / ML / IOT',
-    icon: '◬',
-    color: '#F59E0B',
+    icon: '⚠',
     tags: ['Python', 'TensorFlow', 'IoT Sensors', 'Embedded C']
   },
   {
     title: 'SECURITY',
-    icon: '⍥',
-    color: '#10B981',
+    icon: '🔒',
     tags: ['Cybersecurity', 'Network Security', 'Linux', 'Git']
   }
 ];
 
 const SkillCard = ({ category }) => (
-  <div className="skill-card" style={{
-    background: '#111120',
-    border: '1px solid rgba(248, 250, 252, 0.12)',
-    padding: '2rem 1.8rem',
+  <div className="skill-card reveal" style={{
+    background: '#111122',
+    border: '1px solid rgba(255, 255, 255, 0.05)',
+    padding: '3rem 2rem',
     position: 'relative',
-    overflow: 'hidden',
-    transition: 'all 0.3s',
-    borderRadius: '4px',
-    '--card-color': category.color
+    transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+    borderRadius: '8px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1.5rem'
   }}>
-    <div className="skill-icon" style={{ 
-      fontSize: '2rem', 
-      marginBottom: '1rem', 
-      color: category.color 
-    }}>{category.icon}</div>
-    <div className="skill-title" style={{
-      fontFamily: 'Clash Display',
-      fontSize: '1rem',
+    {/* Hover Top Line */}
+    <div className="hover-line" style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '2px',
+      background: '#7c3aed',
+      opacity: 0,
+      transition: '0.3s'
+    }} />
+
+    <div style={{ fontSize: '2rem' }}>{category.icon}</div>
+    
+    <div style={{
+      fontFamily: 'DM Mono',
+      fontSize: '0.9rem',
       fontWeight: 700,
-      color: '#F8FAFC',
-      letterSpacing: '0.05em',
-      marginBottom: '1rem'
+      color: '#FFFFFF',
+      letterSpacing: '0.15em'
     }}>{category.title}</div>
-    <div className="skill-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: 'auto' }}>
       {category.tags.map((tag, i) => (
-        <span key={i} className="skill-tag" style={{
-          fontFamily: 'JetBrains Mono',
-          fontSize: '0.68rem',
-          color: 'var(--muted)',
-          border: '1px solid var(--dim)',
-          padding: '0.2rem 0.6rem',
-          borderRadius: '2px',
-          transition: 'all 0.2s'
+        <span key={i} style={{
+          fontFamily: 'DM Mono',
+          fontSize: '0.7rem',
+          color: '#a78bfa',
+          background: 'rgba(124, 58, 237, 0.12)',
+          border: '1px solid rgba(124, 58, 237, 0.25)',
+          padding: '0.3rem 0.8rem',
+          borderRadius: '50px',
+          fontWeight: 500
         }}>{tag}</span>
       ))}
     </div>
 
     <style>{`
-      .skill-card::before {
-        content: ''; position: absolute;
-        top: 0; left: 0; right: 0; height: 2px;
-        background: var(--card-color);
-        box-shadow: 0 0 20px var(--card-color);
-        opacity: 0; transition: opacity 0.3s;
+      .skill-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(124, 58, 237, 0.1);
+        border-color: rgba(124, 58, 237, 0.3);
       }
-      .skill-card:hover::before { opacity: 1; }
-      .skill-card:hover { 
-        border-color: rgba(255, 255, 255, 0.15); 
-        transform: translateY(-4px); 
-      }
-      .skill-card:hover .skill-tag { 
-        color: #F8FAFC; 
-        border-color: rgba(255, 255, 255, 0.2); 
+      .skill-card:hover .hover-line {
+        opacity: 1;
       }
     `}</style>
   </div>
 );
 
 const Skills = () => {
-  useEffect(() => {
-    gsap.fromTo('.skill-card', 
-      { opacity: 0.1, y: 60 },
-      {
-        scrollTrigger: {
-          trigger: '.skills-grid',
-          start: 'top 90%'
-        },
-        opacity: 1,
-        y: 0,
-        stagger: 0.12,
-        duration: 0.7,
-        ease: 'power3.out'
-      }
-    );
-  }, []);
-
   return (
-    <section className="skills" id="skills" style={{
-      padding: '10rem 5rem',
-      background: '#060608'
+    <section className="skills" id="work" style={{
+      padding: '10rem 10vw',
+      background: '#080810'
     }}>
-      <span className="section-label">// TECH ARSENAL</span>
-      <h2 className="skills-heading" style={{
-        fontFamily: 'Clash Display',
-        fontWeight: 700,
-        fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-        color: '#F8FAFC',
-        marginBottom: '4rem'
-      }}>Tools I Build With</h2>
+      <span className="section-label reveal">// TECH ARSENAL</span>
+      <h2 className="reveal" style={{
+        fontSize: 'clamp(2.5rem, 4vw, 4rem)',
+        color: '#FFFFFF',
+        marginBottom: '5rem'
+      }}>Tools I <span className="italic-accent">Build</span> With</h2>
       
-      <div className="skills-grid" style={{
+      <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '1.5rem',
-        marginTop: '4rem'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+        gap: '2rem'
       }}>
         {skillCategories.map((cat, i) => (
           <SkillCard key={i} category={cat} />
@@ -137,3 +112,4 @@ const Skills = () => {
 };
 
 export default Skills;
+ Greenland: 0,

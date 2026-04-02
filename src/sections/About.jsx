@@ -1,139 +1,137 @@
-import React, { useEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useEffect, useRef } from 'react';
 
 const About = () => {
-  useEffect(() => {
-    // Animation logic
-    gsap.from('.about-terminal', {
-      scrollTrigger: {
-        trigger: '.about',
-        start: 'top 85%'
-      },
-      scale: 0.95,
-      x: -60,
-      duration: 0.9,
-      ease: 'power3.out'
-    });
+  const revealRef = useRef(null);
 
-    gsap.fromTo('.about-content > *', 
-      { opacity: 0.1, y: 40 },
-      {
-        scrollTrigger: {
-          trigger: '.about-content',
-          start: 'top 90%'
-        },
-        opacity: 1,
-        y: 0,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: 'power3.out'
-      }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      },
+      { threshold: 0.1 }
     );
+
+    const revealElements = document.querySelectorAll('.reveal');
+    revealElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
   }, []);
+
+  const terminalData = {
+    name: "Anmol Garg",
+    role: "Full Stack Developer",
+    focus: ["AI", "IoT", "Cybersecurity"],
+    startup: "Kenet Technologies",
+    education: "VIPS, B.Tech CSE 2024-28",
+    achievement: "Samsung Top 10 National",
+    location: "Noida, India",
+    status: "Available for work"
+  };
 
   return (
     <section className="about" id="about" style={{
+      padding: '10rem 10vw',
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
+      gridTemplateColumns: '1.2fr 1fr',
       gap: '8rem',
-      padding: '10rem 5rem',
       alignItems: 'center',
-      background: '#0C0C14',
-      position: 'relative'
+      background: '#080810',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
-      <div className="about-terminal" style={{
-        background: '#0A0A12',
-        border: '1px solid rgba(0, 229, 255, 0.15)',
+      
+      {/* LEFT: TERMINAL WINDOW */}
+      <div className="reveal" style={{
+        background: '#0a0a14',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
         borderRadius: '12px',
         overflow: 'hidden',
-        boxShadow: '0 0 60px rgba(0, 229, 255, 0.06), 0 40px 80px rgba(0,0,0,0.5)',
-        fontFamily: 'JetBrains Mono'
+        boxShadow: '0 40px 100px rgba(0,0,0,0.4)',
+        position: 'relative'
       }}>
-        <div className="terminal-header" style={{
-          background: '#111120',
+        {/* Terminal Header */}
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.03)',
           padding: '1rem 1.5rem',
           display: 'flex',
+          gap: '0.6rem',
           alignItems: 'center',
-          gap: '0.5rem',
           borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
         }}>
-          <span className="dot" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#FF5F57' }}></span>
-          <span className="dot" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#FEBC2E' }}></span>
-          <span className="dot" style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#28C840' }}></span>
-          <span className="terminal-title" style={{ marginLeft: 'auto', fontSize: '0.7rem', color: 'var(--muted)' }}>anmol@kenet:~</span>
+          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#FF5F57' }} />
+          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#FEBC2E' }} />
+          <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#28C840' }} />
+          <div style={{ marginLeft: 'auto', fontFamily: 'DM Mono', fontSize: '0.7rem', opacity: 0.3, letterSpacing: '0.1em' }}>anmol_garg.json</div>
         </div>
-        <div className="terminal-body" style={{
-          padding: '2rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.7rem'
-        }}>
-          <p style={{ fontSize: '0.85rem' }}><span style={{ color: '#7C3AED' }}>name</span>: <span style={{ color: '#00E5FF' }}>"Anmol Garg"</span></p>
-          <p style={{ fontSize: '0.85rem' }}><span style={{ color: '#7C3AED' }}>role</span>: <span style={{ color: '#00E5FF' }}>"Full Stack Developer"</span></p>
-          <p style={{ fontSize: '0.85rem' }}><span style={{ color: '#7C3AED' }}>focus</span>: [<span style={{ color: '#F59E0B' }}>"AI"</span>, <span style={{ color: '#F59E0B' }}>"IoT"</span>, <span style={{ color: '#F59E0B' }}>"Cybersecurity"</span>]</p>
-          <p style={{ fontSize: '0.85rem' }}><span style={{ color: '#7C3AED' }}>startup</span>: <span style={{ color: '#00E5FF' }}>"Kenet Technologies"</span></p>
-          <p style={{ fontSize: '0.85rem' }}><span style={{ color: '#7C3AED' }}>education</span>: <span style={{ color: '#00E5FF' }}>"VIPS, B.Tech CSE 2024-28"</span></p>
-          <p style={{ fontSize: '0.85rem' }}><span style={{ color: '#7C3AED' }}>achievement</span>: <span style={{ color: '#F59E0B' }}>"Samsung Top 10 National"</span></p>
-          <p style={{ fontSize: '0.85rem' }}><span style={{ color: '#7C3AED' }}>location</span>: <span style={{ color: '#00E5FF' }}>"Noida, India"</span></p>
-          <p style={{ fontSize: '0.85rem' }} className="t-cursor">█</p>
+        
+        {/* Terminal Body */}
+        <div style={{ padding: '2.5rem', fontFamily: 'DM Mono', fontSize: '0.85rem', lineHeight: '1.8' }}>
+          <div><span style={{ color: '#a78bfa' }}>"name"</span>: <span style={{ color: '#86efac' }}>"{terminalData.name}"</span>,</div>
+          <div><span style={{ color: '#a78bfa' }}>"role"</span>: <span style={{ color: '#86efac' }}>"{terminalData.role}"</span>,</div>
+          <div>
+            <span style={{ color: '#a78bfa' }}>"focus"</span>: [
+            <span style={{ color: '#67e8f9' }}>"{terminalData.focus[0]}"</span>, 
+            <span style={{ color: '#67e8f9' }}>"{terminalData.focus[1]}"</span>, 
+            <span style={{ color: '#67e8f9' }}>"{terminalData.focus[2]}"</span>
+            ],
+          </div>
+          <div><span style={{ color: '#a78bfa' }}>"startup"</span>: <span style={{ color: '#86efac' }}>"{terminalData.startup}"</span>,</div>
+          <div><span style={{ color: '#a78bfa' }}>"education"</span>: <span style={{ color: '#86efac' }}>"{terminalData.education}"</span>,</div>
+          <div><span style={{ color: '#a78bfa' }}>"achievement"</span>: <span style={{ color: '#86efac' }}>"{terminalData.achievement}"</span>,</div>
+          <div><span style={{ color: '#a78bfa' }}>"location"</span>: <span style={{ color: '#86efac' }}>"{terminalData.location}"</span>,</div>
+          <div>
+            <span style={{ color: '#a78bfa' }}>"status"</span>: <span style={{ color: '#86efac' }}>"{terminalData.status}"</span>
+            <span style={{ display: 'inline-block', width: '8px', height: '15px', background: '#a78bfa', marginLeft: '5px', animation: 'blink 1s infinite', verticalAlign: 'middle' }} />
+          </div>
         </div>
       </div>
 
-      <div className="about-content" style={{ position: 'relative', zIndex: 5 }}>
+      {/* RIGHT: CONTENT */}
+      <div className="reveal">
         <span className="section-label">// ABOUT ME</span>
-        <h2 className="about-heading" style={{
-          fontFamily: 'Times New Roman',
-          fontWeight: 700,
-          fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
-          lineHeight: '1.15',
-          color: '#F8FAFC',
-          marginBottom: '1.5rem'
+        <h2 style={{
+          fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+          lineHeight: '1.1',
+          marginBottom: '2rem',
+          color: '#FFFFFF'
         }}>
-          Building the future, one <span className="gradient-text">intelligent system</span> at a time.
+          Building the future, one <span className="italic-accent">intelligent system</span> at a time.
         </h2>
-        <p className="about-bio" style={{
-          fontFamily: 'Times New Roman',
-          fontSize: '1rem',
-          lineHeight: '1.8',
-          color: 'var(--muted)',
-          marginBottom: '2.5rem',
-          maxWidth: '52ch'
-        }}>
-          Aspiring Software Engineer from Noida, India, passionate about Artificial Intelligence, Machine Learning, IoT and Cybersecurity. I build intelligent sensor-based systems and scalable full-stack applications that solve real-world problems. Co-Founder of Kenet Technologies — Top 10 National Semifinalist at Samsung Solve for Tomorrow 2025.
-        </p>
         
-        <a href="#" className="btn-download" style={{
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
+          <p style={{ fontFamily: 'DM Mono', fontSize: '0.95rem', color: 'rgba(248, 250, 252, 0.7)', fontWeight: 300 }}>
+            I am a software engineer and hardware enthusiast from Noida, India, specializing in the convergence of AI, IoT, and Cybersecurity. My work focuses on building resilient systems that solve tangible real-world problems.
+          </p>
+          <p style={{ fontFamily: 'DM Mono', fontSize: '0.95rem', color: 'rgba(248, 250, 252, 0.7)', fontWeight: 300 }}>
+            As the Co-Founder of Kenet Technologies, I was recognized as a Top 10 National Semifinalist at Samsung Solve for Tomorrow 2025, validating my commitment to high-impact innovation and scalable architecture.
+          </p>
+        </div>
+
+        <a href="#" style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '0.5rem',
-          border: '1px solid var(--dim)',
-          color: 'var(--muted)',
-          padding: '0.8rem 1.8rem',
-          fontFamily: 'Times New Roman',
-          fontSize: '0.85rem',
-          letterSpacing: '0.08em',
-          textDecoration: 'none',
-          transition: 'all 0.3s ease'
-        }}>
+          gap: '1rem',
+          padding: '1rem 2rem',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          color: '#FFFFFF',
+          fontFamily: 'DM Mono',
+          fontSize: '0.8rem',
+          letterSpacing: '0.1em',
+          transition: '0.3s'
+        }} className="about-cta">
           DOWNLOAD RESUME ↓
         </a>
       </div>
 
       <style>{`
-        .t-cursor { animation: blink 1s infinite; color: #00E5FF; }
-        .btn-download:hover {
-          border-color: #00E5FF;
-          color: #00E5FF;
-          transform: translateY(-2px);
-        }
-        @media (max-width: 768px) {
-          .about {
-            grid-template-columns: 1fr !important;
-            gap: 4rem !important;
-          }
+        .about-cta:hover {
+          border-color: #a78bfa;
+          background: rgba(124, 58, 237, 0.05);
+          transform: translateY(-5px);
         }
       `}</style>
     </section>

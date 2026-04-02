@@ -1,16 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Syne:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg-primary: #050505;
-  --bg-secondary: #0C0C14;
-  --bg-card: #111120;
-  --cyan: #00E5FF;
-  --violet: #7C3AED;
-  --gold: #F59E0B;
-  --white: #F8FAFC;
-  --muted: rgba(248, 250, 252, 0.85);
-  --dim: rgba(248, 250, 252, 0.25);
-  --accent-color: var(--violet);
+  --bg: #080810;
+  --accent: #7c3aed;
+  --accent-light: #a78bfa;
+  --text-primary: #f8fafc;
+  --text-secondary: rgba(248, 250, 252, 0.7);
+  --text-muted: rgba(248, 250, 252, 0.45);
+  --border-color: rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -18,56 +15,100 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 html, body {
   width: 100%;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: 'DM Mono', monospace;
   overflow-x: hidden;
-  background-color: var(--bg-primary);
-  color: var(--white);
-  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+/* Noise Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Section Label Pattern */
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--accent-light);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+/* Headings */
+h1, h2, h3, .font-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+}
+
+.italic-accent {
+  font-style: italic;
+  color: var(--accent-light);
+}
+
+/* Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Smooth Scroll */
+html {
   scroll-behavior: smooth;
 }
 
-h1, h2, h3, h4, .font-heading {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+/* Selection */
+::selection {
+  background: var(--accent);
+  color: #fff;
 }
 
-.font-mono {
-  font-family: 'JetBrains Mono', monospace;
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--cyan), var(--violet));
+  background: var(--accent);
   border-radius: 10px;
 }
 
-/* Custom Selection */
-::selection {
-  background: var(--violet);
-  color: var(--white);
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 @keyframes twinkle {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
+  0%, 100% { opacity: 0.1; transform: scale(0.8); }
   50% { opacity: 1; transform: scale(1.2); }
 }
 
@@ -81,3 +122,40 @@ h1, h2, h3, h4, .font-heading {
   to { transform: translate(-50%, -50%) rotateX(-65deg) rotate(0deg); }
 }
 
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.45; }
+  50% { transform: scale(1.1); opacity: 0.6; }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.pulse-circle {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #86efac;
+  border-radius: 50%;
+}
+
+.pulse-circle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #86efac;
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite ease-out;
+}

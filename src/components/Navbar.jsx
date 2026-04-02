@@ -12,112 +12,91 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'ABOUT', href: '#about' },
-    { name: 'WORK', href: '#work' },
-    { name: 'ACHIEVEMENTS', href: '#achievements' },
-    { name: 'CONTACT', href: '#contact' },
+    { name: 'Work', href: '#work' },
+    { name: 'About', href: '#about' },
+    { name: 'Recognition', href: '#recognition' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} style={{
+    <nav style={{
       position: 'fixed',
       top: 0,
       width: '100%',
       zIndex: 1000,
-      background: isScrolled ? 'rgba(6, 6, 8, 0.9)' : 'transparent',
+      background: isScrolled ? 'rgba(8, 8, 16, 0.8)' : 'transparent',
       backdropFilter: isScrolled ? 'blur(20px)' : 'none',
-      borderBottom: isScrolled ? '1px solid rgba(248, 250, 252, 0.12)' : 'none',
-      transition: 'all 0.4s ease',
-      padding: '1.2rem 4rem',
+      borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
+      transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
+      padding: isScrolled ? '1.2rem 5vw' : '2.5rem 5vw',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center'
     }}>
-      <div className="nav-logo" style={{
-        fontFamily: 'Times New Roman',
+      {/* LOGO */}
+      <div style={{
+        fontFamily: 'Cormorant Garamond',
         fontWeight: 700,
-        fontSize: '1.5rem',
+        fontSize: '1.8rem',
+        color: '#FFFFFF',
         display: 'flex',
         alignItems: 'center',
-        gap: '0.5rem'
+        gap: '2px'
       }}>
-        <span className="gradient-text" style={{ cursor: 'pointer' }}>[AG].</span>
-        <span style={{ 
-          width: '6px', 
-          height: '6px', 
-          backgroundColor: '#00E5FF', 
-          borderRadius: '50%',
-          boxShadow: '0 0 10px #00E5FF',
-          animation: 'blink 1.5s infinite' 
-        }}></span>
+        Anmol<span style={{ color: '#7c3aed' }}>.</span>
       </div>
 
-      <div className="nav-links" style={{
+      {/* NAV LINKS */}
+      <div style={{
         display: 'flex',
-        gap: '3rem',
+        gap: '4rem',
         alignItems: 'center'
       }}>
         {navLinks.map((link) => (
           <a
             key={link.name}
             href={link.href}
-            className="nav-link-item"
             style={{
-              fontFamily: 'Times New Roman',
+              fontFamily: 'Syne',
               fontWeight: 500,
               fontSize: '0.75rem',
-              letterSpacing: '0.15em',
-              color: '#F8FAFC',
-              position: 'relative',
-              padding: '0.5rem 0'
+              letterSpacing: '0.2em',
+              color: 'rgba(255, 255, 255, 0.7)',
+              textTransform: 'uppercase',
+              transition: '0.3s'
             }}
+            className="navbar-link"
           >
             {link.name}
-            <span className="nav-hover-line"></span>
           </a>
         ))}
       </div>
 
-      <a href="#contact" className="nav-say-hello" style={{
-        border: '1px solid #00E5FF',
-        color: '#00E5FF',
-        padding: '0.6rem 1.4rem',
-        fontFamily: 'Times New Roman',
+      {/* CTA */}
+      <a href="#contact" style={{
+        fontFamily: 'Syne',
+        fontWeight: 700,
         fontSize: '0.75rem',
-        letterSpacing: '0.1em',
-        transition: 'all 0.3s ease'
-      }}>
-        [ SAY HELLO ]
+        letterSpacing: '0.15em',
+        color: '#FFFFFF',
+        border: '1px solid rgba(255, 255, 255, 0.15)',
+        padding: '0.8rem 1.8rem',
+        transition: '0.3s'
+      }} className="navbar-cta">
+        LET'S TALK
       </a>
 
       <style>{`
-        .nav-link-item:hover {
-          color: #00E5FF;
+        .navbar-link:hover {
+          color: #a78bfa;
         }
-        .nav-hover-line {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 0;
-          height: 1px;
-          background: #00E5FF;
-          transition: width 0.3s ease;
-        }
-        .nav-link-item:hover .nav-hover-line {
-          width: 100%;
-        }
-        .nav-say-hello:hover {
-          background: #00E5FF;
-          color: #060608;
-          box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+        .navbar-cta:hover {
+          border-color: #a78bfa;
+          background: rgba(124, 58, 237, 0.1);
+          transform: translateY(-2px);
         }
         @media (max-width: 768px) {
-          .navbar {
-            padding: 1rem 1.5rem !important;
-          }
-          .nav-links {
-            display: none !important;
-          }
+          .nav-links { display: none; }
         }
       `}</style>
     </nav>

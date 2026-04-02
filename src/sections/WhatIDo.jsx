@@ -9,140 +9,140 @@ const services = [
   {
     title: 'AI & MACHINE LEARNING',
     description: 'Developing intelligent agents and automated data pipelines. Implementing computer vision and natural language processing to solve real-world predictive modeling challenges.',
-    tags: ['Python', 'TensorFlow', 'Intelligent Agents', 'Data Pipelines']
+    tags: ['Python', 'TensorFlow', 'Data Analysis']
   },
   {
     title: 'IOT & EMBEDDED SYSTEMS',
-    description: 'Hardware prototyping with smart sensors and MSMEs. Designing low-latency communication protocols for Times New Romanconnected industrial and consumer devices.',
-    tags: ['Smart Sensors', 'MSMEs', 'Hardware Prototyping', 'Embedded C']
+    description: 'Hardware prototyping with smart sensors and MSMEs. Designing low-latency communication protocols for connected industrial and consumer devices.',
+    tags: ['IoT Sensors', 'Embedded C', 'Hardware']
   },
   {
     title: 'CYBERSECURITY',
     description: 'Architecting secure systems and performing network analysis. Focus on Linux hardening and implementing Zero-Trust network principles for enterprise applications.',
-    tags: ['Secure Architecture', 'Network Analysis', 'Linux Hardening']
+    tags: ['Linux', 'Network Security', 'Vulnerability Assessment']
   }
 ];
 
 const WhatIDo = () => {
   const [open, setOpen] = useState(0);
 
-  const toggle = (i) => {
-    setOpen(open === i ? -1 : i);
-  };
-
   return (
-    <section className="whatido" id="services" style={{
+    <section className="what-i-do" id="services" style={{
+      padding: '10rem 10vw',
+      background: '#080810',
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
+      gridTemplateColumns: '1fr 1.5fr',
       gap: '8rem',
-      padding: '10rem 5rem',
-      alignItems: 'start',
-      background: '#0C0C14'
+      alignItems: 'start'
     }}>
-      <div className="whatido-left" style={{ position: 'sticky', top: '15rem' }}>
-        <h2 className="whatido-heading" style={{
-          fontFamily: 'Times New Roman',
+      
+      {/* LEFT COLUMN: STICKY TITLE */}
+      <div className="reveal" style={{ position: 'sticky', top: '10rem' }}>
+        <div style={{
+          fontFamily: 'Cormorant Garamond',
+          fontSize: '10rem',
           fontWeight: 700,
-          fontSize: 'clamp(3rem, 7vw, 9rem)',
-          lineHeight: '0.88',
-          letterSpacing: '-0.03em',
-          color: '#F8FAFC'
+          color: '#FFFFFF',
+          opacity: 0.08,
+          lineHeight: 0.8,
+          position: 'absolute',
+          top: '-4rem',
+          left: '-2rem',
+          zIndex: -1
+        }}>04</div>
+        <span className="section-label">// WHAT I DO</span>
+        <h2 style={{
+          fontSize: 'clamp(3rem, 5vw, 4.5rem)',
+          color: '#FFFFFF',
+          lineHeight: '1',
+          marginTop: '1rem'
         }}>
-          WHAT <br />
-          <span className="line2 gradient-text">I DO</span>
+          How I Can <br />
+          <span className="italic-accent">Help</span> You
         </h2>
       </div>
 
-      <div className="whatido-right">
-        {services.map((s, i) => (
+      {/* RIGHT COLUMN: ACCORDION */}
+      <div className="reveal">
+        {services.map((service, i) => (
           <div 
-            className="service-item" 
             key={i} 
-            onClick={() => toggle(i)}
+            onClick={() => setOpen(open === i ? -1 : i)}
             style={{
-              borderBottom: '1px solid rgba(248, 250, 252, 0.12)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
               padding: '2.5rem 0',
               cursor: 'pointer',
-              transition: 'padding-left 0.3s ease'
+              transition: '0.3s'
             }}
           >
-            <div className="service-header" style={{
+            <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '1.5rem',
-              position: 'relative'
+              justifyContent: 'space-between'
             }}>
-              <span className="service-num" style={{
-                fontFamily: 'JetBrains Mono',
-                fontSize: '0.7rem',
-                color: '#00E5FF',
-                letterSpacing: '0.1em',
-                minWidth: '2.5rem'
-              }}>0{i + 1}</span>
-              <span className="service-title" style={{
-                fontFamily: 'Times New Roman',
-                fontSize: '1.4rem',
-                fontWeight: 700,
-                color: '#F8FAFC',
-                flex: 1,
-                letterSpacing: '0.02em'
-              }}>{s.title}</span>
-              <span className="service-arrow" style={{
-                color: '#00E5FF',
-                fontSize: '1.8rem',
-                transition: 'transform 0.4s ease',
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                <span style={{ 
+                  fontFamily: 'DM Mono', 
+                  fontSize: '0.8rem', 
+                  color: '#7c3aed',
+                  fontWeight: 600
+                }}>0{i + 1}</span>
+                <h3 style={{
+                  fontFamily: 'DM Mono',
+                  fontSize: '1.1rem',
+                  fontWeight: 700,
+                  color: open === i ? '#a78bfa' : '#FFFFFF',
+                  letterSpacing: '0.05em',
+                  margin: 0,
+                  transition: '0.3s'
+                }}>{service.title}</h3>
+              </div>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.5rem',
+                color: open === i ? '#a78bfa' : '#FFFFFF',
+                transition: '0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                 transform: open === i ? 'rotate(45deg)' : 'rotate(0)'
-              }}>+</span>
+              }}>+</div>
             </div>
-            <div className={`service-body ${open === i ? 'open' : ''}`} style={{
+
+            <div style={{
               maxHeight: open === i ? '300px' : '0',
               overflow: 'hidden',
               transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-              paddingLeft: '4rem',
-              opacity: open === i ? 1 : 0
+              opacity: open === i ? 1 : 0,
+              paddingLeft: '3.5rem'
             }}>
               <p style={{
-                color: 'var(--muted)',
-                fontFamily: 'Times New Roman',
-                lineHeight: '1.8',
-                margin: '1.2rem 0',
-                maxWidth: '50ch'
-              }}>{s.description}</p>
-              <div className="service-tags" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                {s.tags.map(t => (
-                  <span key={t} style={{
-                    fontFamily: 'JetBrains Mono',
-                    fontSize: '0.68rem',
-                    color: '#00E5FF',
-                    border: '1px solid rgba(0, 229, 255, 0.2)',
-                    padding: '0.2rem 0.6rem',
+                fontFamily: 'DM Mono',
+                fontSize: '0.9rem',
+                color: 'rgba(255,255,255,0.6)',
+                margin: '2rem 0',
+                lineHeight: '1.8'
+              }}>{service.description}</p>
+              
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
+                {service.tags.map((tag, j) => (
+                  <span key={j} style={{
+                    fontFamily: 'DM Mono',
+                    fontSize: '0.7rem',
+                    color: '#a78bfa',
+                    border: '1px solid rgba(124, 58, 237, 0.3)',
+                    padding: '0.2rem 0.8rem',
                     borderRadius: '2px'
-                  }}>{t}</span>
+                  }}>{tag}</span>
                 ))}
               </div>
             </div>
           </div>
         ))}
       </div>
-
-      <style>{`
-        .service-item:hover {
-          padding-left: 0.5rem;
-        }
-        .service-item:hover .service-title {
-          color: #00E5FF;
-        }
-        @media (max-width: 1024px) {
-          .whatido {
-            grid-template-columns: 1fr !important;
-            gap: 4rem !important;
-          }
-          .whatido-left {
-            position: relative !important;
-            top: 0 !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };
