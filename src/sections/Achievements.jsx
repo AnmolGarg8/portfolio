@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Trophy, Target, Zap } from 'lucide-react';
+import { Trophy, Target, Zap, Medal } from 'lucide-react';
 
 const Achievements = () => {
   const achievements = [
