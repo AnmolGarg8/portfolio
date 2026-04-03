@@ -42,7 +42,7 @@ const CustomCursor = () => {
   }, [position]);
 
   return (
-    <div className={`hidden lg:block ${isHovering ? 'cursor-hover' : ''}`}>
+    <div className={`hidden md:block ${isHovering ? 'cursor-hover' : ''}`}>
       <div 
         className="cursor-dot"
         style={{ left: `${position.x}px`, top: `${position.y}px` }}

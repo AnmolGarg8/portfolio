@@ -41,16 +41,19 @@ const Navbar = () => {
     <>
       <nav className="nav-fixed" style={{ padding: isScrolled ? '12px 0' : '20px 0' }}>
         <div className="nav-container">
+          {/* Glass Background - First child for DOM order layering */}
+          <div style={{ position: 'absolute', inset: '0 24px', backgroundColor: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(20px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)' }} />
+
           {/* Logo */}
-          <a href="#home" className="no-underline" style={{ display: 'flex', alignItems: 'center', gap: '8px', zIndex: 10 }}>
+          <a href="#home" className="no-underline" style={{ display: 'flex', alignItems: 'center', gap: '8px', zIndex: 10, position: 'relative' }}>
             <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'linear-gradient(135deg, #7c3aed, #06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '900', fontSize: '20px', boxShadow: '0 0 20px rgba(124,58,237,0.3)' }}>
               AG
             </div>
             <span style={{ color: 'white', fontWeight: '700', letterSpacing: '-0.05em', fontSize: '18px' }} className="hidden sm:block">ANMOL.</span>
           </a>
 
-          {/* Desktop Navigation Links - Forced Right Alignment via justify-between on parent */}
-          <div className="nav-links-desktop">
+          {/* Nav Links */}
+          <div className="nav-links-desktop" style={{ position: 'relative', zIndex: 10 }}>
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -63,19 +66,16 @@ const Navbar = () => {
             ))}
           </div>
 
-        {/* Mobile Toggle Button (Hidden on Desktop via .md-hide) */}
-        <button 
-          style={{ border: 'none', background: 'transparent', cursor: 'pointer', zIndex: 10, flexDirection: 'column', gap: '6px' }}
-          className="md-hide"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', transform: isMobileMenuOpen ? 'rotate(45deg) translateY(11px)' : '' }} />
-          <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', opacity: isMobileMenuOpen ? 0 : 1 }} />
-          <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', transform: isMobileMenuOpen ? 'rotate(-45deg) translateY(-11px)' : '' }} />
-        </button>
-
-          {/* Background Background Glass */}
-          <div style={{ position: 'absolute', inset: '0 24px', backgroundColor: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)', zIndex: -1 }} />
+          {/* Mobile Toggle Button */}
+          <button 
+            style={{ border: 'none', background: 'transparent', cursor: 'pointer', zIndex: 10, position: 'relative', flexDirection: 'column', gap: '6px' }}
+            className="md-hide"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', transform: isMobileMenuOpen ? 'rotate(45deg) translateY(11px)' : '' }} />
+            <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', opacity: isMobileMenuOpen ? 0 : 1 }} />
+            <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', transform: isMobileMenuOpen ? 'rotate(-45deg) translateY(-11px)' : '' }} />
+          </button>
         </div>
       </nav>
 

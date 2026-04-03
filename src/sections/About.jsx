@@ -33,7 +33,7 @@ const About = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-[17px] text-[#b0a8d0] leading-[1.8] font-[Inter]"
+            className="text-[19px] text-[#b0a8d0] leading-[1.8] font-[Inter]"
           >
             I build intelligent systems that sit at the intersection of hardware and software. 
             From ESP32-based IoT platforms to NLP-driven AI tools — I engineer real solutions to real problems. 
