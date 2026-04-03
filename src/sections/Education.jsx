@@ -33,7 +33,7 @@ const Education = () => {
 
           <h2 
             className="text-4xl md:text-5xl font-bold mb-4 title-gradient"
-            style={{ fontFamily: 'Space Grotesk' }}
+            style={{ fontFamily: "'Times New Roman', Times, serif" }}
           >
             B.Tech in Artificial Intelligence & Data Science
           </h2>

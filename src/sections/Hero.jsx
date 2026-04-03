@@ -55,7 +55,7 @@ const Hero = () => {
 
           <div className="space-y-0">
             <p className="hero-hi">Hi, I'm</p>
-            <h1 className="hero-name">Anmol Garg</h1>
+            <h1 className="hero-name" style={{ fontSize: 'clamp(52px, 12vw, 150px)', lineHeight: '0.9', marginBottom: '24px' }}>Anmol Garg</h1>
           </div>
 
           {/* Typewriter Row */}
@@ -66,11 +66,11 @@ const Hero = () => {
             </span>
           </div>
 
-          <p className="text-2xl text-[var(--text-secondary)] font-medium max-w-[600px] m-0">
-            Engineering Intelligence. Building the Future.
+          <p className="text-[42px] text-[var(--text-secondary)] font-bold max-w-[900px] m-0" style={{ wordSpacing: '0.15em', lineHeight: '1.2' }}>
+            Engineering Intelligence. <br className="hidden md:block" /> Building the Future.
           </p>
 
-          <p className="text-lg text-[rgba(255,255,255,0.6)] max-w-[600px] leading-relaxed m-0">
+          <p className="text-[32px] text-[rgba(255,255,255,0.6)] max-w-[900px] leading-[1.4] m-0" style={{ wordSpacing: '0.15em' }}>
             I build intelligent systems that sit at the intersection of hardware and software. 
             From ESP32-based IoT platforms to NLP-driven AI tools — I engineer real solutions to real problems.
           </p>

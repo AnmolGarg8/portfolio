@@ -7,15 +7,14 @@
   --text-secondary: #b0a8d0;
   --glass-bg: rgba(255, 255, 255, 0.04);
   --glass-border: rgba(255, 255, 255, 0.08);
-  --font-main: 'Inter', sans-serif;
-  --font-heading: 'Space Grotesk', sans-serif;
+  --font-main: 'Times New Roman', Times, serif;
+  --font-heading: 'Times New Roman', Times, serif;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: none; /* Hide default cursor for custom one */
 }
 
 html {
@@ -505,7 +504,7 @@ section.section-visible {
 @media (min-width: 768px) {
   .hero-grid-wrapper {
     grid-template-columns: 55% 45%;
-    padding: 100px 80px 60px 120px;
+    padding: 100px 80px 60px 60px;
   }
 }
 

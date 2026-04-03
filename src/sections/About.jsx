@@ -22,8 +22,8 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[52px] font-bold leading-tight mb-8 title-gradient"
-            style={{ fontFamily: 'Space Grotesk' }}
+            className="text-[150px] font-bold leading-[0.9] mb-12 title-gradient tracking-tighter"
+            style={{ fontFamily: "'Times New Roman', Times, serif" }}
           >
             Building the Future <br /> with Intelligence
           </motion.h2>
@@ -33,7 +33,8 @@ const About = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-[19px] text-[#b0a8d0] leading-[1.8] font-[Inter]"
+            className="text-[34px] text-[#b0a8d0] leading-[1.6]"
+            style={{ fontFamily: "'Times New Roman', Times, serif", wordSpacing: '0.15em', letterSpacing: '-0.01em' }}
           >
             I build intelligent systems that sit at the intersection of hardware and software. 
             From ESP32-based IoT platforms to NLP-driven AI tools — I engineer real solutions to real problems. 

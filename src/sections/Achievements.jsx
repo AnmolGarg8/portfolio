@@ -32,7 +32,7 @@ const Achievements = () => {
   return (
     <section id="achievements" className="section-container overflow-visible">
       <div className="mb-20 text-center">
-        <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: 'Space Grotesk' }}>Milestones</h2>
+        <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: "'Times New Roman', Times, serif" }}>Milestones</h2>
         <p className="text-[var(--text-secondary)] text-xl">Recognitions and major milestones in my journey.</p>
       </div>
 

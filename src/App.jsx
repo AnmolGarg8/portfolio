@@ -32,11 +32,11 @@ function App() {
   return (
     <div className="relative">
       <CanvasParticles />
-      <CustomCursor />
+      {/* <CustomCursor /> */}
       <ScrollTimeline />
       <Navbar />
       
-      <main className="lg:pl-32">
+      <main className="lg:pl-28">
         <Hero />
         <About />
         <Skills />

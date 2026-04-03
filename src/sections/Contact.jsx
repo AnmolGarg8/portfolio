@@ -26,7 +26,7 @@ const Contact = () => {
   return (
     <section id="contact" className="section-container">
       <div className="mb-20">
-        <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: 'Space Grotesk' }}>Let's Build Something Great</h2>
+        <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: "'Times New Roman', Times, serif" }}>Let's Build Something Great</h2>
         <p className="text-[var(--text-secondary)] text-xl tracking-tight">Open to internships, collaborations, and full-time opportunities. Let's talk.</p>
       </div>
 

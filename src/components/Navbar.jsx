@@ -44,12 +44,25 @@ const Navbar = () => {
           {/* Glass Background - Neutralized for clicks */}
           <div style={{ position: 'absolute', inset: '0 24px', backgroundColor: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(20px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)', pointerEvents: 'none' }} />
 
-          {/* Logo */}
-          <a href="#home" className="no-underline" style={{ display: 'flex', alignItems: 'center', gap: '8px', zIndex: 10, position: 'relative' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'linear-gradient(135deg, #7c3aed, #06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '900', fontSize: '20px', boxShadow: '0 0 20px rgba(124,58,237,0.3)' }}>
-              AG
+          <a href="#home" className="no-underline group" style={{ display: 'flex', alignItems: 'center', gap: '12px', zIndex: 10, position: 'relative' }}>
+            <div className="relative">
+              <img 
+                src="/logo.png" 
+                alt="Anmol Garg Logo" 
+                style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 0 10px rgba(124,58,237,0.5))'
+                }}
+                className="group-hover:scale-110 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-[var(--accent-primary)]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
-            <span style={{ color: 'white', fontWeight: '700', letterSpacing: '-0.05em', fontSize: '18px' }} className="hidden sm:block">ANMOL.</span>
+            <div style={{ display: 'flex', flexDirection: 'column', opacity: 0.9 }}>
+              <span style={{ color: 'white', fontWeight: '800', letterSpacing: '0.1em', fontSize: '13px', lineHeight: '1', fontFamily: "'Inter', sans-serif" }} className="uppercase">Anmol Garg</span>
+              <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: '500', letterSpacing: '0.05em', fontSize: '10px', marginTop: '2px', fontFamily: "'Inter', sans-serif" }} className="uppercase">Software Engineer & AI Developer</span>
+            </div>
           </a>
 
           {/* Nav Links */}

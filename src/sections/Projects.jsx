@@ -35,7 +35,7 @@ const Projects = () => {
   return (
     <section id="projects" className="section-container">
       <div className="mb-20">
-        <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: 'Space Grotesk' }}>Things I've Engineered</h2>
+        <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: "'Times New Roman', Times, serif" }}>Things I've Engineered</h2>
         <p className="text-[var(--text-secondary)] text-xl tracking-tight">Real-world solutions. Real-world impact.</p>
       </div>
 
