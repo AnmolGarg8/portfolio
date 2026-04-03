@@ -90,20 +90,7 @@ body {
   pointer-events: none;
 }
 
-/* Section Watermark */
-.section-watermark {
-  position: absolute;
-  top: 50px;
-  right: 50px;
-  font-size: 180px;
-  font-weight: 900;
-  font-family: var(--font-heading);
-  color: #fff;
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: -1;
-  user-select: none;
-}
+/* Removed section-watermark styles as per Rule #1 */
 
 /* Typography & Layout */
 .title-gradient {
@@ -443,4 +430,19 @@ section.section-visible {
 
 .contact-form input::placeholder, .contact-form textarea::placeholder {
   color: rgba(167, 139, 250, 0.4);
+}
+/* Floating Animations */
+@keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+.animate-float1 { animation: float1 3s ease-in-out infinite; }
+.animate-float2 { animation: float2 3.5s ease-in-out infinite 0.5s; }
+.animate-badge-pulse { animation: pulse 2s ease-in-out infinite; }
+
+/* Responsive Layout Utilities */
+@media (min-width: 768px) {
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .md\:hero-padding { padding: 120px 80px 60px; }
+  .md\:contact-grid { grid-template-columns: 1fr 1.4fr; }
 }

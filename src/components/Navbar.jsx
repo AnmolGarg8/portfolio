@@ -46,18 +46,28 @@ const Navbar = () => {
           </a>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex gap-8 items-center">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-sm font-medium transition-all relative group ${activeSection === link.id ? 'text-[var(--accent-secondary)]' : 'text-text-secondary hover:text-white'
+                className={`text-[14px] font-medium transition-all relative px-[8px] py-[6px] ${
+                  activeSection === link.id 
+                    ? 'text-[#a78bfa]' 
+                    : 'text-[rgba(200,196,248,0.8)] hover:text-white'
                   }`}
-                style={activeSection === link.id ? { textShadow: '0 0 10px var(--accent-primary)' } : {}}
               >
                 {link.name}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-[var(--accent-secondary)] transition-all duration-300 ${activeSection === link.id ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} />
+                {activeSection === link.id && (
+                  <motion.div 
+                    layoutId="navUnderline"
+                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#7c3aed]"
+                  />
+                )}
+                {/* Horizontal hover line if not active */}
+                {activeSection !== link.id && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[var(--accent-secondary)] transition-all duration-300 group-hover:w-[calc(100%-32px)]" />
+                )}
               </a>
             ))}
           </div>

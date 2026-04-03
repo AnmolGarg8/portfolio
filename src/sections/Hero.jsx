@@ -43,16 +43,16 @@ const Hero = () => {
       <div className="bg-grid-faint" />
       <div className="bg-noise" />
 
-      <div className="section-container lg:grid items-center gap-12">
+      <div className="section-container min-h-screen grid md:grid-cols-2 items-center gap-10 md:hero-padding pt-32 pb-20">
         {/* Left Column */}
-        <div className="z-10">
+        <div className="z-10 order-1 md:order-1">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex items-center gap-3 px-4 py-1_5 rounded-full border border-green-500/30 bg-green-500/5 w-fit mb-8"
+            className="inline-flex items-center gap-2 px-[14px] py-[6px] rounded-full border border-[rgba(34,197,94,0.35)] bg-[rgba(34,197,94,0.08)] w-fit mb-8"
           >
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-[12px] font-bold text-green-500 uppercase tracking-widest">
+            <div className="w-[6px] h-[6px] rounded-full bg-[#22c55e] animate-badge-pulse" />
+            <span className="text-[12px] font-bold text-[#86efac] uppercase tracking-[0.06em]">
               Available for Opportunities
             </span>
           </motion.div>
@@ -61,7 +61,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-[72px] font-bold leading-none mb-2" 
+            className="text-[48px] md:text-[72px] font-bold leading-none mb-2" 
             style={{ fontFamily: 'Space Grotesk' }}
           >
             Hi, I'm
@@ -71,14 +71,14 @@ const Hero = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
-            className="text-[96px] font-black leading-none mb-6 title-gradient"
+            className="text-[64px] md:text-[96px] font-black leading-none mb-6 title-gradient"
             style={{ fontFamily: 'Space Grotesk' }}
           >
             Anmol Garg
           </motion.h1>
 
-          <div className="min-h-[40px] text-2xl md:text-3xl font-light text-[var(--accent-secondary)] mb-4 flex items-center">
-            <span>{text}</span>
+          <div className="min-h-[40px] text-xl md:text-3xl font-light text-[var(--accent-secondary)] mb-4 flex items-center overflow-visible">
+            <span className="whitespace-nowrap inline-block min-w-[320px]">{text}</span>
             <span className="w-[3px] h-[30px] bg-[var(--accent-primary)] ml-2 animate-pulse" />
           </div>
 
@@ -86,7 +86,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
-            className="text-xl text-[var(--text-secondary)] mb-10 font-[Inter]"
+            className="text-lg md:text-xl text-[var(--text-secondary)] mb-10 font-[Inter]"
           >
             I build things that think.
           </motion.p>
@@ -100,7 +100,7 @@ const Hero = () => {
             <button className="btn-neon">Explore My Work →</button>
             <button className="btn-ghost">Download Resume ↓</button>
             
-            <div className="flex gap-4 ml-2">
+            <div className="flex gap-4 ml-0 md:ml-2">
               <a href="#" className="p-3 glass-panel rounded-full hover:rotate-12 hover:scale-110 transition-all text-[var(--text-secondary)] hover:text-white">
                 <Linkedin size={20} />
               </a>
@@ -119,9 +119,9 @@ const Hero = () => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6, duration: 1 }}
-          className="relative flex justify-center items-center"
+          className="relative flex justify-center items-center order-2 md:order-2 mt-12 md:mt-0"
         >
-          <div className="relative group">
+          <div className="relative group p-4">
             {/* Halo Gradient */}
             <div className="absolute inset-0 bg-[#7c3aed]/20 blur-[100px] rounded-full" />
             
@@ -133,29 +133,24 @@ const Hero = () => {
               <img 
                 src="/avatar.jpeg" 
                 alt="3D Avatar" 
-                className="max-h-80vh w-auto object-contain drop-shadow-[0_0_30px_rgba(124,58,237,0.4)]"
+                className="max-h-[75vh] w-auto max-w-full object-contain display-block drop-shadow-[0_0_30px_rgba(124,58,237,0.4)]"
               />
             </motion.div>
 
-            {/* Floating Cards */}
+            {/* Floating Card 1 - Samsung */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.2, duration: 0.5 }}
-              className="absolute -top-10 -right-10 glass-panel p-4 px-6 scale-90 md:scale-100"
+              className="absolute top-[15%] -left-[90px] z-10 bg-[rgba(15,10,40,0.85)] backdrop-blur-[12px] border border-[rgba(124,58,237,0.4)] rounded-[12px] px-4 py-2.5 whitespace-nowrap text-[#e2dffa] shadow-xl animate-float1 hidden md:block"
             >
-              <p className="font-bold text-sm">🏆 Top 10 National</p>
-              <p className="text-xs opacity-60">Samsung 2025</p>
+              <p className="font-bold text-[13px]">🏆 Top 10 National</p>
+              <p className="text-[11px] opacity-60">Samsung Solve 2025</p>
             </motion.div>
 
+            {/* Floating Card 2 - Projects */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.4, duration: 0.5 }}
-              className="absolute bottom-10 -left-16 glass-panel p-4 px-6 scale-90 md:scale-100"
+              className="absolute bottom-[20%] -right-[80px] z-10 bg-[rgba(15,10,40,0.85)] backdrop-blur-[12px] border border-[rgba(124,58,237,0.4)] rounded-[12px] px-4 py-2.5 whitespace-nowrap text-[#e2dffa] shadow-xl animate-float2 hidden md:block"
             >
-              <p className="font-bold text-sm">⚡ 3+ Projects Shipped</p>
-              <p className="text-xs opacity-60">Production Level</p>
+              <p className="font-bold text-[13px]">⚡ 3+ Projects Shipped</p>
+              <p className="text-[11px] opacity-60">Production Ready</p>
             </motion.div>
           </div>
         </motion.div>

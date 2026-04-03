@@ -34,8 +34,6 @@ const Projects = () => {
 
   return (
     <section id="projects" className="section-container">
-      <div className="section-watermark">04</div>
-      
       <div className="mb-20">
         <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: 'Space Grotesk' }}>Things I've Engineered</h2>
         <p className="text-[var(--text-secondary)] text-xl tracking-tight">Real-world solutions. Real-world impact.</p>
@@ -54,11 +52,6 @@ const Projects = () => {
             {/* Top Accent Line */}
             <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-highlight)] opacity-60 group-hover:opacity-100 transition-opacity" />
             
-            {/* Project Number */}
-            <div className="absolute top-6 right-8 text-4xl font-black opacity-10 text-[var(--accent-secondary)] italic select-none">
-              {project.id}
-            </div>
-
             <div className="mb-8 p-4 rounded-2xl bg-white/[0.03] w-fit shadow-inner">
               {project.icon}
             </div>

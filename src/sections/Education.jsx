@@ -6,7 +6,6 @@ const Education = () => {
 
   return (
     <section id="education" className="section-container">
-      <div className="section-watermark">06</div>
 
       <div className="max-w-[720px] mx-auto">
         <motion.div

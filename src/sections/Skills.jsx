@@ -34,8 +34,6 @@ const Skills = () => {
 
   return (
     <section id="skills" className="section-container">
-      <div className="section-watermark">03</div>
-      
       <div className="mb-12">
         <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: 'Space Grotesk' }}>Technical Arsenal</h2>
         <p className="text-[var(--text-secondary)] max-w-xl">
@@ -44,22 +42,18 @@ const Skills = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-4 mb-12 border-b border-white/10 pb-4">
+      <div className="flex flex-wrap gap-3 mb-12">
         {categories.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`cursor-pointer px-4 py-2 text-sm font-semibold transition-all relative ${
-              activeTab === tab ? 'text-white' : 'text-slate-500 hover:text-white'
+            className={`px-5 py-2 rounded-full text-[13px] transition-all cursor-pointer border ${
+              activeTab === tab 
+                ? 'bg-[#7c3aed] border-[#7c3aed] text-white font-semibold' 
+                : 'bg-white/[0.04] border-[rgba(124,58,237,0.3)] text-[rgba(200,196,248,0.7)] hover:bg-[rgba(124,58,237,0.15)] hover:border-[rgba(124,58,237,0.6)] hover:text-[#e2dffa]'
             }`}
           >
             {tab}
-            {activeTab === tab && (
-              <motion.div 
-                layoutId="activeTabUnderline"
-                className="absolute bottom-[-17px] left-0 right-0 h-[2px] bg-[var(--accent-highlight)] shadow-[0_0_10px_var(--accent-highlight)]"
-              />
-            )}
           </button>
         ))}
       </div>
@@ -81,9 +75,8 @@ const Skills = () => {
               className="group"
             >
               <div 
-                className="px-6 py-2 rounded-full border border-[var(--accent-secondary)]/30 bg-[var(--accent-primary)]/10 text-[var(--accent-secondary)] font-medium text-sm flex items-center gap-2 hover:border-[var(--accent-highlight)] hover:bg-[var(--accent-primary)]/20 transition-all hover:scale-105"
+                className="px-[18px] py-[8px] rounded-full border border-[rgba(167,139,250,0.25)] bg-[rgba(124,58,237,0.1)] text-[#c4b5fd] font-medium text-[13px] flex items-center gap-2 hover:border-[rgba(167,139,250,0.6)] hover:bg-[rgba(124,58,237,0.25)] hover:text-[#e9e3ff] hover:scale-[1.04] transition-all cursor-default"
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] group-hover:bg-[var(--accent-highlight)] shadow-[0_0_5px_var(--accent-primary)]" />
                 {skill.name}
               </div>
             </motion.div>

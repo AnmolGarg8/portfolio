@@ -11,8 +11,6 @@ const About = () => {
 
   return (
     <section id="about" className="section-container">
-      <div className="section-watermark">02</div>
-      
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         {/* Left Side */}
         <div>
@@ -44,7 +42,7 @@ const About = () => {
         </div>
 
         {/* Right Side - Stat Grid */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-4 lg:gap-6">
           {stats.map((stat, idx) => (
             <motion.div
               key={idx}
@@ -52,15 +50,15 @@ const About = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="glass-panel p-8 border-l-4 border-l-[var(--accent-primary)] group hover:border-l-[var(--accent-highlight)] hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] bg-white/[0.03]"
+              className="glass-panel p-5 md:p-8 border-l-4 border-l-[var(--accent-primary)] group hover:border-l-[var(--accent-highlight)] hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] bg-white/[0.03] min-h-[120px] max-h-[160px] flex flex-col justify-center"
             >
-              <div className="mb-4 transform group-hover:scale-110 group-hover:rotate-6 transition-transform">
+              <div className="mb-2 transform group-hover:scale-110 group-hover:rotate-6 transition-transform">
                 {stat.icon}
               </div>
-              <h3 className="text-3xl font-black mb-1 title-gradient">
+              <h3 className="text-2xl md:text-3xl font-black mb-1 title-gradient">
                 {stat.title}
               </h3>
-              <p className="text-xs uppercase tracking-widest font-bold opacity-60">
+              <p className="text-[10px] uppercase tracking-widest font-bold opacity-60">
                 {stat.label}
               </p>
             </motion.div>
