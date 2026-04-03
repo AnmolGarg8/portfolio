@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
 
 const ScrollTimeline = () => {
-  const [pathLength, setPathLength] = useState(0);
   const [scrolled, setScrolled] = useState(0);
   const pathRef = useRef(null);
-  const [dots, setDots] = useState([]);
+  const [pathLength, setPathLength] = useState(0);
 
   const sections = [
     { id: 'home', label: 'Hero' },
@@ -22,103 +20,91 @@ const ScrollTimeline = () => {
       setPathLength(pathRef.current.getTotalLength());
     }
 
-    const calculateDots = () => {
-      const newDots = sections.map(section => {
-        const el = document.getElementById(section.id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          const offsetTop = rect.top + scrollTop;
-          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = offsetTop / totalHeight;
-          return { ...section, progress: Math.min(Math.max(progress, 0), 1) };
-        }
-        return null;
-      }).filter(d => d !== null);
-      setDots(newDots);
-    };
-
     const handleScroll = () => {
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = winScroll / height;
-      setScrolled(scrolled);
+      setScrolled(winScroll / height);
     };
 
-    calculateDots();
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', calculateDots);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', calculateDots);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lerp logic for smoother drawing
-  const [currentOffset, setCurrentOffset] = useState(0);
+  // Lerp for smooth drawing
+  const [currentOffset, setCurrentOffset] = useState(10000); // Start way off
   useEffect(() => {
+    if (pathLength === 0) return;
+    
     let animationFrame;
-    const animate = () => {
+    const lerp = () => {
       const target = pathLength - (pathLength * scrolled);
-      setCurrentOffset(prev => prev + (target - prev) * 0.08);
-      animationFrame = requestAnimationFrame(animate);
+      setCurrentOffset(prev => prev + (target - prev) * 0.06);
+      animationFrame = requestAnimationFrame(lerp);
     };
-    animate();
+    lerp();
     return () => cancelAnimationFrame(animationFrame);
   }, [scrolled, pathLength]);
 
   return (
-    <div className="timeline-container">
-      <svg width="100" height="100%" className="h-full">
+    <div className="scroll-timeline">
+      <svg width="100%" height="100%" style={{ overflow: 'visible' }}>
         <defs>
-          <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id="lineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#7c3aed" />
-            <stop offset="100%" stopColor="#a78bfa" />
+            <stop offset="100%" stopColor="#06b6d4" />
           </linearGradient>
         </defs>
+        
+        {/* Background dashed line */}
         <line 
-          x1="41" y1="0" x2="41" y2="100%" 
-          stroke="rgba(124, 58, 237, 0.1)" 
+          x1="0" y1="0" x2="0" y2="100%" 
+          stroke="rgba(124, 58, 237, 0.2)" 
           strokeWidth="2" 
+          strokeDasharray="8 6"
         />
+
+        {/* Drawing line */}
         <path
           ref={pathRef}
-          d="M 41 0 L 41 10000" /* Long enough path */
+          d="M 0 0 L 0 5000" /* Dummy long path */
           fill="none"
-          stroke="url(#purpleGradient)"
+          stroke="url(#lineGrad)"
           strokeWidth="2"
+          className="timeline-line"
           style={{ 
-            strokeDasharray: pathLength, 
+            strokeDasharray: pathLength || 10000, 
             strokeDashoffset: currentOffset 
           }}
         />
-        
-        {dots.map((dot, i) => (
-          <g key={i} transform={`translate(41, ${dot.progress * 100}%)`}>
-            {scrolled >= dot.progress && (
-              <motion.circle
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
+
+        {/* Section Nodes */}
+        {sections.map((section, idx) => {
+          // Approximate calculation for node position
+          // In a real app, you'd calculate exact element offsets
+          const segment = 1 / (sections.length - 1);
+          const pos = idx * segment * 100;
+          const isActive = scrolled >= idx * segment - 0.05;
+
+          return (
+            <g key={section.id} style={{ transform: `translateY(${pos}%)` }}>
+              <circle
                 r="4"
-                fill="#7c3aed"
-                className="timeline-dot"
-                style={{ filter: 'drop-shadow(0 0 5px #7c3aed)' }}
+                fill={isActive ? "#fff" : "rgba(124, 58, 237, 0.5)"}
+                stroke="#7c3aed"
+                strokeWidth="2"
+                className={`timeline-node ${isActive ? 'active' : ''}`}
               />
-            )}
-            <text
-              x="20"
-              y="4"
-              className="timeline-label"
-              style={{ 
-                opacity: scrolled >= dot.progress ? 1 : 0.4,
-                transition: 'opacity 0.3s'
-              }}
-            >
-              {dot.label}
-            </text>
-          </g>
-        ))}
+              <text
+                x="20"
+                y="4"
+                className="timeline-label"
+                style={{ opacity: isActive ? 1 : 0.4 }}
+              >
+                {section.label}
+              </text>
+            </g>
+          );
+        })}
       </svg>
     </div>
   );

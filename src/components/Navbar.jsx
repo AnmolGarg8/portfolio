@@ -10,7 +10,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-      
+
       const sections = ['home', 'about', 'skills', 'projects', 'achievements', 'education', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -51,20 +51,18 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-sm font-medium transition-all relative group ${
-                  activeSection === link.id ? 'text-[var(--accent-secondary)]' : 'text-text-secondary hover:text-white'
-                }`}
+                className={`text-sm font-medium transition-all relative group ${activeSection === link.id ? 'text-[var(--accent-secondary)]' : 'text-text-secondary hover:text-white'
+                  }`}
                 style={activeSection === link.id ? { textShadow: '0 0 10px var(--accent-primary)' } : {}}
               >
                 {link.name}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-[var(--accent-secondary)] transition-all duration-300 ${
-                  activeSection === link.id ? 'w-full' : 'w-0 group-hover:w-full'
-                }`} />
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-[var(--accent-secondary)] transition-all duration-300 ${activeSection === link.id ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
               </a>
             ))}
           </div>
 
-          <button 
+          <button
             className="md:hidden text-white p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
