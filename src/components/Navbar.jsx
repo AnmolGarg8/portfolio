@@ -39,56 +39,54 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-3' : 'py-5'}`}>
-        <div className="mx-auto max-w-7xl px-6 flex justify-between items-center glass-panel py-3 md:py-4">
-          <a href="#home" className="text-2xl font-black tracking-tighter text-white">
-            <span className="text-[var(--accent-primary)]">A</span>G
+      <nav className="nav-fixed" style={{ padding: isScrolled ? '12px 0' : '20px 0' }}>
+        <div className="nav-container">
+          {/* Logo */}
+          <a href="#home" className="no-underline" style={{ display: 'flex', alignItems: 'center', gap: '8px', zIndex: 10 }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'linear-gradient(135deg, #7c3aed, #06b6d4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '900', fontSize: '20px', boxShadow: '0 0 20px rgba(124,58,237,0.3)' }}>
+              AG
+            </div>
+            <span style={{ color: 'white', fontWeight: '700', letterSpacing: '-0.05em', fontSize: '18px' }} className="hidden sm:block">ANMOL.</span>
           </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop Navigation Links - Forced Right Alignment via justify-between on parent */}
+          <div className="nav-links-desktop">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-[14px] font-medium transition-all relative px-[8px] py-[6px] ${
-                  activeSection === link.id 
-                    ? 'text-[#a78bfa]' 
-                    : 'text-[rgba(200,196,248,0.8)] hover:text-white'
-                  }`}
+                className={`nav-link-underline no-underline ${activeSection === link.id ? 'nav-link-active' : ''}`}
+                style={{ fontSize: '14px', fontWeight: '500', color: activeSection === link.id ? '#ffffff' : 'rgba(200,196,248,0.75)', padding: '6px 2px', transition: 'all 0.3s' }}
               >
                 {link.name}
-                {activeSection === link.id && (
-                  <motion.div 
-                    layoutId="navUnderline"
-                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#7c3aed]"
-                  />
-                )}
-                {/* Horizontal hover line if not active */}
-                {activeSection !== link.id && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[var(--accent-secondary)] transition-all duration-300 group-hover:w-[calc(100%-32px)]" />
-                )}
               </a>
             ))}
           </div>
 
-          <button
-            className="md:hidden text-white p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X /> : <Menu />}
-          </button>
+        {/* Mobile Toggle Button (Hidden on Desktop via .md-hide) */}
+        <button 
+          style={{ border: 'none', background: 'transparent', cursor: 'pointer', zIndex: 10, flexDirection: 'column', gap: '6px' }}
+          className="md-hide"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', transform: isMobileMenuOpen ? 'rotate(45deg) translateY(11px)' : '' }} />
+          <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', opacity: isMobileMenuOpen ? 0 : 1 }} />
+          <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', transform: isMobileMenuOpen ? 'rotate(-45deg) translateY(-11px)' : '' }} />
+        </button>
+
+          {/* Background Background Glass */}
+          <div style={{ position: 'absolute', inset: '0 24px', backgroundColor: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)', zIndex: -1 }} />
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-10 md:hidden"
+            className="md:hidden fixed inset-0 z-40 bg-[#0a0a14]/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-10"
           >
             {navLinks.map((link, i) => (
               <motion.a
@@ -98,7 +96,9 @@ const Navbar = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-3xl font-bold text-white hover:text-[var(--accent-primary)] transition-colors"
+                className={`text-3xl font-bold transition-all no-underline ${
+                  activeSection === link.id ? 'text-[var(--accent-primary)]' : 'text-white/60'
+                }`}
               >
                 {link.name}
               </motion.a>

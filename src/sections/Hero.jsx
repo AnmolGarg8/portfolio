@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Linkedin, Github, Mail, ArrowDown } from 'lucide-react';
+import { Linkedin, Github, Mail, ArrowDown, Medal, Rocket } from 'lucide-react';
 
 const Hero = () => {
   const [text, setText] = useState('');
-  const roles = ["Software Engineer", "AI Developer", "IoT Systems Builder", "ML Enthusiast", "Cybersecurity Learner"];
+  const roles = ["Software Engineer", "AI Developer", "IoT Builder", "ML Enthusiast", "Cybersecurity Learner"];
   const [roleIndex, setRoleIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -12,7 +12,7 @@ const Hero = () => {
   useEffect(() => {
     const handleType = () => {
       const currentRole = roles[roleIndex];
-      const speed = isDeleting ? 40 : 80;
+      const speed = isDeleting ? 50 : 100;
 
       if (!isDeleting && charIndex < currentRole.length) {
         setText(currentRole.substring(0, charIndex + 1));
@@ -34,136 +34,106 @@ const Hero = () => {
   }, [charIndex, isDeleting, roleIndex]);
 
   return (
-    <section id="home" className="min-h-screen pt-24 items-center relative overflow-hidden flex">
-      {/* Background Decor */}
-      <div className="gradient-mesh">
-        <div className="mesh-orb orb-1" />
-        <div className="mesh-orb orb-2" />
+    <section id="home" className="hero-section">
+      {/* Absolute Background Elements */}
+      <div className="absolute inset-0 -z-10 bg-[#0a0a12]">
+        <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-[#7c3aed]/10 rounded-full blur-[100px]" />
+        <div className="bg-grid-faint opacity-20 inset-0 absolute" />
       </div>
-      <div className="bg-grid-faint" />
-      <div className="bg-noise" />
 
-      <div className="section-container min-h-screen grid md:grid-cols-2 items-center gap-10 md:hero-padding pt-32 pb-20">
-        {/* Left Column */}
-        <div className="z-10 order-1 md:order-1">
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="inline-flex items-center gap-2 px-[14px] py-[6px] rounded-full border border-[rgba(34,197,94,0.35)] bg-[rgba(34,197,94,0.08)] w-fit mb-8"
-          >
-            <div className="w-[6px] h-[6px] rounded-full bg-[#22c55e] animate-badge-pulse" />
-            <span className="text-[12px] font-bold text-[#86efac] uppercase tracking-[0.06em]">
+      <div className="hero-grid-wrapper">
+        {/* LEFT COLUMN: Text Content */}
+        <div className="hero-left">
+          
+          {/* Available Pill Badge */}
+          <div className="available-pill">
+            <div className="pill-dot" />
+            <span className="text-[11px] font-bold text-[#86efac] uppercase tracking-[0.07em]">
               Available for Opportunities
             </span>
-          </motion.div>
-
-          <motion.h1 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-[48px] md:text-[72px] font-bold leading-none mb-2" 
-            style={{ fontFamily: 'Space Grotesk' }}
-          >
-            Hi, I'm
-          </motion.h1>
-
-          <motion.h1 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-[64px] md:text-[96px] font-black leading-none mb-6 title-gradient"
-            style={{ fontFamily: 'Space Grotesk' }}
-          >
-            Anmol Garg
-          </motion.h1>
-
-          <div className="min-h-[40px] text-xl md:text-3xl font-light text-[var(--accent-secondary)] mb-4 flex items-center overflow-visible">
-            <span className="whitespace-nowrap inline-block min-w-[320px]">{text}</span>
-            <span className="w-[3px] h-[30px] bg-[var(--accent-primary)] ml-2 animate-pulse" />
           </div>
 
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="text-lg md:text-xl text-[var(--text-secondary)] mb-10 font-[Inter]"
-          >
-            I build things that think.
-          </motion.p>
+          <div className="space-y-0">
+            <p className="hero-hi">Hi, I'm</p>
+            <h1 className="hero-name">Anmol Garg</h1>
+          </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
-            className="flex flex-wrap gap-6 items-center"
-          >
-            <button className="btn-neon">Explore My Work →</button>
-            <button className="btn-ghost">Download Resume ↓</button>
-            
-            <div className="flex gap-4 ml-0 md:ml-2">
-              <a href="#" className="p-3 glass-panel rounded-full hover:rotate-12 hover:scale-110 transition-all text-[var(--text-secondary)] hover:text-white">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" className="p-3 glass-panel rounded-full hover:rotate-12 hover:scale-110 transition-all text-[var(--text-secondary)] hover:text-white">
-                <Github size={20} />
-              </a>
-              <a href="#" className="p-3 glass-panel rounded-full hover:rotate-12 hover:scale-110 transition-all text-[var(--text-secondary)] hover:text-white">
-                <Mail size={20} />
-              </a>
-            </div>
-          </motion.div>
+          {/* Typewriter Row */}
+          <div style={{ height: '40px', display: 'flex', alignItems: 'center' }}>
+            <span className="text-[22px] font-medium text-[#e2dffa] whitespace-nowrap min-w-[280px] inline-block">
+              {text}
+              <span className="animate-blink" style={{ marginLeft: '4px', width: '2px', height: '24px', backgroundColor: '#7c3aed', display: 'inline-block' }}>|</span>
+            </span>
+          </div>
+
+          <p className="text-xl text-[var(--text-secondary)] font-medium max-w-[500px] m-0">
+            Engineering Intelligence. Building the Future.
+          </p>
+
+          <p className="text-base text-[rgba(255,255,255,0.6)] max-w-[550px] leading-relaxed m-0">
+            I build intelligent systems that sit at the intersection of hardware and software. 
+            From ESP32-based IoT platforms to NLP-driven AI tools — I engineer real solutions to real problems.
+          </p>
+
+          {/* CTA Buttons */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', marginTop: '8px' }}>
+            <a href="#projects" className="btn-primary-hero no-underline text-white">
+              Explore My Work →
+            </a>
+            <a href="/resume.pdf" target="_blank" className="btn-secondary-hero no-underline text-[#a78bfa]">
+              Download Resume ↓
+            </a>
+          </div>
+
+          {/* Social Icons */}
+          <div style={{ display: 'flex', gap: '12px', marginTop: '4px' }}>
+            <a href="https://linkedin.com/in/anmol-garg2005" target="_blank" className="social-icon-hero no-underline"><Linkedin size={20} /></a>
+            <a href="https://github.com/AnmolGarg8" target="_blank" className="social-icon-hero no-underline"><Github size={20} /></a>
+            <a href="mailto:anmolgarg1605@gmail.com" className="social-icon-hero no-underline"><Mail size={20} /></a>
+          </div>
         </div>
 
-        {/* Right Column - Avatar */}
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6, duration: 1 }}
-          className="relative flex justify-center items-center order-2 md:order-2 mt-12 md:mt-0"
-        >
-          <div className="relative group p-4">
-            {/* Halo Gradient */}
-            <div className="absolute inset-0 bg-[#7c3aed]/20 blur-[100px] rounded-full" />
+        {/* RIGHT COLUMN: Avatar & Floating Cards */}
+        <div className="hero-right">
+          <div className="avatar-wrapper">
+            {/* Radial Glow behind */}
+            <div className="avatar-glow" />
             
-            <motion.div 
-              animate={{ translateY: [-12, 12, -12] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="relative z-10"
-            >
-              <img 
-                src="/avatar.jpeg" 
-                alt="3D Avatar" 
-                className="max-h-[75vh] w-auto max-w-full object-contain display-block drop-shadow-[0_0_30px_rgba(124,58,237,0.4)]"
-              />
-            </motion.div>
+            {/* Main Image with mask */}
+            <img 
+              src="/avatar.jpeg" 
+              alt="Anmol Garg"
+              className="avatar-image"
+            />
 
-            {/* Floating Card 1 - Samsung */}
-            <motion.div 
-              className="absolute top-[15%] -left-[90px] z-10 bg-[rgba(15,10,40,0.85)] backdrop-blur-[12px] border border-[rgba(124,58,237,0.4)] rounded-[12px] px-4 py-2.5 whitespace-nowrap text-[#e2dffa] shadow-xl animate-float1 hidden md:block"
-            >
-              <p className="font-bold text-[13px]">🏆 Top 10 National</p>
-              <p className="text-[11px] opacity-60">Samsung Solve 2025</p>
-            </motion.div>
+            {/* Achievement Cards (Forced visibility for verification) */}
+            <div className="absolute" style={{ top: '15%', left: '-80px', zIndex: 10 }}>
+              <div className="glass-panel p-4 flex items-center gap-3 border border-[rgba(124,58,237,0.4)] bg-[#0a0823]/88 backdrop-blur-xl rounded-[14px] shadow-2xl animate-float-card-1">
+                <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: 'rgba(124,58,237,0.2)', color: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Medal size={20} />
+                </div>
+                <div style={{ paddingRight: '12px' }}>
+                  <p className="text-[10px] font-bold uppercase tracking-tight text-[var(--accent-secondary)] m-0">Samsung Solve 2025</p>
+                  <p className="text-[13px] font-bold text-[#e2dffa] whitespace-nowrap m-0">🏆 Top 10 National</p>
+                </div>
+              </div>
+            </div>
 
-            {/* Floating Card 2 - Projects */}
-            <motion.div 
-              className="absolute bottom-[20%] -right-[80px] z-10 bg-[rgba(15,10,40,0.85)] backdrop-blur-[12px] border border-[rgba(124,58,237,0.4)] rounded-[12px] px-4 py-2.5 whitespace-nowrap text-[#e2dffa] shadow-xl animate-float2 hidden md:block"
-            >
-              <p className="font-bold text-[13px]">⚡ 3+ Projects Shipped</p>
-              <p className="text-[11px] opacity-60">Production Ready</p>
-            </motion.div>
+            <div className="absolute" style={{ bottom: '22%', right: '-70px', zIndex: 10 }}>
+              <div className="glass-panel p-4 flex items-center gap-3 border border-[rgba(124,58,237,0.4)] bg-[#0a0823]/88 backdrop-blur-xl rounded-[14px] shadow-2xl animate-float-card-2">
+                <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: 'rgba(6,182,212,0.2)', color: '#06b6d4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Rocket size={20} />
+                </div>
+                <div style={{ paddingRight: '12px' }}>
+                  <p className="text-[10px] font-bold uppercase tracking-tight text-[var(--accent-highlight)] m-0">Impact Level</p>
+                  <p className="text-[13px] font-bold text-[#e2dffa] whitespace-nowrap m-0">⚡ 3+ Projects Shipped</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      <motion.div 
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 hover:opacity-100 transition-opacity"
-      >
-        <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Scroll to Explore</span>
-        <ArrowDown size={16} className="text-[var(--accent-primary)]" />
-      </motion.div>
     </section>
   );
 };
