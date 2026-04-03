@@ -39,10 +39,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="nav-fixed" style={{ padding: isScrolled ? '12px 0' : '20px 0' }}>
-        <div className="nav-container">
-          {/* Glass Background - First child for DOM order layering */}
-          <div style={{ position: 'absolute', inset: '0 24px', backgroundColor: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(20px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)' }} />
+      <nav className="nav-fixed" style={{ padding: isScrolled ? '12px 0' : '20px 0', pointerEvents: 'auto' }}>
+        <div className="nav-container" style={{ pointerEvents: 'auto' }}>
+          {/* Glass Background - Neutralized for clicks */}
+          <div style={{ position: 'absolute', inset: '0 24px', backgroundColor: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(20px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)', pointerEvents: 'none' }} />
 
           {/* Logo */}
           <a href="#home" className="no-underline" style={{ display: 'flex', alignItems: 'center', gap: '8px', zIndex: 10, position: 'relative' }}>

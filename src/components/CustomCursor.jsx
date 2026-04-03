@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -41,7 +42,7 @@ const CustomCursor = () => {
     return () => cancelAnimationFrame(animationFrame);
   }, [position]);
 
-  return (
+  return createPortal(
     <div className={`hidden md:block ${isHovering ? 'cursor-hover' : ''}`}>
       <div 
         className="cursor-dot"
@@ -51,7 +52,8 @@ const CustomCursor = () => {
         className="cursor-ring"
         style={{ left: `${trailingPosition.x}px`, top: `${trailingPosition.y}px` }}
       />
-    </div>
+    </div>,
+    document.body
   );
 };
 
