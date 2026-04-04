@@ -14,8 +14,8 @@ const About = () => {
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         {/* Left Side */}
         <div>
-          <div className="px-4 py-1.5 rounded-full border border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/5 w-fit mb-8">
-            <span className="text-[12px] font-bold text-[var(--accent-secondary)] uppercase tracking-[0.2em]">About Me</span>
+          <div className="px-8 py-3 rounded-full border border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/5 w-fit mb-8">
+            <span className="text-[42px] font-bold text-[var(--accent-secondary)] uppercase tracking-[0.1em]">About Me</span>
           </div>
           
           <motion.h2 
