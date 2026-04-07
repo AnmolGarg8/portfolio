@@ -1,73 +1,120 @@
-import { Cpu, Trophy, Medal, GraduationCap } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const About = () => {
-  const stats = [
-    { title: "3+", label: "Projects Engineered", icon: <Cpu className="text-[var(--accent-primary)]" size={32} /> },
-    { title: "Top 10", label: "National Recognition", icon: <Trophy className="text-[var(--accent-primary)]" size={32} /> },
-    { title: "2026", label: "India Innovates Finalist", icon: <Medal className="text-[var(--accent-primary)]" size={32} /> },
-    { title: "B.Tech", label: "AI & Data Science, VIPS", icon: <GraduationCap className="text-[var(--accent-primary)]" size={32} /> }
-  ];
+gsap.registerPlugin(ScrollTrigger)
+
+export default function About() {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('.reveal', sectionRef.current).forEach(el => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+          }
+        )
+      })
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section id="about" className="section-container">
-      <div className="grid lg:grid-cols-2 gap-12 items-center">
-        {/* Left Side */}
-        <div>
-          <div className="px-8 py-3 rounded-full border border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/5 w-fit mb-8">
-            <span className="text-[42px] font-bold text-[var(--accent-secondary)] uppercase tracking-[0.1em]">About Me</span>
+    <section id="about" ref={sectionRef} className="section">
+      <div className="section__divider" />
+      <div className="section__inner">
+        <span className="section__label reveal">About</span>
+        <h2 className="section__heading reveal">
+          Who I <span className="grad">Am</span>
+        </h2>
+
+        <div className="about-grid">
+          <div>
+            <p className="about__bio reveal">
+              I build intelligent systems at the intersection of{' '}
+              <strong>hardware and software</strong>. From ESP32-based IoT
+              platforms to NLP-driven AI tools — I engineer{' '}
+              <strong>real solutions to real problems</strong>.
+            </p>
+            <p className="about__bio reveal">
+              Recognized as a{' '}
+              <strong>Top 10 National Semifinalist at Samsung Solve for Tomorrow 2025</strong>{' '}
+              and a <strong>Finalist at India Innovates 2026</strong> — I don't just build
+              software, I engineer impact.
+            </p>
+
+            <div className="about__stats">
+              {[
+                { num: '10+', label: 'Projects Built' },
+                { num: '2', label: 'National Awards' },
+                { num: '5+', label: 'Tech Domains' },
+                { num: '∞', label: 'Problems to Solve' },
+              ].map((s, i) => (
+                <div key={i} className="about__stat card reveal">
+                  <div className="about__stat-num">{s.num}</div>
+                  <div className="about__stat-label">{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
-          
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-[150px] font-bold leading-[0.9] mb-12 title-gradient tracking-tighter"
-            style={{ fontFamily: "'Times New Roman', Times, serif" }}
-          >
-            Building the Future <br /> with Intelligence
-          </motion.h2>
 
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-[34px] text-[#b0a8d0] leading-[1.6]"
-            style={{ fontFamily: "'Times New Roman', Times, serif", wordSpacing: '0.15em', letterSpacing: '-0.01em' }}
-          >
-            I build intelligent systems that sit at the intersection of hardware and software. 
-            From ESP32-based IoT platforms to NLP-driven AI tools — I engineer real solutions to real problems. 
-            Recognized as a Top 10 National Semifinalist at Samsung Solve for Tomorrow 2025 and a Finalist at India Innovates 2026.
-          </motion.p>
-        </div>
-
-        {/* Right Side - Stat Grid */}
-        <div className="grid grid-cols-2 gap-4 lg:gap-6">
-          {stats.map((stat, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="glass-panel p-5 md:p-8 border-l-4 border-l-[var(--accent-primary)] group hover:border-l-[var(--accent-highlight)] hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] bg-white/[0.03] min-h-[120px] max-h-[160px] flex flex-col justify-center"
-            >
-              <div className="mb-2 transform group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                {stat.icon}
+          <div className="about__right reveal">
+            <div className="about__terminal">
+              <div className="about__terminal-bar">
+                <div className="terminal-dot red" />
+                <div className="terminal-dot yellow" />
+                <div className="terminal-dot green" />
+                <span className="terminal-title">anmol@portfolio ~ zsh</span>
               </div>
-              <h3 className="text-2xl md:text-3xl font-black mb-1 title-gradient">
-                {stat.title}
-              </h3>
-              <p className="text-[10px] uppercase tracking-widest font-bold opacity-60">
-                {stat.label}
-              </p>
-            </motion.div>
-          ))}
+              <div className="about__terminal-body">
+                <div className="terminal-line">
+                  <span className="terminal-prompt">›</span>
+                  <span className="terminal-cmd">cat</span>
+                  <span className="terminal-val"> about.json</span>
+                </div>
+                <br />
+                <div className="terminal-line"><span className="terminal-val">{'{'}</span></div>
+                <div className="terminal-line" style={{paddingLeft:'16px'}}>
+                  <span className="terminal-key">"name"</span>
+                  <span className="terminal-val">: </span>
+                  <span className="terminal-str">"Anmol Garg"</span><span className="terminal-val">,</span>
+                </div>
+                <div className="terminal-line" style={{paddingLeft:'16px'}}>
+                  <span className="terminal-key">"role"</span>
+                  <span className="terminal-val">: </span>
+                  <span className="terminal-str">"Software Engineer & AI Developer"</span><span className="terminal-val">,</span>
+                </div>
+                <div className="terminal-line" style={{paddingLeft:'16px'}}>
+                  <span className="terminal-key">"location"</span>
+                  <span className="terminal-val">: </span>
+                  <span className="terminal-str">"Delhi, India"</span><span className="terminal-val">,</span>
+                </div>
+                <div className="terminal-line" style={{paddingLeft:'16px'}}>
+                  <span className="terminal-key">"focus"</span>
+                  <span className="terminal-val">: [</span>
+                  <span className="terminal-str">"AI"</span><span className="terminal-val">, </span>
+                  <span className="terminal-str">"IoT"</span><span className="terminal-val">, </span>
+                  <span className="terminal-str">"NLP"</span>
+                  <span className="terminal-val">],</span>
+                </div>
+                <div className="terminal-line" style={{paddingLeft:'16px'}}>
+                  <span className="terminal-key">"available"</span>
+                  <span className="terminal-val">: </span>
+                  <span style={{color:'#22c55e'}}>true</span>
+                </div>
+                <div className="terminal-line"><span className="terminal-val">{'}'}</span></div>
+                <br />
+                <div className="terminal-line">
+                  <span className="terminal-comment"># Building things that think 🧠</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  );
-};
-
-export default About;
+  )
+}

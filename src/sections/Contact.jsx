@@ -1,124 +1,169 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, Linkedin, Check, Send } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Mail, Linkedin, Phone, MapPin, Send, Github } from 'lucide-react'
 
-const Contact = () => {
-  const [isSending, setIsSending] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+gsap.registerPlugin(ScrollTrigger)
+
+const CONTACT_LINKS = [
+  {
+    icon: <Mail size={18} />,
+    label: 'Email',
+    value: 'anmolgarg1605@gmail.com',
+    href: 'mailto:anmolgarg1605@gmail.com',
+  },
+  {
+    icon: <Linkedin size={18} />,
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/anmol-garg2005',
+    href: 'https://linkedin.com/in/anmol-garg2005',
+  },
+  {
+    icon: <Github size={18} />,
+    label: 'GitHub',
+    value: 'github.com/AnmolGarg8',
+    href: 'https://github.com/AnmolGarg8',
+  },
+  {
+    icon: <Phone size={18} />,
+    label: 'Phone',
+    value: '+91 9625652435',
+    href: 'tel:+919625652435',
+  },
+  {
+    icon: <MapPin size={18} />,
+    label: 'Location',
+    value: 'Delhi, India',
+    href: null,
+  },
+]
+
+export default function Contact() {
+  const sectionRef = useRef(null)
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('.reveal', sectionRef.current).forEach(el => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+          }
+        )
+      })
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSending(true);
-    // Simulate sending
+    e.preventDefault()
+    setSending(true)
+    // Simulate form submission
     setTimeout(() => {
-      setIsSending(false);
-      setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 3000);
-    }, 1500);
-  };
-
-  const contactInfo = [
-    { label: "Email", value: "anmolgarg1605@gmail.com", icon: <Mail size={18} />, href: "mailto:anmolgarg1605@gmail.com" },
-    { label: "Phone", value: "+91 9625652435", icon: <Phone size={18} />, href: "tel:+919625652435" },
-    { label: "LinkedIn", value: "anmol-garg2005", icon: <Linkedin size={18} />, href: "https://linkedin.com/in/anmol-garg2005" }
-  ];
+      setSending(false)
+      setSent(true)
+      setForm({ name: '', email: '', message: '' })
+      setTimeout(() => setSent(false), 4000)
+    }, 1500)
+  }
 
   return (
-    <section id="contact" className="section-container">
-      <div className="mb-20">
-        <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: "'Times New Roman', Times, serif" }}>Let's Build Something Great</h2>
-        <p className="text-[var(--text-secondary)] text-xl tracking-tight">Open to internships, collaborations, and full-time opportunities. Let's talk.</p>
-      </div>
+    <section id="contact" ref={sectionRef} className="section" style={{ background: 'rgba(0,0,0,0.15)' }}>
+      <div className="section__divider" />
+      <div className="section__inner">
+        <span className="section__label reveal">Contact</span>
 
-      <div className="grid md:contact-grid gap-12 lg:gap-16">
-        {/* Left Column - Contact Info */}
-        <div className="space-y-4">
-          {contactInfo.map((info, i) => (
-            <motion.a
-              key={i}
-              href={info.href}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="glass-panel p-6 flex items-center gap-5 border border-white/5 hover:border-[var(--accent-secondary)] group transition-all"
-              style={{ background: 'rgba(255,255,255,0.02)' }}
-            >
-              <div className="p-3 rounded-full bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] group-hover:scale-110 transition-transform">
-                {info.icon}
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-widest font-black opacity-30 mb-0.5">{info.label}</p>
-                <p className="text-lg font-bold text-white group-hover:text-[var(--accent-secondary)] transition-colors">{info.value}</p>
-              </div>
-            </motion.a>
-          ))}
-        </div>
+        <div className="contact-wrap">
+          {/* Left */}
+          <div>
+            <h2 className="contact__big-text reveal">
+              Let's<br />
+              <span className="grad">Work</span><br />
+              Together.
+            </h2>
+            <p className="contact__sub reveal">
+              I'm open to opportunities, collaborations, and interesting problems.
+              Whether you want to build something great or just chat — I'm in.
+            </p>
 
-        {/* Right Column - Contact Form */}
-        <div className="glass-panel p-8 md:p-10 contact-form group overflow-hidden relative" style={{ background: 'rgba(255,255,255,0.03)' }}>
-          <AnimatePresence>
-            {isSuccess && (
-              <motion.div 
-                initial={{ opacity: 0 }} 
-                animate={{ opacity: 1 }} 
-                exit={{ opacity: 0 }} 
-                className="absolute inset-0 z-20 bg-[var(--bg-deep)]/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8"
+            <div className="contact__links reveal">
+              {CONTACT_LINKS.map((c, i) => {
+                const Wrapper = c.href ? 'a' : 'div'
+                const props = c.href
+                  ? { href: c.href, target: c.href.startsWith('http') ? '_blank' : undefined, rel: 'noopener noreferrer' }
+                  : {}
+                return (
+                  <Wrapper key={i} className="contact__link-item" {...props}>
+                    <span className="icon">{c.icon}</span>
+                    <div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '2px' }}>
+                        {c.label}
+                      </div>
+                      <div style={{ fontSize: '14px', fontWeight: 500 }}>{c.value}</div>
+                    </div>
+                  </Wrapper>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Right — Form */}
+          <div className="reveal">
+            <form className="contact__form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="contact-name">Your Name</label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  placeholder="Anmol Garg"
+                  value={form.name}
+                  onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact-email">Email Address</label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  placeholder="hello@example.com"
+                  value={form.email}
+                  onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact-message">Message</label>
+                <textarea
+                  id="contact-message"
+                  placeholder="Tell me about your project or idea..."
+                  value={form.message}
+                  onChange={e => setForm(p => ({ ...p, message: e.target.value }))}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="form-submit btn-primary"
+                disabled={sending || sent}
+                style={{ opacity: sending ? 0.7 : 1 }}
               >
-                <div className="w-16 h-16 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mb-4 border border-green-500/30">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 200 }}
-                  >
-                    <Check size={32} />
-                  </motion.div>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-1">Message Sent!</h3>
-                <p className="text-sm text-[var(--text-secondary)]">Thanks for reaching out. I'll get back to you soon.</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-widest opacity-40 ml-1">Full Name</label>
-                <input required type="text" placeholder="John Doe" />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-widest opacity-40 ml-1">Email Address</label>
-                <input required type="email" placeholder="john@example.com" />
-              </div>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest opacity-40 ml-1">Subject</label>
-              <input required type="text" placeholder="Project Inquiry" />
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest opacity-40 ml-1">Message</label>
-              <textarea required rows="4" placeholder="Tell me about your project..."></textarea>
-            </div>
-
-            <button 
-              type="submit" 
-              disabled={isSending}
-              className={`w-full group flex items-center justify-center gap-3 py-4 rounded-xl font-black uppercase tracking-widest text-xs transition-all duration-300 relative overflow-hidden ${
-                isSending ? 'opacity-70 cursor-wait' : 'bg-gradient-to-r from-[#7c3aed] to-[#06b6d4] hover:shadow-[0_0_25px_rgba(124,58,237,0.4)] hover:scale-[1.02] active:scale-[0.98]'
-              }`}
-            >
-              {isSending ? 'Sending...' : (
-                <>
-                  <span>Send Message</span>
-                  <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </>
-              )}
-            </button>
-          </form>
+                {sent ? (
+                  <>✓ Message Sent!</>
+                ) : sending ? (
+                  <>Sending...</>
+                ) : (
+                  <><Send size={15} /> Send Message</>
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
-  );
-};
-
-export default Contact;
+  )
+}

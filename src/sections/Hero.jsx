@@ -1,141 +1,173 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Linkedin, Github, Mail, ArrowDown, Medal, Rocket } from 'lucide-react';
+import './Hero.css'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { Github, Linkedin, Mail, Phone, ArrowDown } from 'lucide-react'
+import CanvasParticles from '../components/CanvasParticles'
+import HeroScene from '../components/HeroScene'
 
-const Hero = () => {
-  const [text, setText] = useState('');
-  const roles = ["Software Engineer", "AI Developer", "IoT Builder", "ML Enthusiast", "Cybersecurity Learner"];
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+const SOCIALS = [
+  { icon: <Github size={18} />, href: 'https://github.com/AnmolGarg8', label: 'GitHub' },
+  { icon: <Linkedin size={18} />, href: 'https://linkedin.com/in/anmol-garg2005', label: 'LinkedIn' },
+  { icon: <Mail size={18} />, href: 'mailto:anmolgarg1605@gmail.com', label: 'Email' },
+  { icon: <Phone size={18} />, href: 'tel:+919625652435', label: 'Phone' },
+]
 
+export default function Hero({ isLoaded }) {
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const sectionRef = useRef(null)
+  const leftRef = useRef(null)
+  const rightRef = useRef(null)
+  const socialRef = useRef(null)
+  const scrollRef = useRef(null)
+  const statusRef = useRef(null)
+
+  // Track mouse for 3D scene parallax
   useEffect(() => {
-    const handleType = () => {
-      const currentRole = roles[roleIndex];
-      const speed = isDeleting ? 50 : 100;
+    const onMove = (e) => {
+      const w = window.innerWidth, h = window.innerHeight
+      mouseRef.current.x = (e.clientX / w - 0.5) * 2
+      mouseRef.current.y = (e.clientY / h - 0.5) * 2
+    }
+    window.addEventListener('mousemove', onMove, { passive: true })
+    return () => window.removeEventListener('mousemove', onMove)
+  }, [])
 
-      if (!isDeleting && charIndex < currentRole.length) {
-        setText(currentRole.substring(0, charIndex + 1));
-        setCharIndex(prev => prev + 1);
-      } else if (isDeleting && charIndex > 0) {
-        setText(currentRole.substring(0, charIndex - 1));
-        setCharIndex(prev => prev - 1);
-      } else if (!isDeleting && charIndex === currentRole.length) {
-        setTimeout(() => setIsDeleting(true), 1500);
-      } else {
-        setIsDeleting(false);
-        setRoleIndex(idx => (idx + 1) % roles.length);
-        setCharIndex(0);
-      }
-    };
+  // GSAP entrance after preloader
+  useEffect(() => {
+    if (!isLoaded) return
 
-    const timer = setTimeout(handleType, isDeleting ? 50 : 100);
-    return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, roleIndex]);
+    const tl = gsap.timeline({ delay: 0.1 })
+    const leftEls = leftRef.current ? Array.from(leftRef.current.querySelectorAll('.ha')) : []
+    const rightEls = rightRef.current ? Array.from(rightRef.current.querySelectorAll('.ha')) : []
+
+    if (leftEls.length > 0) {
+      tl.fromTo(leftEls,
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out' }
+      )
+    }
+    if (rightEls.length > 0) {
+      tl.fromTo(rightEls,
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out' },
+        '<0.05'
+      )
+    }
+    if (socialRef.current) {
+      tl.fromTo(socialRef.current,
+        { opacity: 0, x: -15 },
+        { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' },
+        '-=0.3'
+      )
+    }
+    if (statusRef.current) {
+      tl.fromTo(statusRef.current,
+        { opacity: 0, scale: 0.85 },
+        { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(1.7)' },
+        '-=0.2'
+      )
+    }
+    if (scrollRef.current) {
+      tl.fromTo(scrollRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4 },
+        '-=0.1'
+      )
+    }
+  }, [isLoaded])
 
   return (
-    <section id="home" className="hero-section">
-      {/* Absolute Background Elements */}
-      <div className="absolute inset-0 -z-10 bg-[#0a0a12]">
-        <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-[#7c3aed]/10 rounded-full blur-[100px]" />
-        <div className="bg-grid-faint opacity-20 inset-0 absolute" />
+    <section id="home" ref={sectionRef} className="hero-v2">
+      {/* Particle canvas — absolutely positioned behind everything */}
+      <CanvasParticles />
+
+      {/* Glow blobs */}
+      <div className="hv2__glow hv2__glow--left" />
+      <div className="hv2__glow hv2__glow--right" />
+      <div className="hv2__glow hv2__glow--top" />
+
+      {/* Social sidebar */}
+      <div ref={socialRef} className="hv2__social" style={{ opacity: 0 }}>
+        {SOCIALS.map(s => (
+          <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
+            {s.icon}
+          </a>
+        ))}
+        <div className="hv2__social-line" />
       </div>
 
-      <div className="hero-grid-wrapper">
-        {/* LEFT COLUMN: Text Content */}
-        <div className="hero-left">
-          
-          {/* Available Pill Badge */}
-          <div className="available-pill">
-            <div className="pill-dot" />
-            <span className="text-[11px] font-bold text-[#86efac] uppercase tracking-[0.07em]">
-              Available for Opportunities
-            </span>
-          </div>
+      {/* 3D scene — absolutely centered, behind text columns */}
+      <div className="hv2__scene-wrap">
+        {isLoaded && <HeroScene mouseRef={mouseRef} />}
+        <div ref={statusRef} className="hv2__badge" style={{ opacity: 0 }}>
+          <span className="hv2__badge-dot" />
+          Open to Opportunities
+        </div>
+      </div>
 
-          <div className="space-y-0">
-            <p className="hero-hi">Hi, I'm</p>
-            <h1 className="hero-name" style={{ fontSize: 'clamp(52px, 12vw, 150px)', lineHeight: '0.9', marginBottom: '24px' }}>Anmol Garg</h1>
-          </div>
+      {/* Three-column layout overlaid on top */}
+      <div className="hv2__layout">
 
-          {/* Typewriter Row */}
-          <div style={{ height: '40px', display: 'flex', alignItems: 'center' }}>
-            <span className="text-[22px] font-medium text-[#e2dffa] whitespace-nowrap min-w-[280px] inline-block">
-              {text}
-              <span className="animate-blink" style={{ marginLeft: '4px', width: '2px', height: '24px', backgroundColor: '#7c3aed', display: 'inline-block' }}>|</span>
-            </span>
-          </div>
+        {/* ── LEFT COLUMN ── */}
+        <div ref={leftRef} className="hv2__left">
+          <p className="hv2__greeting ha">Hello! I'm</p>
 
-          <p className="text-[42px] text-[var(--text-secondary)] font-bold max-w-[900px] m-0" style={{ wordSpacing: '0.15em', lineHeight: '1.2' }}>
-            Engineering Intelligence. <br className="hidden md:block" /> Building the Future.
-          </p>
+          <h1 className="hv2__name ha">
+            <span className="hv2__name-line">ANMOL</span>
+            <span className="hv2__name-line">GARG</span>
+          </h1>
 
-          <p className="text-[32px] text-[rgba(255,255,255,0.6)] max-w-[900px] leading-[1.4] m-0" style={{ wordSpacing: '0.15em' }}>
-            I build intelligent systems that sit at the intersection of hardware and software. 
-            From ESP32-based IoT platforms to NLP-driven AI tools — I engineer real solutions to real problems.
-          </p>
-
-          {/* CTA Buttons */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', marginTop: '8px' }}>
-            <a href="#projects" className="btn-primary-hero no-underline text-white">
-              Explore My Work →
-            </a>
-            <a href="/resume.pdf" target="_blank" className="btn-secondary-hero no-underline text-[#a78bfa]">
-              Download Resume ↓
+          <div className="hv2__cta ha">
+            <a
+              href="#contact"
+              className="btn-primary"
+              onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }) }}
+            >
+              <Mail size={14} /> Get in Touch
             </a>
           </div>
 
-          {/* Social Icons */}
-          <div style={{ display: 'flex', gap: '12px', marginTop: '4px' }}>
-            <a href="https://linkedin.com/in/anmol-garg2005" target="_blank" className="social-icon-hero no-underline"><Linkedin size={20} /></a>
-            <a href="https://github.com/AnmolGarg8" target="_blank" className="social-icon-hero no-underline"><Github size={20} /></a>
-            <a href="mailto:anmolgarg1605@gmail.com" className="social-icon-hero no-underline"><Mail size={20} /></a>
-          </div>
+          <a
+            href="#projects"
+            className="hv2__scroll-link ha"
+            onClick={e => { e.preventDefault(); document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' }) }}
+          >
+            View Projects <ArrowDown size={14} />
+          </a>
         </div>
 
-        {/* RIGHT COLUMN: Avatar & Floating Cards */}
-        <div className="hero-right">
-          <div className="avatar-wrapper">
-            {/* Radial Glow behind */}
-            <div className="avatar-glow" />
-            
-            {/* Main Image with mask */}
-            <img 
-              src="/avatar.jpeg" 
-              alt="Anmol Garg"
-              className="avatar-image"
-            />
+        {/* ── CENTER spacer (3D lives behind) ── */}
+        <div className="hv2__center-spacer" />
 
-            {/* Achievement Cards (Forced visibility for verification) */}
-            <div className="absolute" style={{ top: '15%', left: '-80px', zIndex: 10 }}>
-              <div className="glass-panel p-4 flex items-center gap-3 border border-[rgba(124,58,237,0.4)] bg-[#0a0823]/88 backdrop-blur-xl rounded-[14px] shadow-2xl animate-float-card-1">
-                <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: 'rgba(124,58,237,0.2)', color: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Medal size={20} />
-                </div>
-                <div style={{ paddingRight: '12px' }}>
-                  <p className="text-[10px] font-bold uppercase tracking-tight text-[var(--accent-secondary)] m-0">Samsung Solve 2025</p>
-                  <p className="text-[13px] font-bold text-[#e2dffa] whitespace-nowrap m-0">🏆 Top 10 National</p>
-                </div>
-              </div>
-            </div>
+        {/* ── RIGHT COLUMN ── */}
+        <div ref={rightRef} className="hv2__right">
+          <p className="hv2__role-label ha">A Creative</p>
 
-            <div className="absolute" style={{ bottom: '22%', right: '-70px', zIndex: 10 }}>
-              <div className="glass-panel p-4 flex items-center gap-3 border border-[rgba(124,58,237,0.4)] bg-[#0a0823]/88 backdrop-blur-xl rounded-[14px] shadow-2xl animate-float-card-2">
-                <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: 'rgba(6,182,212,0.2)', color: '#06b6d4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Rocket size={20} />
-                </div>
-                <div style={{ paddingRight: '12px' }}>
-                  <p className="text-[10px] font-bold uppercase tracking-tight text-[var(--accent-highlight)] m-0">Impact Level</p>
-                  <p className="text-[13px] font-bold text-[#e2dffa] whitespace-nowrap m-0">⚡ 3+ Projects Shipped</p>
-                </div>
-              </div>
-            </div>
+          <div className="hv2__role-stack ha">
+            <span className="hv2__role-back">ENGINEER</span>
+            <span className="hv2__role-front">DEVELOPER</span>
+          </div>
+
+          <p className="hv2__tagline ha">
+            "Engineering Intelligence.<br />Building the Future."
+          </p>
+
+          <p className="hv2__oneliner ha">
+            I build things that think.
+          </p>
+
+          <div className="hv2__contact-mini ha">
+            <a href="mailto:anmolgarg1605@gmail.com">anmolgarg1605@gmail.com</a>
+            <span className="hv2__location">📍 Delhi, India</span>
           </div>
         </div>
       </div>
 
+      {/* Scroll indicator */}
+      <div ref={scrollRef} className="hv2__scroll" style={{ opacity: 0 }}>
+        <span className="hv2__scroll-text">Scroll</span>
+        <div className="hv2__scroll-line" />
+      </div>
     </section>
-  );
-};
-
-export default Hero;
+  )
+}

@@ -1,95 +1,114 @@
-import { motion } from 'framer-motion';
-import { Database, Zap, Cpu, Github, ExternalLink } from 'lucide-react';
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ArrowUpRight } from 'lucide-react'
 
-const Projects = () => {
-  const projects = [
-    {
-      id: "01",
-      name: "NoteNetra",
-      role: "IoT Fintech Platform",
-      impact: "Designed an ESP32-powered system that transforms offline cash transactions into structured digital credit data — bridging the financial inclusion gap for MSMEs and farmers across rural India.",
-      tags: ["ESP32", "IoT", "Cloud Dashboard", "Firebase", "Fintech"],
-      icon: <Database size={40} className="text-[var(--accent-primary)]" />,
-      stagger: 0
-    },
-    {
-      id: "02",
-      name: "Smart Vape Detection System",
-      role: "Sensor-based Alert Engine",
-      impact: "Engineered a real-time sensor-based detection system that identifies vape smoke in restricted environments and instantly alerts authorities — applied sensor fusion and threshold logic for reliable detection.",
-      tags: ["Hardware", "MQ Sensors", "Buzzer Alert", "Embedded C"],
-      icon: <Zap size={40} className="text-[var(--accent-primary)]" />,
-      stagger: 40
-    },
-    {
-      id: "03",
-      name: "AlKosh",
-      role: "SAMARTH-AI MSME Platform",
-      impact: "Built an AI-driven onboarding engine that classifies unstructured product descriptions into structured enterprise taxonomy using NLP and semantic similarity models — with confidence scoring for enterprise-grade reliability.",
-      tags: ["NLP", "Semantic Similarity", "Python", "REST API", "AI"],
-      icon: <Cpu size={40} className="text-[var(--accent-primary)]" />,
-      stagger: 20
-    }
-  ];
+gsap.registerPlugin(ScrollTrigger)
+
+const PROJECTS = [
+  {
+    num: '01',
+    name: 'Smart IoT Health Monitor',
+    desc: 'ESP32-based wearable platform for real-time biometric monitoring — heart rate, SpO2, temperature — with cloud dashboard and NLP-powered symptom analysis.',
+    tags: ['ESP32', 'Python', 'MQTT', 'TensorFlow', 'Firebase', 'React'],
+    link: 'https://github.com/AnmolGarg8',
+  },
+  {
+    num: '02',
+    name: 'AI-Powered Crop Disease Detector',
+    desc: 'Computer vision model (CNN + transfer learning) achieving 94% accuracy on plant disease classification from leaf images. Deployed as mobile-friendly web app.',
+    tags: ['Python', 'PyTorch', 'OpenCV', 'FastAPI', 'React Native'],
+    link: 'https://github.com/AnmolGarg8',
+  },
+  {
+    num: '03',
+    name: 'NLP Legal Document Analyzer',
+    desc: 'LLM-powered tool for extracting key clauses, obligations, and risks from legal contracts. Reduces review time by 70% using spaCy + LangChain pipeline.',
+    tags: ['Python', 'LangChain', 'spaCy', 'OpenAI', 'Next.js', 'MongoDB'],
+    link: 'https://github.com/AnmolGarg8',
+  },
+  {
+    num: '04',
+    name: 'Smart Home Automation Hub',
+    desc: 'Centralized IoT hub connecting 20+ sensors and actuators via MQTT. Voice-controlled via custom NLP engine. Samsung Solve for Tomorrow 2025 project.',
+    tags: ['ESP32', 'Raspberry Pi', 'MQTT', 'Node.js', 'Python', 'React'],
+    link: 'https://github.com/AnmolGarg8',
+  },
+  {
+    num: '05',
+    name: 'Real-Time Code Collaboration IDE',
+    desc: 'Browser-based collaborative code editor with WebSocket sync, multi-language support, AI autocomplete, and integrated terminal — built for hackathons.',
+    tags: ['React', 'Node.js', 'WebSockets', 'Monaco Editor', 'Docker'],
+    link: 'https://github.com/AnmolGarg8',
+  },
+]
+
+export default function Projects() {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('.reveal', sectionRef.current).forEach(el => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+          }
+        )
+      })
+
+      // Project items stagger
+      gsap.fromTo('.project-item',
+        { opacity: 0, x: -30 },
+        {
+          opacity: 1, x: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out',
+          scrollTrigger: { trigger: '.projects-list', start: 'top 85%', toggleActions: 'play none none none' }
+        }
+      )
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section id="projects" className="section-container">
-      <div className="mb-20">
-        <h2 className="text-5xl font-bold mb-4 title-gradient" style={{ fontFamily: "'Times New Roman', Times, serif" }}>Things I've Engineered</h2>
-        <p className="text-[var(--text-secondary)] text-xl tracking-tight">Real-world solutions. Real-world impact.</p>
-      </div>
+    <section id="projects" ref={sectionRef} className="section">
+      <div className="section__divider" />
+      <div className="section__inner">
+        <span className="section__label reveal">Projects</span>
+        <h2 className="section__heading reveal">
+          What I've <span className="grad">Built</span>
+        </h2>
+        <p className="section__desc reveal">
+          Selected projects that showcase my engineering range — from embedded systems to full-stack AI applications.
+        </p>
 
-      <div className="grid lg:grid-cols-3 gap-12 lg:gap-14 items-start">
-        {projects.map((project, idx) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 50 + project.stagger }}
-            whileInView={{ opacity: 1, y: project.stagger }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="glass-panel p-8 relative flex flex-col group min-h-[520px] shadow-[0_15px_35px_rgba(0,0,0,0.2)]"
-          >
-            {/* Top Accent Line */}
-            <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-highlight)] opacity-60 group-hover:opacity-100 transition-opacity" />
-            
-            <div className="mb-8 p-4 rounded-2xl bg-white/[0.03] w-fit shadow-inner">
-              {project.icon}
-            </div>
-
-            <div className="mb-4">
-              <p className="text-xs uppercase tracking-[0.2em] font-bold text-[var(--accent-secondary)] mb-2">{project.role}</p>
-              <h3 className="text-2xl font-bold text-white group-hover:text-[var(--accent-highlight)] transition-colors">
-                {project.name}
-              </h3>
-            </div>
-
-            <p className="text-[#b0a8d0] leading-relaxed mb-8 flex-grow">
-              {project.impact}
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-8">
-              {project.tags.map(tag => (
-                <span key={tag} className="text-[10px] font-mono font-bold tracking-wider uppercase px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[var(--accent-secondary)]">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex gap-6 mt-auto pt-6 border-t border-white/5">
-              <a href="#" className="flex items-center gap-2 text-sm font-bold opacity-60 hover:opacity-100 transition-opacity relative group/link">
-                <Github size={16} /> <span>Code</span>
-                <div className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[var(--accent-highlight)] group-hover/link:w-full transition-all duration-300" />
-              </a>
-              <a href="#" className="flex items-center gap-2 text-sm font-bold opacity-60 hover:opacity-100 transition-opacity relative group/link">
-                <ExternalLink size={16} /> <span>Live Demo</span>
-                <div className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[var(--accent-highlight)] group-hover/link:w-full transition-all duration-300" />
-              </a>
-            </div>
-          </motion.div>
-        ))}
+        <div className="projects-list">
+          {PROJECTS.map((p) => (
+            <a
+              key={p.num}
+              href={p.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-item"
+              style={{ textDecoration: 'none' }}
+            >
+              <div className="project-item__num">{p.num}</div>
+              <div className="project-item__body">
+                <div className="project-item__name">{p.name}</div>
+                <div className="project-item__desc">{p.desc}</div>
+                <div className="project-item__tags">
+                  {p.tags.map(t => (
+                    <span key={t} className="project-item__tag">{t}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="project-item__arrow">
+                <ArrowUpRight size={20} />
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
-  );
-};
-
-export default Projects;
+  )
+}

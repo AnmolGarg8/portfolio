@@ -1,0 +1,366 @@
+/* ============================================
+   HERO V2 — Moncy.dev Three-Column Layout
+   3D scene is absolutely centered behind a grid overlay
+   ============================================ */
+
+/* Particle canvas fills hero section absolutely */
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-v2 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+}
+
+/* Atmospheric glow blobs */
+.hv2__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(130px);
+  pointer-events: none;
+  z-index: 1;
+}
+.hv2__glow--left {
+  width: 700px;
+  height: 700px;
+  bottom: -200px;
+  left: -150px;
+  background: rgba(124, 58, 237, 0.2);
+}
+.hv2__glow--right {
+  width: 500px;
+  height: 500px;
+  top: -50px;
+  right: -80px;
+  background: rgba(6, 182, 212, 0.1);
+}
+.hv2__glow--top {
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(124, 58, 237, 0.08);
+}
+
+/* Social sidebar — fixed to left */
+.hv2__social {
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.hv2__social a {
+  color: rgba(167, 139, 250, 0.4);
+  text-decoration: none;
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: flex;
+}
+.hv2__social a:hover {
+  color: var(--text-primary);
+  transform: translateX(3px);
+}
+.hv2__social-line {
+  width: 1px;
+  height: 70px;
+  background: linear-gradient(to bottom, rgba(124, 58, 237, 0.4), transparent);
+  margin-top: 6px;
+}
+
+/* ──────────────────────────────────────────────
+   3D SCENE — absolutely centered in the hero
+   ────────────────────────────────────────────── */
+.hv2__scene-wrap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55vw;
+  max-width: 900px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hv2__badge {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(8, 8, 18, 0.85);
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+  z-index: 30;
+  pointer-events: all;
+}
+
+.hv2__badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+/* ──────────────────────────────────────────────
+   LAYOUT — Three-column text grid on top of 3D
+   ────────────────────────────────────────────── */
+.hv2__layout {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  align-items: center;
+  padding: 0 32px 0 80px;
+  pointer-events: none;
+}
+
+/* ── LEFT COLUMN ── */
+.hv2__left {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 60px;
+  pointer-events: all;
+}
+
+.hv2__greeting {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+  opacity: 0;
+}
+
+.hv2__name {
+  font-family: 'Space Grotesk', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1.0;
+  letter-spacing: -2.5px;
+  opacity: 0;
+}
+
+.hv2__name-line {
+  font-size: clamp(50px, 5.2vw, 85px);
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+}
+
+.hv2__cta {
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+}
+
+.hv2__scroll-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.25s ease;
+  opacity: 0;
+}
+.hv2__scroll-link:hover { color: var(--text-secondary); }
+
+/* ── CENTER SPACER (3D is behind via .hv2__scene-wrap) ── */
+.hv2__center-spacer {
+  /* Empty — just creates the grid space for the centered 3D */
+  height: 100vh;
+}
+
+/* ── RIGHT COLUMN ── */
+.hv2__right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 60px;
+  text-align: right;
+  pointer-events: all;
+}
+
+.hv2__role-label {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  opacity: 0;
+}
+
+.hv2__role-stack {
+  position: relative;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -2.5px;
+  overflow: hidden;
+  height: clamp(55px, 5.5vw, 90px);
+  opacity: 0;
+}
+
+.hv2__role-back {
+  display: block;
+  font-size: clamp(44px, 4.6vw, 78px);
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(124, 58, 237, 0.3);
+  position: absolute;
+  top: 0;
+  right: 0;
+  user-select: none;
+}
+
+.hv2__role-front {
+  display: block;
+  font-size: clamp(44px, 4.6vw, 78px);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.hv2__tagline {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 10.5px;
+  letter-spacing: 1.5px;
+  line-height: 1.7;
+  opacity: 0;
+}
+
+.hv2__oneliner {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(17px, 1.6vw, 22px);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  opacity: 0;
+}
+
+.hv2__contact-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+}
+.hv2__contact-mini a {
+  font-size: 12px;
+  color: var(--accent-purple);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+.hv2__contact-mini a:hover { color: var(--text-primary); }
+.hv2__location {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Scroll indicator */
+.hv2__scroll {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 20;
+}
+.hv2__scroll-text {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.hv2__scroll-line {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, rgba(124,58,237,0.7), transparent);
+  animation: scrollLine 2s ease infinite;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .hv2__layout {
+    grid-template-columns: 1fr 1.2fr 1fr;
+    padding: 0 24px 0 70px;
+  }
+  .hv2__scene-wrap {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-v2 {
+    height: auto;
+    min-height: 100vh;
+  }
+  .hv2__layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    padding: 100px 24px 40px;
+    gap: 0;
+    height: auto;
+    min-height: 100vh;
+  }
+  .hv2__scene-wrap {
+    position: relative;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: 60vw;
+    max-height: 420px;
+    order: -1;
+  }
+  .hv2__center-spacer {
+    display: none;
+  }
+  .hv2__left, .hv2__right {
+    text-align: center;
+    padding-top: 24px;
+    pointer-events: all;
+  }
+  .hv2__cta { justify-content: center; }
+  .hv2__right { text-align: center; }
+  .hv2__name { align-items: center; }
+  .hv2__social { display: none; }
+  .hv2__role-stack { text-align: center; }
+  .hv2__role-back, .hv2__role-front { right: 0; left: 0; text-align: center; }
+  .hv2__contact-mini { align-items: center; }
+}

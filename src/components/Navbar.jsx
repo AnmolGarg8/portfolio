@@ -1,126 +1,115 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+const NAV_LINKS = [
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Achievements', href: '#achievements' },
+  { label: 'Education', href: '#education' },
+  { label: 'Contact', href: '#contact' },
+]
 
+export default function Navbar({ isLoaded }) {
+  const navRef = useRef(null)
+  const linksRef = useRef([])
+  const progressRef = useRef(null)
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
+
+  // Scroll effects
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      const scrollY = window.scrollY
+      const docH = document.documentElement.scrollHeight - window.innerHeight
+      setScrolled(scrollY > 60)
 
-      const sections = ['home', 'about', 'skills', 'projects', 'achievements', 'education', 'contact'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top >= -200 && rect.top <= 400) {
-            setActiveSection(section);
-            break;
-          }
-        }
+      if (progressRef.current) {
+        progressRef.current.style.width = (scrollY / docH * 100) + '%'
       }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-  const navLinks = [
-    { name: 'Home', href: '#home', id: 'home' },
-    { name: 'About', href: '#about', id: 'about' },
-    { name: 'Skills', href: '#skills', id: 'skills' },
-    { name: 'Projects', href: '#projects', id: 'projects' },
-    { name: 'Achievements', href: '#achievements', id: 'achievements' },
-    { name: 'Education', href: '#education', id: 'education' },
-    { name: 'Contact', href: '#contact', id: 'contact' },
-  ];
+  // Active section detection
+  useEffect(() => {
+    const sections = NAV_LINKS.map(l => document.querySelector(l.href))
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActiveSection('#' + entry.target.id)
+        })
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    )
+    sections.forEach(s => s && observer.observe(s))
+    return () => observer.disconnect()
+  }, [])
+
+  // Entrance animation after preloader
+  useEffect(() => {
+    if (!isLoaded) return
+    gsap.fromTo(linksRef.current,
+      { y: -20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: 'power3.out', delay: 0.1 }
+    )
+  }, [isLoaded])
+
+  const handleLinkClick = (e, href) => {
+    e.preventDefault()
+    const target = document.querySelector(href)
+    if (target) target.scrollIntoView({ behavior: 'smooth' })
+    setMenuOpen(false)
+  }
 
   return (
     <>
-      <nav className="nav-fixed" style={{ padding: isScrolled ? '12px 0' : '20px 0', pointerEvents: 'auto' }}>
-        <div className="nav-container" style={{ pointerEvents: 'auto' }}>
-          {/* Glass Background - Neutralized for clicks */}
-          <div style={{ position: 'absolute', inset: '0 24px', backgroundColor: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(20px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)', pointerEvents: 'none' }} />
+      <div ref={progressRef} className="scroll-progress" />
+      <nav ref={navRef} className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+        <a href="#" className="navbar__logo" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
+          AG
+        </a>
 
-          <a href="#home" className="no-underline group" style={{ display: 'flex', alignItems: 'center', gap: '12px', zIndex: 10, position: 'relative' }}>
-            <div className="relative">
-              <img 
-                src="/logo.png" 
-                alt="Anmol Garg Logo" 
-                style={{ 
-                  width: '48px', 
-                  height: '48px', 
-                  objectFit: 'contain',
-                  filter: 'drop-shadow(0 0 10px rgba(124,58,237,0.5))'
-                }}
-                className="group-hover:scale-110 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-[var(--accent-primary)]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', opacity: 0.9 }}>
-              <span style={{ color: 'white', fontWeight: '800', letterSpacing: '0.1em', fontSize: '13px', lineHeight: '1', fontFamily: "'Inter', sans-serif" }} className="uppercase">Anmol Garg</span>
-              <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: '500', letterSpacing: '0.05em', fontSize: '10px', marginTop: '2px', fontFamily: "'Inter', sans-serif" }} className="uppercase">Software Engineer & AI Developer</span>
-            </div>
-          </a>
-
-          {/* Nav Links */}
-          <div className="nav-links-desktop" style={{ position: 'relative', zIndex: 10 }}>
-            {navLinks.map((link) => (
+        <ul className="navbar__links">
+          {NAV_LINKS.map((link, i) => (
+            <li key={link.href}>
               <a
-                key={link.name}
+                ref={el => linksRef.current[i] = el}
                 href={link.href}
-                className={`nav-link-underline no-underline ${activeSection === link.id ? 'nav-link-active' : ''}`}
-                style={{ fontSize: '14px', fontWeight: '500', color: activeSection === link.id ? '#ffffff' : 'rgba(200,196,248,0.75)', padding: '6px 2px', transition: 'all 0.3s' }}
+                className={activeSection === link.href ? 'active' : ''}
+                onClick={e => handleLinkClick(e, link.href)}
+                style={{ opacity: 0 }}
               >
-                {link.name}
+                {link.label}
               </a>
-            ))}
-          </div>
+            </li>
+          ))}
+        </ul>
 
-          {/* Mobile Toggle Button */}
-          <button 
-            style={{ border: 'none', background: 'transparent', cursor: 'pointer', zIndex: 10, position: 'relative', flexDirection: 'column', gap: '6px' }}
-            className="md-hide"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', transform: isMobileMenuOpen ? 'rotate(45deg) translateY(11px)' : '' }} />
-            <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', opacity: isMobileMenuOpen ? 0 : 1 }} />
-            <div style={{ width: '24px', height: '2px', backgroundColor: 'white', transition: 'all 0.3s', transform: isMobileMenuOpen ? 'rotate(-45deg) translateY(-11px)' : '' }} />
-          </button>
-        </div>
+        <button
+          className={`navbar__hamburger ${menuOpen ? 'open' : ''}`}
+          aria-label="Toggle menu"
+          onClick={() => setMenuOpen(p => !p)}
+        >
+          <span /><span /><span />
+        </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            className="md:hidden fixed inset-0 z-40 bg-[#0a0a14]/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-10"
+      {/* Mobile Menu */}
+      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+        {NAV_LINKS.map((link, i) => (
+          <a
+            key={link.href}
+            href={link.href}
+            onClick={e => handleLinkClick(e, link.href)}
+            style={{ animationDelay: menuOpen ? `${i * 0.06}s` : '0s' }}
           >
-            {navLinks.map((link, i) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-3xl font-bold transition-all no-underline ${
-                  activeSection === link.id ? 'text-[var(--accent-primary)]' : 'text-white/60'
-                }`}
-              >
-                {link.name}
-              </motion.a>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {link.label}
+          </a>
+        ))}
+      </div>
     </>
-  );
-};
-
-export default Navbar;
+  )
+}
