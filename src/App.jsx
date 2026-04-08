@@ -1,78 +1,57 @@
-import { useState, useEffect } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Lenis from '@studio-freight/lenis'
-
-import CustomCursor from './components/CustomCursor'
+import { useEffect, useRef, useState } from 'react'
+import './index.css'
 import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-
+import Sidebar from './components/Sidebar'
+import CustomCursor from './components/CustomCursor'
 import Hero from './sections/Hero'
 import About from './sections/About'
-import Skills from './sections/Skills'
-import Projects from './sections/Projects'
-import Achievements from './sections/Achievements'
-import Education from './sections/Education'
+import Experience from './sections/Experience'
+import Work from './sections/Work'
+import TechStack from './sections/TechStack'
 import Contact from './sections/Contact'
 
-gsap.registerPlugin(ScrollTrigger)
-
 export default function App() {
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    // Setup Lenis smooth scroll
-    const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      smoothWheel: true,
-    })
+    // Reveal on scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible')
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
 
-    // Connect Lenis to GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update)
-    gsap.ticker.add((time) => { lenis.raf(time * 1000) })
-    gsap.ticker.lagSmoothing(0)
+    const elements = document.querySelectorAll('.reveal')
+    elements.forEach(el => observer.observe(el))
 
-    return () => {
-      lenis.destroy()
-      gsap.ticker.remove((time) => { lenis.raf(time * 1000) })
-    }
-  }, [])
-
-  const handleLoaded = () => {
-    setIsLoaded(true)
-    // Refresh ScrollTrigger after load
-    setTimeout(() => ScrollTrigger.refresh(), 100)
-  }
+    return () => observer.disconnect()
+  }, [loaded])
 
   return (
     <>
-      {/* Noise texture overlay */}
-      <div className="noise-overlay" aria-hidden="true" />
-
-      {/* Custom Cursor */}
+      <Preloader onComplete={() => setLoaded(true)} />
       <CustomCursor />
 
-      {/* Preloader */}
-      {!isLoaded && <Preloader onComplete={handleLoaded} />}
-
-      {/* Navigation */}
-      <Navbar isLoaded={isLoaded} />
-
-      {/* Page Sections */}
-      <main>
-        <Hero isLoaded={isLoaded} />
-        <About />
-        <Skills />
-        <Projects />
-        <Achievements />
-        <Education />
-        <Contact />
-      </main>
-
-      <Footer />
+      {loaded && (
+        <>
+          <Navbar />
+          <Sidebar />
+          <main>
+            <Hero />
+            <About />
+            <Experience />
+            <Work />
+            <TechStack />
+            <Contact />
+          </main>
+        </>
+      )}
     </>
   )
 }
