@@ -1,57 +1,67 @@
 import { useEffect, useRef, useState } from 'react'
-import './index.css'
-import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
-import Sidebar from './components/Sidebar'
-import CustomCursor from './components/CustomCursor'
-import Hero from './sections/Hero'
-import About from './sections/About'
-import Experience from './sections/Experience'
-import Work from './sections/Work'
-import TechStack from './sections/TechStack'
-import Contact from './sections/Contact'
+import SocialIcons from './components/SocialIcons'
+import Cursor from './components/Cursor'
+import Landing from './components/Landing'
+import About from './components/About'
+import WhatIDo from './components/WhatIDo'
+import Career from './components/Career'
+import Work from './components/Work'
+import TechStack from './components/TechStack'
+import Contact from './components/Contact'
+import Loading from './components/Loading'
+import { initSmoothScroll, initScrollAnimations, initLandingAnimations } from './utils/animations'
 
-export default function App() {
-  const [loaded, setLoaded] = useState(false)
+const App = () => {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const mainRef = useRef(null)
 
   useEffect(() => {
-    // Reveal on scroll
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible')
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
+    // Preload timer
+    const timer = setTimeout(() => {
+      setIsLoaded(true)
+    }, 2800)
+    return () => clearTimeout(timer)
+  }, [])
 
-    const elements = document.querySelectorAll('.reveal')
-    elements.forEach(el => observer.observe(el))
+  useEffect(() => {
+    if (!isLoaded) return
 
-    return () => observer.disconnect()
-  }, [loaded])
+    const cleanup = initSmoothScroll()
+    
+    // Small delay to ensure DOM is ready
+    const animTimer = setTimeout(() => {
+      initLandingAnimations()
+      initScrollAnimations()
+    }, 100)
+
+    return () => {
+      cleanup()
+      clearTimeout(animTimer)
+    }
+  }, [isLoaded])
 
   return (
     <>
-      <Preloader onComplete={() => setLoaded(true)} />
-      <CustomCursor />
-
-      {loaded && (
-        <>
-          <Navbar />
-          <Sidebar />
-          <main>
-            <Hero />
+      <Loading isLoaded={isLoaded} />
+      <Cursor />
+      <Navbar />
+      <SocialIcons />
+      <main ref={mainRef} className={isLoaded ? 'main-active' : ''}>
+        <div id="smooth-wrapper">
+          <div id="smooth-content">
+            <Landing />
             <About />
-            <Experience />
+            <WhatIDo />
+            <Career />
             <Work />
             <TechStack />
             <Contact />
-          </main>
-        </>
-      )}
+          </div>
+        </div>
+      </main>
     </>
   )
 }
+
+export default App

@@ -1,0 +1,50 @@
+.loading-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: #000;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.loading-hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+.loading-logo {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--accentColor);
+}
+.loading-bar-container {
+  width: 200px;
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loading-bar {
+  width: 0%;
+  height: 100%;
+  background: var(--accentColor);
+  transition: width 2.5s ease;
+}
+.loading-bar-full {
+  width: 100%;
+}
+.loading-counter {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.5);
+}
