@@ -22,21 +22,22 @@ const TechStack = () => {
   const canvasRef = useRef(null)
   const ballsRef = useRef([])
   const mouseRef = useRef({ x: -1000, y: -1000 })
+  const sectionRef = useRef(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    const section = sectionRef.current
+    if (!canvas || !section) return
     const ctx = canvas.getContext('2d')
     let animId
 
     const resize = () => {
-      const parent = canvas.parentElement
-      canvas.width = parent.clientWidth
-      canvas.height = parent.clientHeight
+      // FIX 11: Use section dimensions — not window
+      canvas.width = section.clientWidth
+      canvas.height = section.clientHeight
     }
     resize()
 
-    // Initialize balls
     const W = canvas.width
     const H = canvas.height
     ballsRef.current = techItems.map((item) => {
@@ -85,7 +86,6 @@ const TechStack = () => {
             b.y -= ny * overlap * 0.5
             b2.x += nx * overlap * 0.5
             b2.y += ny * overlap * 0.5
-            // Swap velocities along collision normal
             const relV = (b.vx - b2.vx) * nx + (b.vy - b2.vy) * ny
             b.vx -= relV * nx * 0.5
             b.vy -= relV * ny * 0.5
@@ -94,15 +94,12 @@ const TechStack = () => {
           }
         }
 
-        // Friction
         b.vx *= 0.995
         b.vy *= 0.995
-
-        // Move
         b.x += b.vx
         b.y += b.vy
 
-        // Bounce off walls
+        // FIX 11: Bounce off canvas (section) dimensions
         if (b.x - b.r < 0) { b.x = b.r; b.vx *= -0.7; }
         if (b.x + b.r > canvas.width) { b.x = canvas.width - b.r; b.vx *= -0.7; }
         if (b.y - b.r < 0) { b.y = b.r; b.vy *= -0.7; }
@@ -116,7 +113,6 @@ const TechStack = () => {
         grad.addColorStop(0, 'rgba(220, 210, 255, 0.95)')
         grad.addColorStop(0.5, 'rgba(180, 170, 240, 0.85)')
         grad.addColorStop(1, 'rgba(120, 100, 200, 0.7)')
-
         ctx.beginPath()
         ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2)
         ctx.fillStyle = grad
@@ -168,32 +164,39 @@ const TechStack = () => {
       })
     }
 
-    canvas.addEventListener('mousemove', onMouseMove)
-    canvas.addEventListener('mouseleave', onMouseLeave)
-    canvas.addEventListener('click', onClick)
-    window.addEventListener('resize', () => {
+    const handleResize = () => {
       resize()
-      // Reclamp balls
       ballsRef.current.forEach(b => {
         b.x = Math.min(Math.max(b.r, b.x), canvas.width - b.r)
         b.y = Math.min(Math.max(b.r, b.y), canvas.height - b.r)
       })
-    })
+    }
+
+    canvas.addEventListener('mousemove', onMouseMove)
+    canvas.addEventListener('mouseleave', onMouseLeave)
+    canvas.addEventListener('click', onClick)
+    window.addEventListener('resize', handleResize)
 
     return () => {
       cancelAnimationFrame(animId)
       canvas.removeEventListener('mousemove', onMouseMove)
       canvas.removeEventListener('mouseleave', onMouseLeave)
       canvas.removeEventListener('click', onClick)
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
   return (
-    <section className="techstack">
-      <h2>My Techstack</h2>
-      <div style={{ position: 'relative', width: '100%', height: 'calc(100% - 200px)', marginTop: '200px' }}>
-        <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
+    <section className="techstack" ref={sectionRef}>
+      {/* FIX 10: Heading above canvas with z-index */}
+      <div className="techstack-heading-wrap">
+        <span className="techstack-label">Skills & Technologies</span>
+        <h2 className="techstack-title">My Techstack</h2>
       </div>
+      <canvas
+        ref={canvasRef}
+        className="bubble-canvas"
+      />
     </section>
   )
 }

@@ -1,4 +1,9 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './styles/Career.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const careerData = [
   {
@@ -22,6 +27,31 @@ const careerData = [
 ]
 
 const Career = () => {
+  const yearRefs = useRef([])
+
+  // ENH 5: Year counter animation
+  useEffect(() => {
+    yearRefs.current.forEach(el => {
+      if (!el) return
+      const text = el.textContent
+      const target = parseInt(text)
+      if (isNaN(target)) return // skip "NOW"
+      gsap.from({ val: 0 }, {
+        val: target,
+        duration: 0.9,
+        ease: 'power2.out',
+        onUpdate: function () {
+          el.textContent = Math.round(this.targets()[0].val)
+        },
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      })
+    })
+  }, [])
+
   return (
     <section className="career-section">
       <div className="career-container" style={{ width: 'var(--cWidth)', maxWidth: 'var(--cMaxWidth)', margin: 'auto' }}>
@@ -29,9 +59,6 @@ const Career = () => {
           My career <span>&</span> experience
         </h2>
         <div className="career-info">
-          <div className="career-timeline">
-            <div className="career-dot" />
-          </div>
           {careerData.map((item, index) => (
             <div className="career-info-box" key={index}>
               <div className="career-info-in">
@@ -39,7 +66,12 @@ const Career = () => {
                   <h4>{item.role}</h4>
                   <h5>{item.company}</h5>
                 </div>
-                <h3>{item.year}</h3>
+                <h3
+                  className="year-number"
+                  ref={el => yearRefs.current[index] = el}
+                >
+                  {item.year}
+                </h3>
               </div>
               <p>{item.description}</p>
             </div>

@@ -9,7 +9,7 @@ import Career from './components/Career'
 import Work from './components/Work'
 import TechStack from './components/TechStack'
 import Contact from './components/Contact'
-import Loading from './components/Loading'
+import Marquee from './components/Marquee'
 import { initSmoothScroll, initScrollAnimations, initLandingAnimations } from './utils/animations'
 
 const App = () => {
@@ -54,6 +54,7 @@ const App = () => {
             <About />
             <WhatIDo />
             <Career />
+            <Marquee />
             <Work />
             <TechStack />
             <Contact />

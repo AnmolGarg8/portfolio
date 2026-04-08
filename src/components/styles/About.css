@@ -8,6 +8,7 @@
   height: auto;
   width: var(--cWidth);
   margin: auto;
+  background: transparent; /* FIX 4: pure transparent, no gradient */
 }
 .about-me {
   padding: 50px 0px;
