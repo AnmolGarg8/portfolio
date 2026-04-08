@@ -3,6 +3,7 @@
   padding-bottom: 100px;
   margin-top: 100px;
   position: relative;
+  background: #0a0a0a;
 }
 
 /* FIX 13: 3D sphere positioning */
@@ -43,6 +44,7 @@
   line-height: 1;
   margin: 0;
   margin-bottom: 60px;
+  font-family: 'Archivo Black', sans-serif;
 }
 
 .contact-flex {
@@ -50,9 +52,12 @@
   justify-content: space-between;
 }
 .contact-flex h4 {
-  font-weight: 500;
+  font-weight: 900;
   margin: 0;
   opacity: 0.6;
+  font-family: 'Archivo Black', sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 .contact-box {
   display: flex;
@@ -61,6 +66,7 @@
 .contact-flex p {
   margin-top: 10px;
   margin-bottom: 20px;
+  font-family: 'Inter', sans-serif;
 }
 a.contact-social {
   font-size: 25px;
@@ -69,6 +75,7 @@ a.contact-social {
   display: flex;
   align-items: center;
   transition: color 0.3s;
+  font-family: 'Inter', sans-serif;
 }
 a.contact-social:hover {
   color: var(--accentColor);
@@ -78,9 +85,10 @@ a.contact-social:hover {
   justify-content: flex-end;
 }
 .contact-box h2 {
-  font-weight: 400;
+  font-weight: 700;
   font-size: 23px;
   margin: 0;
+  font-family: 'Inter', sans-serif;
 }
 .contact-box h2 > span {
   color: var(--accentColor);
@@ -93,6 +101,7 @@ a.contact-social:hover {
   gap: 10px;
   opacity: 0.5;
   justify-content: flex-end;
+  font-family: 'Inter', sans-serif;
 }
 
 @media only screen and (max-width: 1600px) {

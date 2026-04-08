@@ -1,7 +1,10 @@
 .work-section h2 {
   margin-top: 100px;
   font-size: 70px;
-  font-weight: 500;
+  font-weight: 900;
+  font-family: 'Archivo Black', sans-serif;
+  color: #ffffff;
+  text-transform: uppercase;
 }
 .work-section h2 > span {
   color: var(--accentColor);
@@ -11,6 +14,7 @@
   min-height: 100vh;
   box-sizing: border-box;
   will-change: transform;
+  background: #0a0a0a;
 }
 .work-container {
   margin: auto;
@@ -79,18 +83,22 @@
   font-size: 50px;
   line-height: 50px;
   margin: 0;
-  font-weight: 600;
+  font-weight: 900;
+  font-family: 'Archivo Black', sans-serif;
 }
 .work-info h4 {
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 700;
   margin: 0;
+  font-family: 'Archivo Black', sans-serif;
+  text-transform: uppercase;
 }
 .work-info p {
-  font-weight: 200;
+  font-weight: 400;
   color: #adacac;
   margin: 0;
   margin-top: 3px;
+  font-family: 'Inter', sans-serif;
 }
 .work-info > p {
   width: 90%;
