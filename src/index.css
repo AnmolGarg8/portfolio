@@ -1,13 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@100..900&display=swap');
-
 :root {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   font-optical-sizing: auto;
   font-style: normal;
   line-height: 1.5;
   color-scheme: dark;
   color: #eae5ec;
-  background-color: #0a0a0a;
+  background-color: var(--backgroundColor);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,31 +13,26 @@
   -moz-osx-font-smoothing: grayscale;
   user-select: none;
 
-  --accentColor: #6c63ff; /* Moncy.dev purple */
-  --backgroundColor: #0a0a0a;
+  --accentColor: #c2a4ff;
+  --backgroundColor: #0b080c;
   --vh: 100vh;
   --vh: 100svh;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Archivo Black', sans-serif;
-  text-transform: uppercase;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 body {
   margin: 0;
   height: auto;
-  background-color: #0a0a0a;
+  background-color: #000;
   flex-grow: 1;
   --cWidth: calc(100% - 30px);
   --cMaxWidth: 1920px;
   max-width: 100vw;
   overflow-x: hidden;
-  background: #0a0a0a;
-}
-
-p, span, li, a {
-  font-family: 'Inter', sans-serif;
+  overflow: hidden;
 }
 
 a {
@@ -67,55 +60,41 @@ main {
   position: relative;
 }
 
+.split-line {
+  overflow: hidden;
+}
+.split-h2 {
+  overflow: hidden;
+  display: flex;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
 * { box-sizing: border-box; }
 
-/* FIX 10 & 11: TechStack Section */
+/* TechStack */
 .techstack {
   width: 100%;
   position: relative;
-  height: 60vh;
+  height: var(--vh);
   margin: auto;
-  margin-top: 100px;
-  margin-bottom: 50px;
-  overflow: hidden; /* Contain bubbles */
-  background: #0a0a0a;
+  margin-top: 50px;
+  margin-bottom: -100px;
 }
-
-.techstack-heading-wrap {
-  position: relative;
-  z-index: 10; /* Above canvas */
+.techstack h2 {
+  font-size: 80px;
   text-align: center;
-  padding-top: 60px;
-  pointer-events: none;
-}
-
-.techstack-label {
-  display: block;
-  margin-bottom: 15px;
-  color: #ffffff;
-  font-size: clamp(14px, 1.5vw, 18px);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  opacity: 0.5;
-  font-family: 'Inter', sans-serif;
-}
-
-h2.techstack-title {
-  font-size: clamp(42px, 5vw, 60px);
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-  text-transform: uppercase;
-  font-family: 'Archivo Black', sans-serif;
-}
-
-canvas.bubble-canvas {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 1; /* Behind heading */
+  width: 100%;
+  top: 120px;
+  left: 0;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
 @media screen and (min-width: 768px) {
   body { --cWidth: 94%; }
+}
+@media screen and (max-width: 900px) {
+  .techstack h2 { font-size: 40px; }
 }

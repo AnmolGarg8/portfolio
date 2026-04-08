@@ -7,7 +7,11 @@ const WhatIDo = () => {
   return (
     <section className="whatIDO">
       <div className="what-box">
-        <h2>WHAT I DO</h2>
+        <h2>
+          WH<span className="hat-h2">AT</span>
+          <br />
+          I <span className="do-h2">DO</span>
+        </h2>
       </div>
       <div className="what-box">
         <div className="what-box-in">
