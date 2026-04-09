@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar'
 import SocialIcons from './components/SocialIcons'
 import Cursor from './components/Cursor'
 import Landing from './components/Landing'
-import About from './components/About'
-import WhatIDo from './components/WhatIDo'
-import Career from './components/Career'
-import Work from './components/Work'
-import TechStack from './components/TechStack'
-import Contact from './components/Contact'
 import Loading from './components/Loading'
 import { initSmoothScroll, initScrollAnimations, initLandingAnimations } from './utils/animations'
+
+// Lazy load non-critical sections
+const About = lazy(() => import('./components/About'))
+const WhatIDo = lazy(() => import('./components/WhatIDo'))
+const Career = lazy(() => import('./components/Career'))
+const Work = lazy(() => import('./components/Work'))
+const TechStack = lazy(() => import('./components/TechStack'))
+const Contact = lazy(() => import('./components/Contact'))
 
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -51,12 +53,14 @@ const App = () => {
         <div id="smooth-wrapper">
           <div id="smooth-content">
             <Landing />
-            <About />
-            <WhatIDo />
-            <Career />
-            <Work />
-            <TechStack />
-            <Contact />
+            <Suspense fallback={<div style={{ height: '100vh', background: 'transparent' }} />}>
+              <About />
+              <WhatIDo />
+              <Career />
+              <Work />
+              <TechStack />
+              <Contact />
+            </Suspense>
           </div>
         </div>
       </main>

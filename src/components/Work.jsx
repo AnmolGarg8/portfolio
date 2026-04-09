@@ -50,7 +50,7 @@ const Work = () => {
               </div>
               <div className="work-image">
                 <div className="work-image-in">
-                  <img src={project.image} alt={project.name} />
+                  <img src={project.image} alt={project.name} loading="lazy" />
                 </div>
               </div>
             </div>

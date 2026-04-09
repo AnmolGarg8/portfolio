@@ -146,8 +146,6 @@ const TechStack = () => {
       animId = requestAnimationFrame(draw)
     }
 
-    draw()
-
     const onMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect()
       mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
@@ -171,17 +169,33 @@ const TechStack = () => {
     canvas.addEventListener('mousemove', onMouseMove)
     canvas.addEventListener('mouseleave', onMouseLeave)
     canvas.addEventListener('click', onClick)
-    window.addEventListener('resize', () => {
+    
+    const onResize = () => {
       resize()
-      // Reclamp balls
       ballsRef.current.forEach(b => {
         b.x = Math.min(Math.max(b.r, b.x), canvas.width - b.r)
         b.y = Math.min(Math.max(b.r, b.y), canvas.height - b.r)
       })
-    })
+    }
+    window.addEventListener('resize', onResize)
+
+    // Observer to pause when not in view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          draw()
+        } else {
+          cancelAnimationFrame(animId)
+        }
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(canvas)
 
     return () => {
       cancelAnimationFrame(animId)
+      observer.disconnect()
+      window.removeEventListener('resize', onResize)
       canvas.removeEventListener('mousemove', onMouseMove)
       canvas.removeEventListener('mouseleave', onMouseLeave)
       canvas.removeEventListener('click', onClick)

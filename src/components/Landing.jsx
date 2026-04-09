@@ -20,7 +20,12 @@ const Landing = () => {
 
         {/* CENTER: Character image */}
         <div className="landing-image">
-          <img src="/hero-char.png" alt="Anmol Garg 3D Avatar" />
+          <img 
+            src="/hero-char.png" 
+            alt="Anmol Garg 3D Avatar" 
+            fetchpriority="high" 
+            loading="eager" 
+          />
           <div className="character-rim" />
         </div>
 

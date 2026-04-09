@@ -64,9 +64,12 @@ function animateTextIn(selector, delay = 0) {
   if (!el) return
   const text = el.textContent || ''
   el.innerHTML = ''
+  
   const wrapper = document.createElement('span')
   wrapper.style.display = 'inline-block'
   wrapper.style.overflow = 'hidden'
+
+  const fragment = document.createDocumentFragment()
 
   text.split('').forEach((char, i) => {
     const span = document.createElement('span')
@@ -75,7 +78,7 @@ function animateTextIn(selector, delay = 0) {
     span.style.opacity = '0'
     span.style.transform = 'translateY(80px)'
     span.style.filter = 'blur(5px)'
-    wrapper.appendChild(span)
+    fragment.appendChild(span)
 
     gsap.to(span, {
       opacity: 1,
@@ -86,6 +89,8 @@ function animateTextIn(selector, delay = 0) {
       delay: delay + i * 0.025,
     })
   })
+  
+  wrapper.appendChild(fragment)
   el.appendChild(wrapper)
 }
 
