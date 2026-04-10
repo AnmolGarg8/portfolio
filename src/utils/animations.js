@@ -96,6 +96,21 @@ function animateTextIn(selector, delay = 0) {
 
 /* ─── Scroll-triggered animations for all sections ─── */
 export function initScrollAnimations() {
+  // About character parallax
+  gsap.fromTo('.about-character img',
+    { y: 150 },
+    {
+      y: -150,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.about-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+      }
+    }
+  )
+
   // About section
   gsap.fromTo('.about-me', 
     { opacity: 0, y: 60 },

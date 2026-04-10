@@ -77,3 +77,22 @@
   .navbar-connect { font-size: 16px; }
   .navbar-title { font-size: 18px; }
 }
+
+#contact-sphere-wrapper,
+.contact-sphere-container {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+nav, .navbar, header.header {
+  position: fixed;
+  top: 0;
+  z-index: 1000 !important;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+}
+
+.global-orb, .cursor-glow, .bg-orb, .floating-blob {
+  display: none !important;
+}

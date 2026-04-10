@@ -1,4 +1,6 @@
-.about-section {
+.about-section,
+section#about,
+[data-section="about"] {
   display: flex;
   align-items: center;
   justify-content: left;
@@ -8,7 +10,27 @@
   height: auto;
   width: var(--cWidth);
   margin: auto;
+  background: #0a0a0a !important;
+  background-image: none !important;
 }
+
+.about-character {
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+@media only screen and (max-width: 1024px) {
+  .about-character {
+    display: none !important;
+  }
+}
+
 .about-me {
   padding: 50px 0px;
   padding-bottom: 0;
@@ -16,17 +38,24 @@
   max-width: calc(100% - 15px);
 }
 .about-me h3 {
-  font-size: 25px;
-  text-transform: uppercase;
-  letter-spacing: 7px;
-  font-weight: 400;
-  color: var(--accentColor);
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  margin-bottom: 16px !important;
 }
 .about-me p {
-  font-size: 33px;
-  font-weight: 600;
-  line-height: 36px;
-  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  line-height: 1.85 !important;
+  max-width: 720px !important;
 }
 @media only screen and (min-width: 600px) {
   .about-section { justify-content: center; }
@@ -38,7 +67,9 @@
   }
 }
 @media only screen and (min-width: 1025px) {
-  .about-section {
+  .about-section,
+  section#about,
+  [data-section="about"] {
     width: var(--cWidth);
     justify-content: right;
     max-width: 1920px;
@@ -49,14 +80,6 @@
     padding: 0px;
     width: 50%;
   }
-  .about-me p {
-    font-size: 1.9vw;
-    line-height: 2.3vw;
-  }
 }
 @media only screen and (min-width: 1950px) {
-  .about-me p {
-    font-size: 2.5rem;
-    line-height: 2.7rem;
-  }
 }

@@ -211,3 +211,8 @@
 @media only screen and (min-width: 1950px) {
   .what-box h2 { font-size: 7rem; line-height: 6.8rem; }
 }
+
+@keyframes char-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
