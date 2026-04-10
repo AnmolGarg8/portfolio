@@ -3,6 +3,19 @@ import './styles/About.css'
 const About = () => {
   return (
     <section className="about-section">
+      <div className="about-character">
+        <img
+          src="/hero-char.png"
+          alt="3D Character"
+          style={{
+            maxHeight: '70vh',
+            width: 'auto',
+            objectFit: 'contain',
+            display: 'block',
+            animation: 'char-float 4.2s ease-in-out infinite'
+          }}
+        />
+      </div>
       <div className="about-me">
         <h3>About me</h3>
         <p className="para">
