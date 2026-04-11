@@ -40,11 +40,11 @@ export const handleHeadRotation = (
       interpolationY
     );
 
-    // If mouseY is 1 (top), we want positive rotation (tilt up)
-    // If mouseY is -1 (bottom), we want negative rotation (tilt down)
+    // If mouseY is 1 (top), we want head to tilt UP (negative X rotation)
+    // If mouseY is -1 (bottom), we want head to tilt DOWN (positive X rotation)
     headBone.rotation.x = lerp(
       headBone.rotation.x,
-      mouseY * maxRotationX,
+      -mouseY * maxRotationX,
       interpolationX
     );
 

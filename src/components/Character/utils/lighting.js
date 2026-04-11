@@ -4,13 +4,17 @@ import { gsap } from "gsap";
 
 const setLighting = (scene) => {
   const directionalLight = new THREE.DirectionalLight(0xc7a9ff, 0);
-  directionalLight.intensity = 0;
-  directionalLight.position.set(-0.47, -0.32, -1);
+  directionalLight.position.set(-2, 10, 5); // Better overhead angle
   directionalLight.castShadow = true;
   directionalLight.shadow.mapSize.width = 1024;
   directionalLight.shadow.mapSize.height = 1024;
   directionalLight.shadow.camera.near = 0.5;
   directionalLight.shadow.camera.far = 50;
+  
+  // BIAS fix for "overlapping" shadow artifacts on the head
+  directionalLight.shadow.bias = -0.0005; 
+  directionalLight.shadow.normalBias = 0.05;
+  
   scene.add(directionalLight);
 
   const pointLight = new THREE.PointLight(0xc2a4ff, 0, 100, 3);
