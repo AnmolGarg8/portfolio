@@ -148,21 +148,21 @@ h2.landing-info-h2 {
 }
 @media screen and (min-width: 1025px) {
   .landing-intro {
-    top: 50%; left: 0%;
-    right: auto;
-    transform: translateY(-50%);
+    top: 50%; left: auto;
+    right: 66%;
+    transform: translate(0%, -50%);
   }
   .landing-info {
     bottom: auto; top: 51%;
     z-index: inherit;
-    text-align: right;
-    transform: translateY(-50%);
-    right: 0%; left: auto;
+    text-align: left;
+    transform: translate(0%, -50%);
+    right: auto; left: 66%;
   }
 }
 @media screen and (min-width: 1200px) {
-  .landing-intro { left: 0%; right: auto; }
-  .landing-info { right: 0%; left: auto; }
+  .landing-intro { right: 70%; }
+  .landing-info { left: 70%; }
 }
 @media screen and (min-width: 1600px) {
   .landing-intro h2 { font-size: 35px; }

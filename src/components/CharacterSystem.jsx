@@ -23,15 +23,6 @@ export default function CharacterSystem() {
     // ── Initial state ──────────────────────────────────────
     gsap.set(aboutImg, { opacity: 0 })
     gsap.set(workingImg, { opacity: 0 })
-    gsap.set(wrapper, {
-      position: 'fixed',
-      left: '50%',
-      xPercent: -50,
-      bottom: 0,
-      width: 'clamp(260px, 33vw, 500px)',
-      zIndex: 50,
-      pointerEvents: 'none',
-    })
 
     // ── TRANSITION 1: Hero → About ─────────────────────────
     const tl1 = gsap.timeline({
@@ -135,12 +126,13 @@ export default function CharacterSystem() {
         left: '50%',
         bottom: 0,
         width: 'clamp(280px, 35vw, 520px)',
+        transform: 'translateX(-50%)',
       }}
     >
       {/* POSE 1: Hero — standing upright */}
       <img
         ref={heroImgRef}
-        src="/hero-char.png"
+        src="/character-hero.png"
         alt="Developer character"
         style={{
           position: 'absolute',
@@ -154,7 +146,7 @@ export default function CharacterSystem() {
       {/* POSE 2: About — sitting casual */}
       <img
         ref={aboutImgRef}
-        src="/hero-char.png"
+        src="/character-about.png"
         alt="Developer character sitting"
         style={{
           position: 'absolute',
@@ -169,7 +161,7 @@ export default function CharacterSystem() {
       {/* POSE 3: Working — seated at desk */}
       <img
         ref={workingImgRef}
-        src="/hero-char.png"
+        src="/character-working.png"
         alt="Developer working"
         style={{
           position: 'absolute',
