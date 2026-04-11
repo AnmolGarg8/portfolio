@@ -23,7 +23,7 @@ const careerData = [
 
 const Career = () => {
   return (
-    <section className="career-section">
+    <section className="career-section" id="experience">
       <div className="career-container" style={{ width: 'var(--cWidth)', maxWidth: 'var(--cMaxWidth)', margin: 'auto' }}>
         <h2>
           My career <span>&</span> experience

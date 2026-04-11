@@ -99,7 +99,13 @@ main {
   .techstack h2 { font-size: 40px; }
 }
 
-@keyframes charFloat {
+@keyframes charIdle {
   0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-14px); }
+  50%       { transform: translateY(-13px); }
+}
+
+@media (max-width: 768px) {
+  #character-wrapper {
+    display: none;
+  }
 }
