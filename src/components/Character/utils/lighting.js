@@ -12,8 +12,8 @@ const setLighting = (scene) => {
   directionalLight.shadow.camera.far = 50;
   
   // BIAS fix for "overlapping" shadow artifacts on the head
-  directionalLight.shadow.bias = -0.0005; 
-  directionalLight.shadow.normalBias = 0.05;
+  directionalLight.shadow.bias = -0.0001; 
+  directionalLight.shadow.normalBias = 0.5; // Increased significantly to resolve hair clipping
   
   scene.add(directionalLight);
 
