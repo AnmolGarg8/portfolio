@@ -19,11 +19,12 @@ const Scene = () => {
   const [character, setChar] = useState(null);
   
   useEffect(() => {
+    let isMounted = true;
     if (canvasDiv.current) {
       let rect = canvasDiv.current.getBoundingClientRect();
       let container = { width: rect.width, height: rect.height };
       const aspect = container.width / container.height;
-      const scene = sceneRef.current;
+      const scene = new THREE.Scene(); // Create scene locally inside useEffect
 
       const renderer = new THREE.WebGLRenderer({
         alpha: true,
@@ -34,13 +35,13 @@ const Scene = () => {
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1;
       renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Smoother shadows
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       canvasDiv.current.appendChild(renderer.domElement);
 
       const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
       camera.position.z = 10;
       camera.position.set(0, 13.1, 24.7);
-      camera.zoom = 1.0; // Slightly reduced from 1.1 for better framing
+      camera.zoom = 1.0;
       camera.updateProjectionMatrix();
 
       let headBone = null;
@@ -55,7 +56,7 @@ const Scene = () => {
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
       loadCharacter().then((gltf) => {
-        if (gltf) {
+        if (gltf && isMounted) {
           const animations = setAnimations(gltf);
           hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
           mixer = animations.mixer;
@@ -63,17 +64,19 @@ const Scene = () => {
           setChar(character);
           scene.add(character);
           
-          // Try to find the actual head bone first, fall back to spine006
-          headBone = character.getObjectByName("Head") || 
-                     character.getObjectByName("head") || 
-                     character.getObjectByName("spine006") || 
+          // Reverting to spine006 as it is the most reliable head-base bone in this model
+          headBone = character.getObjectByName("spine006") || 
+                     character.getObjectByName("Neck") || 
+                     character.getObjectByName("Head") || 
                      null;
           
           screenLight = character.getObjectByName("screenlight") || null;
           progress.loaded().then(() => {
             setTimeout(() => {
-              light.turnOnLights();
-              animations.startIntro();
+              if (isMounted) {
+                light.turnOnLights();
+                animations.startIntro();
+              }
             }, 2500);
           });
           const resizeListener = () => handleResize(renderer, camera, canvasDiv, character);
@@ -82,7 +85,7 @@ const Scene = () => {
       });
 
       let mouse = { x: 0, y: 0 },
-        interpolation = { x: 0.15, y: 0.25 }; // Slightly increased for more responsive eye feel
+        interpolation = { x: 0.15, y: 0.25 };
 
       const onMouseMoveGlobal = (event) => {
         handleMouseMove(event, (x, y) => (mouse = { x, y }));
@@ -107,13 +110,14 @@ const Scene = () => {
 
       document.addEventListener("mousemove", onMouseMoveGlobal);
       
-      const landingDiv = document.getElementById("hero"); // Changed to hero to match user ID
+      const landingDiv = document.getElementById("hero");
       if (landingDiv) {
         landingDiv.addEventListener("touchstart", onTouchStart);
         landingDiv.addEventListener("touchend", onTouchEndGlobal);
       }
       
       const animate = () => {
+        if (!isMounted) return;
         requestAnimationFrame(animate);
         const delta = clock.getDelta();
         if (mixer) {
@@ -135,6 +139,7 @@ const Scene = () => {
       animate();
       
       return () => {
+        isMounted = false;
         clearTimeout(debounce);
         scene.clear();
         renderer.dispose();
@@ -149,6 +154,7 @@ const Scene = () => {
       };
     }
   }, []);
+
 
   return (
     <>
