@@ -4,7 +4,7 @@ import SocialIcons from './components/SocialIcons'
 import Cursor from './components/Cursor'
 import Landing from './components/Landing'
 import Loading from './components/Loading'
-import CharacterSystem from './components/CharacterSystem'
+import CharacterModel from './components/Character'
 import { initSmoothScroll, initScrollAnimations, initLandingAnimations } from './utils/animations'
 
 // Lazy load non-critical sections
@@ -51,7 +51,7 @@ const App = () => {
       <Navbar />
       <SocialIcons />
 
-      <CharacterSystem />
+      <CharacterModel />
 
       <main ref={mainRef} className={isLoaded ? 'main-active' : ''}>
         <div id="smooth-wrapper">

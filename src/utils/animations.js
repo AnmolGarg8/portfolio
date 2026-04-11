@@ -43,13 +43,6 @@ export function initLandingAnimations() {
     { opacity: 0, y: 30 },
     { opacity: 1, y: 0, duration: 1.2, ease: 'power1.inOut', delay: 0.8 }
   )
-
-  // Character system entrance
-  gsap.fromTo(
-    '#character-wrapper',
-    { opacity: 0, scale: 0.85 },
-    { opacity: 1, scale: 1, duration: 1.4, ease: 'back.out(1.2)', delay: 0.3 }
-  )
 }
 
 function animateTextIn(selector, delay = 0) {

@@ -46,28 +46,83 @@
   100% { transform: translate(calc(100% - 2px), -50%) rotate(360deg); }
 }
 
-/* Character image */
-.landing-image {
+/* Character Model (3D Scene) */
+.character-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.character-model {
+  height: 80vh;
   position: absolute;
-  bottom: 0;
-  height: 95%;
+  max-width: 1920px;
+  max-height: 1080px;
+  transform: translateX(-50%);
+  width: 100%;
+  left: 50%;
+  z-index: 0;
+  bottom: 50px;
+  pointer-events: inherit;
+}
+
+.character-model::after {
+  content: "";
+  width: 100vw;
+  height: 250px;
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--backgroundColor) 70%
+  );
+  bottom: -50px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 9;
+  position: absolute;
 }
-.landing-image img {
-  height: 100%;
-  z-index: 2;
+
+.character-model::before {
+  content: "";
+  width: 100vw;
+  height: 700px;
+  background-color: var(--backgroundColor);
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  position: absolute;
+}
+
+.character-model canvas {
   position: relative;
+  pointer-events: none;
+  z-index: 2;
 }
+
+.character-hover {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
 .character-rim {
   position: absolute;
-  width: 400px; height: 400px;
+  width: 400px;
+  height: 400px;
   z-index: 1;
   background-color: #f59bf8;
   box-shadow: inset 66px 35px 85px 0px rgba(85, 0, 255, 0.65);
   filter: blur(50px);
   border-radius: 50%;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, 100%) scale(1.4);
   opacity: 0;
 }
@@ -147,6 +202,16 @@ h2.landing-info-h2 {
   h2.landing-info-h2 { font-size: 55px; }
 }
 @media screen and (min-width: 1025px) {
+  .character-model {
+    height: 100vh;
+    bottom: 0;
+    z-index: 11;
+    position: fixed;
+  }
+  .character-model::after,
+  .character-model::before {
+    display: none;
+  }
   .landing-intro {
     top: 50%; left: auto;
     right: 66%;
