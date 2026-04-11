@@ -31,35 +31,23 @@ export const handleHeadRotation = (
 ) => {
   if (!headBone) return;
   if (window.scrollY < 200) {
-    const maxRotation = Math.PI / 6;
+    const maxRotationY = Math.PI / 6; // 30 degrees side to side
+    const maxRotationX = Math.PI / 10; // ~18 degrees up and down
+
     headBone.rotation.y = lerp(
       headBone.rotation.y,
-      mouseX * maxRotation,
+      mouseX * maxRotationY,
       interpolationY
     );
-    let minRotationX = -0.3;
-    let maxRotationX = 0.4;
-    if (mouseY > minRotationX) {
-      if (mouseY < maxRotationX) {
-        headBone.rotation.x = lerp(
-          headBone.rotation.x,
-          -mouseY - 0.5 * maxRotation,
-          interpolationX
-        );
-      } else {
-        headBone.rotation.x = lerp(
-          headBone.rotation.x,
-          -maxRotation - 0.5 * maxRotation,
-          interpolationX
-        );
-      }
-    } else {
-      headBone.rotation.x = lerp(
-        headBone.rotation.x,
-        -minRotationX - 0.5 * maxRotation,
-        interpolationX
-      );
-    }
+
+    // If mouseY is 1 (top), we want positive rotation (tilt up)
+    // If mouseY is -1 (bottom), we want negative rotation (tilt down)
+    headBone.rotation.x = lerp(
+      headBone.rotation.x,
+      mouseY * maxRotationX,
+      interpolationX
+    );
+
   } else {
     if (window.innerWidth > 1024) {
       headBone.rotation.x = lerp(headBone.rotation.x, -0.4, 0.03);

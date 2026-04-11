@@ -214,20 +214,22 @@ h2.landing-info-h2 {
   }
   .landing-intro {
     top: 50%; left: auto;
-    right: 66%;
+    right: 60%;
     transform: translate(0%, -50%);
+    width: max-content;
   }
   .landing-info {
     bottom: auto; top: 51%;
     z-index: inherit;
     text-align: left;
     transform: translate(0%, -50%);
-    right: auto; left: 66%;
+    right: auto; left: 60%;
+    width: max-content;
   }
 }
 @media screen and (min-width: 1200px) {
-  .landing-intro { right: 70%; }
-  .landing-info { left: 70%; }
+  .landing-intro { right: 65%; }
+  .landing-info { left: 65%; }
 }
 @media screen and (min-width: 1600px) {
   .landing-intro h2 { font-size: 35px; }

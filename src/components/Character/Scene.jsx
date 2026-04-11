@@ -38,7 +38,7 @@ const Scene = () => {
       const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
       camera.position.z = 10;
       camera.position.set(0, 13.1, 24.7);
-      camera.zoom = 1.1;
+      camera.zoom = 1.0; // Slightly reduced from 1.1 for better framing
       camera.updateProjectionMatrix();
 
       let headBone = null;
@@ -60,7 +60,13 @@ const Scene = () => {
           let character = gltf.scene;
           setChar(character);
           scene.add(character);
-          headBone = character.getObjectByName("spine006") || null;
+          
+          // Try to find the actual head bone first, fall back to spine006
+          headBone = character.getObjectByName("Head") || 
+                     character.getObjectByName("head") || 
+                     character.getObjectByName("spine006") || 
+                     null;
+          
           screenLight = character.getObjectByName("screenlight") || null;
           progress.loaded().then(() => {
             setTimeout(() => {
@@ -74,7 +80,7 @@ const Scene = () => {
       });
 
       let mouse = { x: 0, y: 0 },
-        interpolation = { x: 0.1, y: 0.2 };
+        interpolation = { x: 0.15, y: 0.25 }; // Slightly increased for more responsive eye feel
 
       const onMouseMoveGlobal = (event) => {
         handleMouseMove(event, (x, y) => (mouse = { x, y }));
