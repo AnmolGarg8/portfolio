@@ -2,32 +2,18 @@ import './styles/Landing.css'
 
 const Landing = () => {
   return (
-    <section className="landing-section">
+    <section className="landing-section" id="hero">
       <div className="landing-container">
-        {/* Purple ambient glow circles */}
-        <div className="landing-circle1" />
-        <div className="landing-circle2" />
-
         {/* LEFT: Name intro */}
         <div className="landing-intro">
           <h2>Hello! I'm</h2>
-          <h1>
-            <span>ANMOL</span>
-            <br />
-            <span>GARG</span>
-          </h1>
+          <div className="hero-name">
+            <div className="name-line">ANMOL</div>
+            <div className="name-line">GARG</div>
+          </div>
         </div>
 
-        {/* CENTER: Character image */}
-        <div className="landing-image">
-          <img 
-            src="/hero-char.png" 
-            alt="Anmol Garg 3D Avatar" 
-            fetchpriority="high" 
-            loading="eager" 
-          />
-          <div className="character-rim" />
-        </div>
+
 
         {/* RIGHT: Role titles */}
         <div className="landing-info">

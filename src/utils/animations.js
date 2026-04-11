@@ -96,49 +96,56 @@ function animateTextIn(selector, delay = 0) {
 
 /* ─── Scroll-triggered animations for all sections ─── */
 export function initScrollAnimations() {
-  // About character pseudo-3D scroll effect
-  const aboutCharTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.about-section',
-      start: 'top bottom',
-      end: 'top 20%',
-      scrub: 1.5,
-    }
-  })
+  const charWrapper = document.getElementById('character-wrapper')
+  const charImg = document.getElementById('character-img')
 
-  // Phase 1: Translate and rotate into place as if arriving from the hero section
-  aboutCharTl.fromTo('.about-character img',
-    { 
-      x: '30vw',
-      y: 150,
-      scale: 1.3,
-      rotationZ: 8,
-      filter: 'blur(4px)',
+  if (charWrapper) {
+    // ── TRANSITION 1: Hero → About ──────────────────────────────
+    gsap.to(charWrapper, {
+      left: '18%',
+      width: 'clamp(200px, 26vw, 380px)',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#about',
+        start: 'top 85%',
+        end: 'top 20%',
+        scrub: 1.5,
+      }
+    })
+
+    gsap.to(charWrapper, {
+      xPercent: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#about',
+        start: 'top 85%',
+        end: 'top 20%',
+        scrub: 1.5,
+      }
+    })
+
+    // ── TRANSITION 2: About → What I Do (exit left + fade) ──────
+    gsap.to(charWrapper, {
+      left: '-25%',
       opacity: 0,
-    },
-    {
-      x: 0,
-      y: 0,
-      scale: 1,
-      rotationZ: 0,
-      filter: 'blur(0px)',
-      opacity: 1,
-      ease: 'power2.out',
-    }
-  )
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#whatido',
+        start: 'top 80%',
+        end: 'top 10%',
+        scrub: 1.2,
+      }
+    })
 
-  // Phase 2: Subtle parallax while scrolling past the rest of the About section
-  gsap.to('.about-character img', {
-    y: -120,
-    scale: 0.95,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.about-section',
-      start: 'top 20%',
-      end: 'bottom top',
-      scrub: 1,
-    }
-  })
+    let scrollTimer
+    window.addEventListener('scroll', () => {
+      if (charImg) charImg.style.animationPlayState = 'paused'
+      clearTimeout(scrollTimer)
+      scrollTimer = setTimeout(() => {
+        if (charImg) charImg.style.animationPlayState = 'running'
+      }, 150)
+    })
+  }
 
   // About section
   gsap.fromTo('.about-me', 

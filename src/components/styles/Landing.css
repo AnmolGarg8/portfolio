@@ -86,12 +86,11 @@
   font-weight: 300;
   letter-spacing: 2px;
 }
-.landing-intro h1 {
-  margin: 0;
-  letter-spacing: 2px;
-  font-size: 28px;
-  line-height: 28px;
-  font-weight: 500;
+.hero-name {
+  font-size: clamp(90px, 12vw, 140px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -4px;
 }
 
 /* Right info */

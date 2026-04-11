@@ -49,6 +49,12 @@ const App = () => {
       <Cursor />
       <Navbar />
       <SocialIcons />
+
+      <div id="character-wrapper">
+        <img id="character-img" src="/hero-char.png" alt="3D Character" />
+        <div id="character-glow"></div>
+      </div>
+
       <main ref={mainRef} className={isLoaded ? 'main-active' : ''}>
         <div id="smooth-wrapper">
           <div id="smooth-content">

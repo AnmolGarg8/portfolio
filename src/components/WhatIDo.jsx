@@ -5,7 +5,7 @@ const WhatIDo = () => {
   const [activeCard, setActiveCard] = useState(0)
 
   return (
-    <section className="whatIDO">
+    <section className="whatIDO" id="whatido">
       <div className="what-box">
         <h2>
           WH<span className="hat-h2">AT</span>
