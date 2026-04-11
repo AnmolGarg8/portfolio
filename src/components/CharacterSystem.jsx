@@ -135,13 +135,12 @@ export default function CharacterSystem() {
         left: '50%',
         bottom: 0,
         width: 'clamp(280px, 35vw, 520px)',
-        transform: 'translateX(-50%)',
       }}
     >
       {/* POSE 1: Hero — standing upright */}
       <img
         ref={heroImgRef}
-        src="/character-hero.png"
+        src="/hero-char.png"
         alt="Developer character"
         style={{
           position: 'absolute',
@@ -155,7 +154,7 @@ export default function CharacterSystem() {
       {/* POSE 2: About — sitting casual */}
       <img
         ref={aboutImgRef}
-        src="/character-about.png"
+        src="/hero-char.png"
         alt="Developer character sitting"
         style={{
           position: 'absolute',
@@ -170,7 +169,7 @@ export default function CharacterSystem() {
       {/* POSE 3: Working — seated at desk */}
       <img
         ref={workingImgRef}
-        src="/character-working.png"
+        src="/hero-char.png"
         alt="Developer working"
         style={{
           position: 'absolute',

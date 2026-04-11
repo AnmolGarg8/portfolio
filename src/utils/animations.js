@@ -44,18 +44,11 @@ export function initLandingAnimations() {
     { opacity: 1, y: 0, duration: 1.2, ease: 'power1.inOut', delay: 0.8 }
   )
 
-  // Character image entrance
+  // Character system entrance
   gsap.fromTo(
-    '.landing-image',
+    '#character-wrapper',
     { opacity: 0, scale: 0.85 },
     { opacity: 1, scale: 1, duration: 1.4, ease: 'back.out(1.2)', delay: 0.3 }
-  )
-
-  // Character rim glow
-  gsap.fromTo(
-    '.character-rim',
-    { opacity: 0, scale: 0.5 },
-    { opacity: 1, scale: 1.4, duration: 2, ease: 'power2.out', delay: 0.8 }
   )
 }
 
