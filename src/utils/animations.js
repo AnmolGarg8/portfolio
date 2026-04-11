@@ -96,57 +96,6 @@ function animateTextIn(selector, delay = 0) {
 
 /* ─── Scroll-triggered animations for all sections ─── */
 export function initScrollAnimations() {
-  const charWrapper = document.getElementById('character-wrapper')
-  const charImg = document.getElementById('character-img')
-
-  if (charWrapper) {
-    // ── TRANSITION 1: Hero → About ──────────────────────────────
-    gsap.to(charWrapper, {
-      left: '18%',
-      width: 'clamp(200px, 26vw, 380px)',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#about',
-        start: 'top 85%',
-        end: 'top 20%',
-        scrub: 1.5,
-      }
-    })
-
-    gsap.to(charWrapper, {
-      xPercent: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#about',
-        start: 'top 85%',
-        end: 'top 20%',
-        scrub: 1.5,
-      }
-    })
-
-    // ── TRANSITION 2: About → What I Do (exit left + fade) ──────
-    gsap.to(charWrapper, {
-      left: '-25%',
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#whatido',
-        start: 'top 80%',
-        end: 'top 10%',
-        scrub: 1.2,
-      }
-    })
-
-    let scrollTimer
-    window.addEventListener('scroll', () => {
-      if (charImg) charImg.style.animationPlayState = 'paused'
-      clearTimeout(scrollTimer)
-      scrollTimer = setTimeout(() => {
-        if (charImg) charImg.style.animationPlayState = 'running'
-      }, 150)
-    })
-  }
-
   // About section
   gsap.fromTo('.about-me', 
     { opacity: 0, y: 60 },

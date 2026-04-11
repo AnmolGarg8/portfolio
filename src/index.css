@@ -99,40 +99,7 @@ main {
   .techstack h2 { font-size: 40px; }
 }
 
-#character-wrapper {
-  position: fixed;
-  z-index: 50;
-  pointer-events: none;
-  will-change: transform, opacity;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: clamp(280px, 35vw, 520px);
-}
-
-#character-img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  animation: char-float 4.2s ease-in-out infinite;
-  animation-play-state: var(--float-state, running);
-}
-
-@keyframes char-float {
+@keyframes charFloat {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-14px); }
-}
-
-#character-glow {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 24px;
-  background: radial-gradient(ellipse, rgba(108,99,255,0.65) 0%, transparent 70%);
-  border-radius: 50%;
-  filter: blur(8px);
-  pointer-events: none;
 }

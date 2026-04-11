@@ -15,16 +15,21 @@
   line-height: 70px;
   font-weight: 400;
   text-align: center;
-  background: linear-gradient(0deg, #7f40ff, #ffffff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
   margin-top: 50px;
   margin-bottom: 90px;
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 .career-section h2 > span {
   font-weight: 300;
+}
+.year-number, .career-info h3 {
+  font-size: clamp(100px, 14vw, 150px) !important;
+  font-weight: 900 !important;
+  letter-spacing: -5px !important;
+  line-height: 1 !important;
+  color: #ffffff !important;
 }
 .career-info {
   position: relative;
