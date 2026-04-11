@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import setCharacter from "./utils/character.js";
-import setLighting from "./utils/lighting.js";
-import handleResize from "./utils/resizeUtils.js";
+import setCharacter from "./utils/character";
+import setLighting from "./utils/lighting";
+import handleResize from "./utils/resizeUtils";
 import {
   handleMouseMove,
   handleTouchEnd,
   handleHeadRotation,
   handleTouchMove,
-} from "./utils/mouseUtils.js";
-import setAnimations from "./utils/animationUtils.js";
+} from "./utils/mouseUtils";
+import setAnimations from "./utils/animationUtils";
 
 const Scene = () => {
   const canvasDiv = useRef(null);

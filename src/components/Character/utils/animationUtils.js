@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { eyebrowBoneNames, typingBoneNames } from "../../../data/boneData";
+import { eyebrowBoneNames, typingBoneNames } from "../../../data/boneData.js";
 
 const setAnimations = (gltf) => {
   let character = gltf.scene;
