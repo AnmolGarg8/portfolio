@@ -28,6 +28,27 @@ const setCharacter = (renderer, scene, camera) => {
                 child.castShadow = true;
                 child.receiveShadow = true;
                 child.frustumCulled = true;
+
+                // Skin color update (Face, Hands, Neck, Ears, Feet)
+                const skinKeywords = ["skin", "hand", "foot", "neck", "ear", "head", "face", "body", "wolf3d", "plane", "cube", "mesh"];
+                const isSkin = skinKeywords.some(keyword => child.name.toLowerCase().includes(keyword));
+                
+                if (isSkin && child.name !== "EYEs001" && child.name !== "hair" && child.name !== "BODYSHIRT" && child.name !== "Keyboard" && !child.name.includes("sole")) {
+                  child.material = new THREE.MeshStandardMaterial({
+                    color: "#f1c27d", // Warm human skin tone
+                    roughness: 0.8,
+                    metalness: 0.1,
+                  });
+                }
+
+                // T-shirt color update (Colorful - Vibrant Indigo)
+                if (child.name === "BODYSHIRT") {
+                  child.material = new THREE.MeshStandardMaterial({
+                    color: "#6366f1", // Vibrant Indigo
+                    roughness: 0.6,
+                    metalness: 0.2,
+                  });
+                }
               }
             });
             resolve(gltf);
