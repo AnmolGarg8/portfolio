@@ -2,22 +2,22 @@ import './styles/Career.css'
 
 const careerData = [
   {
-    role: 'IoT Developer',
-    company: 'Self-Initiated',
+    role: 'IoT Systems Developer',
+    company: 'Self-Initiated Research',
     year: '2023',
-    description: 'Started building sensor-based hardware systems, developing real-time data pipelines and cloud-synced dashboards with ESP32.'
+    description: 'Architected ESP32-based embedded systems for real-time sensor data acquisition, engineered cloud-synced dashboards with live telemetry pipelines, and developed an offline-to-online cash transaction system (NoteNetra) converting raw cashflow data into structured credit insights for underserved MSMEs.'
   },
   {
-    role: 'AI Developer',
-    company: 'Project Work',
+    role: 'AI & NLP Engineer',
+    company: 'Project & Competition Work',
     year: '2024',
-    description: 'Began building NLP-driven tools, semantic classification systems, and AI-powered MSME platforms using Python and modern ML models.'
+    description: 'Engineered SAMARTH-AI — an NLP-driven MSME onboarding platform leveraging semantic similarity models for automated product taxonomy classification with confidence scoring. Achieved Top 10 National Semifinalist recognition at Samsung Solve for Tomorrow 2025 and Finalist standing at India Innovates 2026.'
   },
   {
-    role: 'Creative Engineer',
-    company: 'Upskilling',
+    role: 'Creative AI Engineer',
+    company: 'Upskilling & Building',
     year: 'NOW',
-    description: 'Building immersive, intelligent systems at the intersection of AI, IoT, and software. Actively upskilling in GSAP, Three.js, and advanced animation techniques.'
+    description: 'Building at the intersection of AI, IoT, and immersive web engineering. Deepening expertise in GSAP, Three.js, and React-based creative interfaces. Actively pursuing production-grade ML deployment, advanced computer vision with OpenCV, and scalable FastAPI backends — engineering systems that are both intelligent and beautifully crafted.'
   },
 ]
 
@@ -28,20 +28,34 @@ const Career = () => {
         <h2>
           My career <span>&</span> experience
         </h2>
+        
         <div className="career-info">
+          {/* Vertical spine */}
           <div className="career-timeline">
-            <div className="career-dot" />
+            {/* The dot now renders per row in CSS or as a fixed element if needed, 
+                but user asked for per entry alignment. I'll add dots inside the mapping. */}
           </div>
+
           {careerData.map((item, index) => (
-            <div className="career-info-box" key={index}>
-              <div className="career-info-in">
-                <div>
+            <div className="career-row" key={index}>
+              {/* Left Column: Title & Tag */}
+              <div className="career-left">
+                <div className="career-title-block">
                   <h4>{item.role}</h4>
                   <h5>{item.company}</h5>
                 </div>
-                <h3>{item.year}</h3>
+                <h3 className={`year-${item.year.toLowerCase()}`}>{item.year}</h3>
               </div>
-              <p>{item.description}</p>
+
+              {/* Center: Dot on line */}
+              <div className="career-center">
+                <div className="career-dot-marker" />
+              </div>
+
+              {/* Right Column: Description */}
+              <div className="career-right">
+                <p>{item.description}</p>
+              </div>
             </div>
           ))}
         </div>

@@ -49,6 +49,26 @@ const setCharacter = (renderer, scene, camera) => {
                     metalness: 0.2,
                   });
                 }
+
+                // Pants color update (Cinematic Purple)
+                if (child.name.toLowerCase().includes("pants") || 
+                    child.name.toLowerCase().includes("bottom") || 
+                    child.name.toLowerCase().includes("trousers")) {
+                  child.material = new THREE.MeshStandardMaterial({
+                    color: "#a78bfa", 
+                    roughness: 0.8,
+                    metalness: 0.1,
+                  });
+                }
+
+                // Shoes color update (Dark Charcoal)
+                if (child.name.toLowerCase().includes("shoe") || child.name.toLowerCase().includes("sole")) {
+                  child.material = new THREE.MeshStandardMaterial({
+                    color: "#1a1a1a", 
+                    roughness: 0.9,
+                    metalness: 0.1,
+                  });
+                }
               }
             });
             resolve(gltf);

@@ -1,5 +1,5 @@
 :root {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   line-height: 1.5;
@@ -20,7 +20,7 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Inter', 'Outfit', system-ui, sans-serif;
 }
 
 body {
@@ -94,6 +94,7 @@ main {
   pointer-events: none;
 }
 
+
 @media screen and (min-width: 768px) {
   body { --cWidth: 94%; }
 }
@@ -104,10 +105,4 @@ main {
 @keyframes charIdle {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-13px); }
-}
-
-@media (max-width: 768px) {
-  #character-wrapper {
-    display: none;
-  }
 }

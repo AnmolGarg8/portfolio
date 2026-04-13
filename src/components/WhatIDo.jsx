@@ -7,6 +7,7 @@ const WhatIDo = () => {
   return (
     <section className="whatIDO" id="whatido">
       <div className="what-box">
+        <div className="what-character"></div>
         <h2>
           WH<span className="hat-h2">AT</span>
           <br />

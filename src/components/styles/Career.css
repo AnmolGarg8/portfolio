@@ -2,148 +2,152 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  place-items: center;
-  justify-content: center;
   position: relative;
   height: auto;
   margin: auto;
   margin-bottom: 250px;
-  padding: 120px 0px;
+  padding: 130px 0px;
+  overflow: hidden;
 }
+
 .career-section h2 {
   font-size: 70px;
   line-height: 70px;
   font-weight: 400;
   text-align: center;
-  margin-top: 100px;
-  margin-bottom: 90px;
-  color: #ffffff !important;
-  background: none !important;
-  -webkit-text-fill-color: #ffffff !important;
+  margin-top: 50px;
+  margin-bottom: 120px;
+  color: #fff !important;
 }
-.career-section h2 > span {
-  font-weight: 300;
-}
-.year-number, .career-info h3 {
-  font-size: clamp(100px, 14vw, 150px) !important;
-  font-weight: 900 !important;
-  letter-spacing: -5px !important;
-  line-height: 1 !important;
-  color: #ffffff !important;
-}
+
 .career-info {
   position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  margin: 0px auto;
-}
-.career-info-box {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 50px;
-}
-.career-info-box p {
-  width: 40%;
-  font-size: 18px;
-  font-weight: 300;
-  margin: 0;
-}
-.career-info-in {
-  display: flex;
-  width: 40%;
-  justify-content: space-between;
-  gap: 50px;
-}
-.career-info h3 {
-  font-size: 48px;
-  margin: 0;
-  font-weight: 900;
-  line-height: 45px;
-  opacity: 0.5;
-  transition: 0.3s;
-}
-.career-info-box:nth-child(2) h3 { font-size: 64px; opacity: 0.7; }
-.career-info-box:nth-child(3) h3 { font-size: 80px; opacity: 1; color: var(--accentColor) !important; }
-.career-info h4 {
-  font-size: 33px;
-  line-height: 30px;
-  letter-spacing: 0.8px;
-  font-weight: 500;
-  margin: 0;
-}
-.career-info h5 {
-  font-weight: 400;
-  letter-spacing: 0.7px;
-  font-size: 20px;
-  text-transform: capitalize;
-  margin: 10px 0px;
-  color: var(--accentColor);
+  gap: 80px;
 }
 
-/* Timeline bar */
+/* Vertical spine — EXACT MIDPOINT */
 .career-timeline {
   position: absolute;
-  top: -50px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 3px;
+  width: 2px;
   height: 100%;
-  background-image: linear-gradient(to top, #aa42ff 20%, var(--accentColor) 50%, transparent 95%);
-  max-height: 0%;
-}
-.career-dot {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 50%);
-  background-color: #aa42ff;
-  width: 10px; height: 10px;
-  border-radius: 50px;
-  box-shadow: 0px 0px 5px 2px #d29bff, 0px 0px 15px 8px #d097ff, 0px 0px 110px 20px #f2c0ff;
-  animation: timeline 0.8s linear infinite forwards;
-}
-@keyframes timeline {
-  10%, 20%, 50%, 70%, 90% {
-    box-shadow: 0px 0px 5px 2px #d29bff;
-  }
-  10%, 30%, 0%, 100%, 64%, 80% {
-    box-shadow: 0px 0px 5px 2px #d29bff, 0px 0px 15px 5px #d097ff, 0px 0px 110px 20px #f2c0ff;
-  }
+  background: linear-gradient(to bottom, transparent, #a78bfa 10%, #a78bfa 90%, transparent);
+  opacity: 0.3;
 }
 
-/* Responsive */
-@media only screen and (max-width: 1400px) {
-  .career-section h2 { font-size: 50px; line-height: 50px; }
-  .career-info h4 { font-size: 22px; line-height: 24px; width: 180px; }
-  .career-info h5 { font-size: 17px; }
-  .career-info h3 { font-size: 40px; }
-  .career-info-box p { font-size: 14px; width: 45%; }
-  .career-info-in { width: 45%; gap: 20px; }
+.career-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  align-items: start; /* Fix 6: Top edge alignment */
+  width: 100%;
 }
-@media only screen and (max-width: 900px) {
-  .career-info-box {
+
+/* Left Column */
+.career-left {
+  text-align: right;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: start;
+  gap: 40px; /* Fix 4: Gap from timeline line */
+  margin-left: 90px; /* Fix 7: Sidebar clearance */
+}
+
+.career-title-block {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fix 4: Year labels sitting LEFT of line */
+.career-left h3 {
+  margin: 0;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: #a78bfa !important; /* Fix 5: Nowak purple */
+  opacity: 0.8;
+}
+
+/* Fix 5: Progressive sizes */
+.year-2023 { font-size: 5rem !important; }
+.year-2024 { font-size: 6.5rem !important; }
+.year-now   { font-size: 8rem !important; }
+
+.career-info h4 {
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap; /* Fix 2 in previous turn */
+}
+
+.career-info h5 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #a78bfa;
+  margin: 8px 0 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Center Column: Dots */
+.career-center {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* Fix 3: 14x14 dots centered on line */
+.career-dot-marker {
+  width: 14px;
+  height: 14px;
+  background: #a78bfa;
+  border-radius: 50%;
+  margin-top: 15px; /* Offset to align with text top */
+  z-index: 5;
+  box-shadow: 0 0 15px #a78bfa;
+}
+
+/* Right Column */
+.career-right {
+  padding-left: 40px; /* Match left gap */
+  text-align: left;
+}
+
+/* Fix 6: Description Paragraph Alignment */
+.career-right p {
+  font-size: 15px;
+  line-height: 1.8;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 15px 0 0 0; /* Align top with titles */
+  max-width: 460px;
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 1024px) {
+  .career-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-left: 40px;
+  }
+  .career-timeline { left: 20px; }
+  .career-left {
     flex-direction: column;
+    text-align: left;
+    margin-left: 0;
     gap: 10px;
-    margin-bottom: 70px;
   }
-  .career-info-in, .career-info-box p {
-    width: 100%;
-    padding-left: 10%;
-    box-sizing: border-box;
-  }
-  .career-timeline { left: 0%; }
-  .career-container { width: calc(100% - 25px) !important; }
-}
-@media only screen and (min-width: 1025px) {
-  .career-info-box {
-    padding-left: 80px;
-  }
-}
-@media only screen and (max-width: 600px) {
-  .career-info { margin: 0; }
-  .career-section h2 { width: 100%; font-size: 45px; line-height: 45px; margin-top: 0px; }
-  .career-info-in { gap: 0px; }
-  .career-info h3 { font-size: 33px; }
-  .career-info-in, .career-info-box p { padding-left: 10%; }
-  .career-section { padding-top: 120px; align-items: start; }
+  .career-title-block, .career-left h3 { text-align: left; }
+  .career-center { display: none; }
+  .career-right { padding-left: 0; }
+  .year-2023, .year-2024, .year-now { font-size: 4rem !important; }
 }
