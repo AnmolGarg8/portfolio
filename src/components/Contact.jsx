@@ -28,7 +28,7 @@ const Contact = () => {
         </div>
         <div className="contact-box contact-footer">
           <h2>Designed and Developed by <span>Anmol Garg</span></h2>
-          <h5>© 2025</h5>
+          <h5>© 2026</h5>
         </div>
       </div>
     </section>

@@ -25,7 +25,7 @@ const WhatIDo = () => {
             <div className="what-border2"><svg viewBox="0 0 1 500" preserveAspectRatio="none"><line x1="0.5" y1="0" x2="0.5" y2="500" stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="6 4"/></svg></div>
             <div className="what-content-in">
               <h3>DEVELOP</h3>
-              <h4>DESCRIPTION</h4>
+              <h4>OVERVIEW</h4>
               <p>Started building with Python and C++, now I craft intelligent systems with ESP32, Firebase, NLP models... and a lot of curiosity!</p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
@@ -49,7 +49,7 @@ const WhatIDo = () => {
             <div className="what-border2"><svg viewBox="0 0 1 500" preserveAspectRatio="none"><line x1="0.5" y1="0" x2="0.5" y2="500" stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="6 4"/></svg></div>
             <div className="what-content-in">
               <h3>AI & IoT</h3>
-              <h4>DESCRIPTION</h4>
+              <h4>OVERVIEW</h4>
               <p>I started exploring AI as a hobby, but like all good obsessions, it slowly crept into everything I build — now it won't leave me alone!</p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">

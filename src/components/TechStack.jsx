@@ -169,7 +169,7 @@ const TechStack = () => {
     canvas.addEventListener('mousemove', onMouseMove)
     canvas.addEventListener('mouseleave', onMouseLeave)
     canvas.addEventListener('click', onClick)
-    
+
     const onResize = () => {
       resize()
       ballsRef.current.forEach(b => {
