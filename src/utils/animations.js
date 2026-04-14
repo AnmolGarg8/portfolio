@@ -23,7 +23,7 @@ export function initLandingAnimations() {
   })
   // Navbar + social icons fade in
   gsap.fromTo(
-    ['.header', '.icons-section', '.nav-fade'],
+    ['.header', '.icons-section', '.resume-button', '.nav-fade'],
     { opacity: 0 },
     { opacity: 1, duration: 1.2, ease: 'power1.inOut', delay: 0.1 }
   )
@@ -118,7 +118,7 @@ export function initScrollAnimations() {
   })
   careerTl
     .fromTo('.career-timeline', { maxHeight: '0%', opacity: 0 }, { maxHeight: '100%', opacity: 1, duration: 1 }, 0)
-    .fromTo('.career-info-box', { opacity: 0, y: 40 }, { opacity: 1, y: 0, stagger: 0.15, duration: 0.5 }, 0)
+    .fromTo('.career-row', { opacity: 0, y: 40 }, { opacity: 1, y: 0, stagger: 0.15, duration: 0.5 }, 0)
 
   // Career heading
   gsap.fromTo('.career-section h2',

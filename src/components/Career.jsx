@@ -24,27 +24,24 @@ const careerData = [
 const Career = () => {
   return (
     <section className="career-section" id="experience">
-      <div className="career-container" style={{ width: 'var(--cWidth)', maxWidth: 'var(--cMaxWidth)', margin: 'auto' }}>
+      <div className="career-container">
         <h2>
           My career <span>&</span> experience
         </h2>
         
         <div className="career-info">
           {/* Vertical spine */}
-          <div className="career-timeline">
-            {/* The dot now renders per row in CSS or as a fixed element if needed, 
-                but user asked for per entry alignment. I'll add dots inside the mapping. */}
-          </div>
+          <div className="career-timeline"></div>
 
           {careerData.map((item, index) => (
             <div className="career-row" key={index}>
               {/* Left Column: Title & Tag */}
               <div className="career-left">
+                <h3 className={`year-${item.year.toLowerCase()}`}>{item.year}</h3>
                 <div className="career-title-block">
                   <h4>{item.role}</h4>
                   <h5>{item.company}</h5>
                 </div>
-                <h3 className={`year-${item.year.toLowerCase()}`}>{item.year}</h3>
               </div>
 
               {/* Center: Dot on line */}

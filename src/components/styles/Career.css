@@ -1,23 +1,32 @@
 .career-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
   position: relative;
   height: auto;
   margin: auto;
   margin-bottom: 250px;
-  padding: 130px 0px;
+  padding: 140px 0px 130px 0px; /* Fix 6: Top padding */
   overflow: hidden;
 }
 
+.career-container {
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
+  margin: auto;
+}
+
 .career-section h2 {
-  font-size: 70px;
-  line-height: 70px;
+  font-size: clamp(2rem, 5vw, 3.5rem); /* Fix 6: Heading size */
+  line-height: 1.1;
   font-weight: 400;
   text-align: center;
   margin-top: 50px;
-  margin-bottom: 120px;
-  color: #fff !important;
+  margin-bottom: 80px; /* Fix 6: Spacing before timeline */
+  color: rgba(255, 255, 255, 0.15) !important; /* Fix 6: Heading color */
+}
+
+.career-section h2 span {
+  color: inherit;
 }
 
 .career-info {
@@ -27,7 +36,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 120px;
 }
 
 /* Vertical spine — EXACT MIDPOINT */
@@ -39,43 +48,42 @@
   width: 2px;
   height: 100%;
   background: linear-gradient(to bottom, transparent, #a78bfa 10%, #a78bfa 90%, transparent);
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
 .career-row {
   display: grid;
-  grid-template-columns: 1fr 60px 1fr;
-  align-items: start; /* Fix 6: Top edge alignment */
+  grid-template-columns: 1fr 80px 1fr; /* Fix 5: Symmetric grid */
+  align-items: center;
   width: 100%;
 }
 
 /* Left Column */
 .career-left {
-  text-align: right;
+  text-align: right; /* Fix 5: Right aligned */
   display: flex;
-  flex-direction: row-reverse;
-  align-items: start;
-  gap: 40px; /* Fix 4: Gap from timeline line */
-  margin-left: 90px; /* Fix 7: Sidebar clearance */
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 40px; /* Fix 5: Gap from timeline */
 }
 
 .career-title-block {
   text-align: right;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
 }
 
-/* Fix 4: Year labels sitting LEFT of line */
+/* Fix 7: Year labels visual consistency */
 .career-left h3 {
   margin: 0;
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1;
   letter-spacing: -0.05em;
-  color: #a78bfa !important; /* Fix 5: Nowak purple */
-  opacity: 0.8;
+  color: #a78bfa !important;
+  opacity: 1;
 }
 
-/* Fix 5: Progressive sizes */
 .year-2023 { font-size: 5rem !important; }
 .year-2024 { font-size: 6.5rem !important; }
 .year-now   { font-size: 8rem !important; }
@@ -84,17 +92,18 @@
   font-size: 28px;
   line-height: 1.1;
   font-weight: 600;
-  margin: 0;
-  white-space: nowrap; /* Fix 2 in previous turn */
+  margin: 10px 0 5px 0;
+  color: #fff;
 }
 
 .career-info h5 {
-  font-size: 16px;
+  font-size: 0.65rem; /* Fix 2: Font size */
   font-weight: 400;
   color: #a78bfa;
-  margin: 8px 0 0 0;
+  margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em; /* Fix 2: Letter spacing */
+  white-space: nowrap; /* Fix 2: No wrapping */
 }
 
 /* Center Column: Dots */
@@ -102,52 +111,54 @@
   height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   position: relative;
 }
 
-/* Fix 3: 14x14 dots centered on line */
+/* Fix 1: 12x12 dots precisely at center */
 .career-dot-marker {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   background: #a78bfa;
   border-radius: 50%;
-  margin-top: 15px; /* Offset to align with text top */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 5;
-  box-shadow: 0 0 15px #a78bfa;
 }
 
 /* Right Column */
 .career-right {
-  padding-left: 40px; /* Match left gap */
-  text-align: left;
+  padding-left: 40px; /* Fix 5: Match left gap */
+  text-align: left; /* Fix 5: Left aligned */
 }
 
-/* Fix 6: Description Paragraph Alignment */
 .career-right p {
   font-size: 15px;
   line-height: 1.8;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.72);
-  margin: 15px 0 0 0; /* Align top with titles */
-  max-width: 460px;
+  margin: 0;
+  max-width: 480px;
 }
 
 /* Mobile Adjustments */
 @media screen and (max-width: 1024px) {
   .career-row {
     grid-template-columns: 1fr;
-    gap: 20px;
-    padding-left: 40px;
+    gap: 30px;
+    padding-left: 50px;
   }
   .career-timeline { left: 20px; }
   .career-left {
-    flex-direction: column;
     text-align: left;
-    margin-left: 0;
-    gap: 10px;
+    align-items: flex-start;
+    padding-right: 0;
   }
-  .career-title-block, .career-left h3 { text-align: left; }
+  .career-title-block { align-items: flex-start; text-align: left; }
   .career-center { display: none; }
   .career-right { padding-left: 0; }
-  .year-2023, .year-2024, .year-now { font-size: 4rem !important; }
+  .year-2023 { font-size: 3.5rem !important; }
+  .year-2024 { font-size: 4rem !important; }
+  .year-now { font-size: 4.5rem !important; }
 }
