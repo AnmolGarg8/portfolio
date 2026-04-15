@@ -60,11 +60,11 @@
 
 /* Left Column */
 .career-left {
-  text-align: right; /* Fix 5: Right aligned */
+  text-align: right;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  padding-right: 40px; /* Fix 5: Gap from timeline */
+  align-items: flex-end; /* Strictly right-align children */
+  padding-right: 40px;
 }
 
 .career-title-block {

@@ -10,6 +10,9 @@ export function setCharTimeline(character, camera) {
     intensity = Math.random();
   }, 200);
   
+  const helloText = ".landing-intro h2";
+  const nameLines = ".name-line";
+
   const tl1 = gsap.timeline({
     scrollTrigger: {
       trigger: ".landing-section",
@@ -17,6 +20,15 @@ export function setCharTimeline(character, camera) {
       end: "bottom top",
       scrub: true,
       invalidateOnRefresh: true,
+      toggleActions: "play none none reset",
+      onLeaveBack: (self) => {
+        // Reset only the hero text elements to their fully visible state
+        gsap.set([helloText, nameLines], {
+          opacity: 1,
+          y: 0,
+          clearProps: "all"
+        });
+      }
     },
   });
   
@@ -109,7 +121,7 @@ export function setCharTimeline(character, camera) {
         .fromTo(
           ".character-rim",
           { opacity: 1, scaleX: 1.4 },
-          { opacity: 0, scale: 0, y: "-70%", duration: 5, delay: 2 },
+          { opacity: 0, scale: 0, duration: 5, delay: 2 },
           0.3
         );
 

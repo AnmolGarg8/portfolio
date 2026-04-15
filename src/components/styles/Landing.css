@@ -1,164 +1,136 @@
 .landing-section {
   width: 100%;
-  max-width: var(--cMaxWidth);
-  margin: auto;
+  height: 100vh;
   position: relative;
-  height: var(--vh);
   overflow: hidden;
-  background-color: var(--backgroundColor);
-}
-.landing-container {
-  width: var(--cWidth);
-  margin: auto;
-  height: 100%;
-  position: relative;
-  max-width: var(--cMaxWidth);
+  background-color: transparent; /* Main background is on body */
+  z-index: 1;
 }
 
-/* Purple ambient glow - Cinematic Match */
-.landing-circle1 {
-  top: 50%; 
-  left: 50%;
-  z-index: 0;
-  position: absolute;
-  width: 800px; 
-  height: 800px;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.25) 0%, transparent 70%);
-  filter: blur(100px);
+/* HERO TEXT CONTAINERS - These now scroll away with the hero section */
+.hero-fixed-container {
+  position: absolute; /* Changed from fixed to absolute */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  pointer-events: none; /* Don't interfere with 3D interactions */
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-fixed-container.left {
+  left: 5%;
+  max-width: 35%; /* Prevent overlap with center character */
+  text-align: left;
+}
+
+.hero-fixed-container.right {
+  right: 5%;
+  max-width: 40%;
+  text-align: right;
+}
+
+/* TYPOGRAPHY HIERARCHY */
+.hero-small-text {
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  color: #a78bfa; /* Purple accent */
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.hero-large-text {
+  font-size: clamp(2.5rem, 6vw, 6.5rem);
+  font-weight: 950;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: #fff;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.hero-large-text span {
+  display: block;
+}
+
+/* SECONDARY RIGHT TITLES */
+.hero-large-text.secondary {
+  font-size: clamp(1.8rem, 4vw, 4rem);
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 30%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* FLOATING ORB (STABLE) */
+.floating-orb {
+  position: absolute; /* Changed from fixed to scroll away with hero */
+  top: 10%;
+  right: 15%;
+  width: clamp(200px, 30vw, 500px);
+  height: clamp(200px, 30vw, 500px);
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.15) 0%, transparent 70%);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
   pointer-events: none;
+  z-index: 0;
+  filter: blur(60px);
+  animation: orbFloat 10s ease-in-out infinite;
 }
 
-/* Character Model Stays Touched-Only-Styling */
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, 30px); }
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 1024px) {
+  .hero-fixed-container.left { left: 4%; }
+  .hero-fixed-container.right { right: 4%; }
+  .hero-large-text { font-size: clamp(2rem, 8vw, 4.5rem); }
+}
+
+@media (max-width: 768px) {
+  .hero-fixed-container {
+    position: absolute; /* Stack naturally on mobile if viewport is too tight */
+    top: auto;
+    transform: none;
+    width: 90%;
+    left: 5% !important;
+    right: auto !important;
+    text-align: left !important;
+  }
+  
+  .hero-fixed-container.left {
+    top: 15%;
+  }
+  
+  .hero-fixed-container.right {
+    top: 65%;
+  }
+
+  .hero-large-text {
+    font-size: 3rem;
+  }
+}
+
+/* Character Wrapper Consistency */
 .character-container {
   width: 100%;
   height: 100%;
   position: relative;
-  overflow: hidden;
-}
-
-.character-model {
-  height: 80vh;
-  position: absolute;
-  max-width: 1920px;
-  max-height: 1080px;
-  transform: translateX(-50%);
-  width: 100%;
-  left: 50%;
   z-index: 10;
-  bottom: 0px;
-  pointer-events: inherit;
 }
 
-.character-model canvas {
-  position: relative;
-  pointer-events: none;
-  z-index: 5;
-}
-
-/* Left intro - Matches Image 1 */
-.landing-intro {
-  position: absolute;
-  z-index: 20;
-  top: 50%;
-  left: 5%;
-  transform: translateY(-50%);
-  text-align: left;
-}
-
-.landing-intro h2 {
-  margin: 0;
-  color: #a78bfa;
-  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
-  font-weight: 500;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.hero-name {
-  font-size: clamp(3rem, 8vw, 7.5rem);
-  font-weight: 950;
-  line-height: 0.82;
-  letter-spacing: -0.05em;
-  color: #fff;
-  text-transform: uppercase;
-}
-
-/* Right side Standalone title - Matches Image 1 */
-.standalone-hero-title {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 50%;
-  transform: translateY(-50%);
-  z-index: 1; /* Sit behind character */
-  text-align: right;
-  height: 15vw;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.title-wrapper {
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-
-.subtitle-stable {
-  position: absolute;
-  top: 0;
-  right: 48px;
-  z-index: 5;
-}
-
-.subtitle-stable h3 {
-  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-  font-weight: 300;
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.8);
-  letter-spacing: 0.05em;
-  margin: 0;
-}
-
-.main-title-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin-top: 2rem;
-}
-
-.title-slide {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-right: 48px;
-}
-
-h2.landing-info-h2 {
-  font-size: clamp(4rem, 12vw, 10rem);
-  font-weight: 950;
-  text-transform: uppercase;
-  letter-spacing: -0.03em;
-  line-height: 0.85;
-  margin: 0;
-  color: #ffffff;
-  text-shadow: 0 20px 50px rgba(0,0,0,0.6);
-}
-
-.title-slide.incoming { z-index: 3; }
-.title-slide.outgoing { z-index: 2; }
-
-/* Responsive adjustments */
 @media screen and (min-width: 1025px) {
   .character-model {
     height: 100vh;
@@ -166,5 +138,7 @@ h2.landing-info-h2 {
     z-index: 15;
     position: fixed;
     transform: translate(-50%, 0);
+    width: 100%;
+    left: 50%;
   }
 }

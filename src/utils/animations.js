@@ -27,57 +27,60 @@ export function initLandingAnimations() {
     { opacity: 0 },
     { opacity: 1, duration: 1.2, ease: 'power1.inOut', delay: 0.1 }
   )
-  // Landing intro text — split char animation
-  animateTextIn('.landing-intro h2', 0.3)
-  animateTextIn('.landing-intro h1', 0.4)
-  animateTextIn('.landing-info h3', 0.5)
-
-  // Landing role titles
-  gsap.fromTo(
-    '.landing-h2-info',
-    { opacity: 0, y: 40 },
-    { opacity: 1, y: 0, duration: 1.2, ease: 'power3.inOut', delay: 0.5 }
+  
+  // New Fixed Blocks entrance
+  gsap.fromTo('.hero-left-block', 
+    { x: -100, opacity: 0 }, 
+    { x: 0, opacity: 1, duration: 1.2, ease: 'power4.out', delay: 0.4 }
   )
-  gsap.fromTo(
-    '.landing-info-h2',
-    { opacity: 0, y: 30 },
-    { opacity: 1, y: 0, duration: 1.2, ease: 'power1.inOut', delay: 0.8 }
+  
+  gsap.fromTo('.hero-right-block', 
+    { x: 100, opacity: 0 }, 
+    { x: 0, opacity: 1, duration: 1.2, ease: 'power4.out', delay: 0.4 }
   )
 }
 
 function animateTextIn(selector, delay = 0) {
-  const el = document.querySelector(selector)
-  if (!el) return
-  const text = el.textContent || ''
-  el.innerHTML = ''
-  
-  const wrapper = document.createElement('span')
-  wrapper.style.display = 'inline-block'
-  wrapper.style.overflow = 'hidden'
+  const elements = document.querySelectorAll(selector)
+  if (!elements.length) return
 
-  const fragment = document.createDocumentFragment()
+  elements.forEach((el) => {
+    const text = el.textContent || ''
+    el.innerHTML = ''
+    
+    // Ensure parent is visible
+    gsap.set(el, { opacity: 1, visibility: 'visible' })
 
-  text.split('').forEach((char, i) => {
-    const span = document.createElement('span')
-    span.textContent = char === ' ' ? '\u00a0' : char
-    span.style.display = 'inline-block'
-    span.style.opacity = '0'
-    span.style.transform = 'translateY(80px)'
-    span.style.filter = 'blur(5px)'
-    fragment.appendChild(span)
+    const fragment = document.createDocumentFragment()
+    const spans = []
 
-    gsap.to(span, {
+    text.split('').forEach((char, i) => {
+      const span = document.createElement('span')
+      span.textContent = char === ' ' ? '\u00a0' : char
+      span.style.display = 'inline-block'
+      span.style.opacity = '0'
+      span.style.transform = 'translateY(40px)' // Reduced distance for smoother feel
+      span.style.filter = 'blur(10px)'
+      fragment.appendChild(span)
+      spans.push(span)
+    })
+    
+    el.appendChild(fragment)
+
+    gsap.to(spans, {
       opacity: 1,
       y: 0,
       filter: 'blur(0px)',
-      duration: 1.2,
-      ease: 'power3.inOut',
-      delay: delay + i * 0.025,
+      duration: 1,
+      ease: 'power3.out',
+      stagger: 0.02,
+      delay: delay,
+      onComplete: () => {
+        // Fallback: Ensure everything is visible at the end
+        gsap.set(spans, { opacity: 1, y: 0, filter: 'blur(0px)', clearProps: 'all' })
+      }
     })
   })
-  
-  wrapper.appendChild(fragment)
-  el.appendChild(wrapper)
 }
 
 /* ─── Scroll-triggered animations for all sections ─── */

@@ -52,7 +52,6 @@ const setLighting = (scene) => {
       ease: ease,
     });
     gsap.to(".character-rim", {
-      y: "55%",
       opacity: 1,
       delay: 0.2,
       duration: 2,

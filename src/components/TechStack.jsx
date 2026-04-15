@@ -37,13 +37,19 @@ const TechStack = () => {
     resize()
 
     // Initialize balls
-    const W = canvas.width
-    const H = canvas.height
+    const W = canvas.width || 800
+    const H = canvas.height || 600
+    
+    if (W === 0 || H === 0) return;
+
     ballsRef.current = techItems.map((item) => {
       const r = item.size / 2
+      // Ensure they spawn within visible area
+      const spawnX = r + Math.random() * (W - 2 * r)
+      const spawnY = r + Math.random() * (H - 2 * r)
       return {
-        x: r + Math.random() * (W - 2 * r),
-        y: r + Math.random() * (H - 2 * r),
+        x: spawnX,
+        y: spawnY,
         vx: (Math.random() - 0.5) * 1.5,
         vy: (Math.random() - 0.5) * 1.5,
         r,

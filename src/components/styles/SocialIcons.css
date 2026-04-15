@@ -1,12 +1,12 @@
 .icons-section {
   position: fixed;
-  left: 28px; /* Fix 4: Fixed left */
+  left: 32px; /* Explicit left */
   top: 50%;
   transform: translateY(-50%);
-  z-index: 50; /* Fix 4: z-index */
+  z-index: 50; 
   display: flex;
   flex-direction: column;
-  gap: 44px; /* Fix 4: Vertical spacing */
+  gap: 24px; /* Fix 4: Requested vertical spacing */
   pointer-events: auto;
 }
 
@@ -37,8 +37,8 @@
   right: 40px;
   z-index: 100;
   font-size: 0.75rem;
-  letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.85); /* Improved readability */
   text-transform: uppercase;
   font-weight: 600;
   text-decoration: none;
@@ -53,8 +53,8 @@
 /* Mobile Adjustments */
 @media screen and (max-width: 768px) {
   .icons-section {
-    left: 15px;
-    gap: 30px;
+    left: 16px;
+    gap: 24px; /* Maintain consistent vertical spacing */
   }
   .resume-button {
     bottom: 20px;

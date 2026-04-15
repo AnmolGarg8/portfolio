@@ -36,7 +36,7 @@ const App = () => {
     const animTimer = setTimeout(() => {
       initLandingAnimations()
       initScrollAnimations()
-    }, 100)
+    }, 50)
 
     return () => {
       cleanup()

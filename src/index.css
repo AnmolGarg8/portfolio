@@ -80,6 +80,7 @@ main {
   margin: auto;
   margin-top: 100px;
   margin-bottom: 0px;
+  overflow: hidden;
 }
 .techstack h2 {
   font-size: 80px;
