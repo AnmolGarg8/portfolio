@@ -6,7 +6,7 @@ const SocialIcons = () => {
   return (
     <>
       <div className="icons-section" id="social">
-        <a href="https://github.com/anmolgarg" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/AnmolGarg8" target="_blank" rel="noopener noreferrer">
           <FaGithub />
         </a>
         <a href="https://linkedin.com/in/anmol-garg2005" target="_blank" rel="noopener noreferrer">

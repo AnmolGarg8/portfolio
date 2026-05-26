@@ -16,7 +16,7 @@ const Contact = () => {
         </div>
         <div className="contact-box">
           <h4>SOCIAL</h4>
-          <a className="contact-social" href="https://github.com/anmolgarg" target="_blank" rel="noopener noreferrer">
+          <a className="contact-social" href="https://github.com/AnmolGarg8" target="_blank" rel="noopener noreferrer">
             Github <FaArrowUpRightFromSquare style={{ fontSize: '12px', marginLeft: '4px' }} />
           </a>
           <a className="contact-social" href="https://linkedin.com/in/anmol-garg2005" target="_blank" rel="noopener noreferrer">
