@@ -59,6 +59,52 @@ section#about,
   max-width: 600px !important;
   text-align: left !important;
 }
+.about-hook {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  line-height: 1.4 !important;
+  margin-bottom: 20px !important;
+  text-align: left !important;
+}
+.about-me p.para {
+  margin-bottom: 16px !important;
+}
+.about-highlights {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 28px 0 0 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+.about-highlights li {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  position: relative !important;
+  padding-left: 24px !important;
+  text-align: left !important;
+}
+.about-highlights li::before {
+  content: "→" !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: var(--accentColor) !important;
+  font-weight: bold !important;
+}
+.about-highlights li strong {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+.about-highlights li em {
+  color: var(--accentColor) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+}
+
 @media only screen and (min-width: 600px) {
   .about-section { justify-content: center; }
 }
@@ -75,8 +121,9 @@ section#about,
     width: var(--cWidth);
     justify-content: right;
     max-width: 1920px;
-    height: var(--vh);
-    padding: 0px;
+    min-height: var(--vh);
+    height: auto;
+    padding: 100px 0px;
   }
   .about-me {
     padding: 0px;
