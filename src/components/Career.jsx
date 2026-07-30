@@ -5,7 +5,7 @@ const careerData = [
     role: 'Software Engineer Intern',
     company: '7rd.ai (Seven Rounds Defender)',
     year: '2026-Now',
-    description: 'Building a Windows native desktop ground control interface for an autonomous drone defense platform using Electron, React, and TypeScript with Vision AI and Electronic Warfare-resilient navigation. Deploying autonomous AI agents on VPS infrastructure to automate workflows, reducing manual intervention by 40%.'
+    description: 'Building a Windows native ground control interface for an autonomous drone defense platform incorporating Vision AI and EW-resilient navigation. Assigned to design a secure indigenous Automatic Identification System (AIS) prototype for the Indian Navy (encrypted naval communications), and building an integrated drone management platform for the Indian Army aggregating multi-UAS feeds onto a unified geospatial UI with AI analytics.'
   },
   {
     role: 'Google Student Ambassador & India Innovates Finalist',
